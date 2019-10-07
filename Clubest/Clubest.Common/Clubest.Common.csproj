@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clubest.Data\Clubest.Data.csproj" />
+    <ProjectReference Include="..\Clubest.Domain\Clubest.Domain.csproj" />
+    <ProjectReference Include="..\Clubest.Tests\Clubest.Tests.csproj" />
+  </ItemGroup>
+
+</Project>
