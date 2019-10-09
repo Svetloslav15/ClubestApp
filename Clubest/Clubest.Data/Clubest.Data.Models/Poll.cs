@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Poll
     {
@@ -25,6 +26,7 @@
 
         public ICollection<UsersPolls> UsersPolls { get; set; }
 
+        [NotMapped]
         public ICollection<string> Interests { get; set; }
 
         public string ClubId { get; set; }
@@ -33,6 +35,7 @@
 
         public DateTime ExpiredDate { get; set; }
 
+        [NotMapped]
         public ICollection<string> VotedUsers { get; set; }
     }
 }

@@ -1,20 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Clubest.Controllers
+﻿namespace Clubest.Controllers
 {
+    using System.Collections.Generic;
+    using Clubest.Data;
+    using Clubest.Data.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly ClubestDbContext dbContext;
+
+        public ValuesController(ClubestDbContext dbContext)
         {
-            return new string[] { "value1", "value2" };
+            this.dbContext = dbContext;
+        }
+        // GET api/values
+        [Authorize]
+        [HttpGet]
+        public ActionResult<IEnumerable<Post>> Get()
+        {
+            return this.dbContext.Posts;
         }
 
         // GET api/values/5

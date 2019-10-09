@@ -51,7 +51,7 @@
                 .HasMany(club => club.Posts)
                 .WithOne(post => post.Club)
                 .HasForeignKey(post => post.ClubId);
-            
+
             builder.Entity<Club>()
                 .HasMany(club => club.Events)
                 .WithOne(ev => ev.Club)

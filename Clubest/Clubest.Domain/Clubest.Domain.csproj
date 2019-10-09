@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Contracts\" />
+    <Folder Include="Clubest.Domain.Services\" />
+    <Folder Include="Clubest.Domain.Contracts\" />
   </ItemGroup>
 
 </Project>

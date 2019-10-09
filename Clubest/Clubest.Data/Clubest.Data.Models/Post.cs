@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Post
     {
@@ -24,8 +25,10 @@
 
         public string Content { get; set; }
 
+        [NotMapped]
         public ICollection<ApplicationUser> Likes { get; set; }
 
+        [NotMapped]
         public ICollection<ApplicationUser> DisLikes { get; set; }
 
         public ICollection<Comment> Comments { get; set; }

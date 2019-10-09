@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Event
     {
@@ -35,6 +36,7 @@
 
         public bool IsPublic { get; set; }
 
+        [NotMapped]
         public ICollection<string> Interests { get; set; }
     }
 }

@@ -1,14 +1,13 @@
-namespace Clubest
+﻿namespace Clubest
 {
     using Clubest.Data;
-    using Clubest.Data.Data.Models;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.Hosting;
-    using Microsoft.AspNetCore.Identity;
-    using Clubest.Data.Data.Seeding;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
     public class Startup
@@ -23,40 +22,24 @@ namespace Clubest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-                .AddNewtonsoftJson();
-
-            services.AddScoped<AAUserRolesSeeder>();
-            services.AddScoped<AdminUserSeeder>();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<ClubestDbContext>(options =>
-            {
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
-            });
-            services.AddCors(options =>
-            {
-                options.AddPolicy("ClubestCORSPolicy",
-                    builder =>
-                    {
-                        builder.WithOrigins("http://localhost:4200")
-                                .AllowAnyHeader();
-                    });
-            });
-            services.AddIdentityCore<ApplicationUser>(options =>
-            {
-                //Options stopped only during development
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredLength = 3;
+                options.UseSqlServer(
+                    this.Configuration.GetConnectionString("DefaultConnection")));
 
-            }).AddRoles<IdentityRole>()
-              .AddEntityFrameworkStores<ClubestDbContext>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                        options =>
+                        {
+                            options.LoginPath = new PathString("/auth/login");
+                            options.AccessDeniedPath = new PathString("/auth/denied");
+                        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
@@ -74,17 +57,9 @@ namespace Clubest
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseMvc();
         }
     }
 }
