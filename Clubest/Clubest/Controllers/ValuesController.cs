@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using Clubest.Data;
     using Clubest.Data.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     [Route("api/[controller]")]
@@ -17,7 +16,6 @@
             this.dbContext = dbContext;
         }
         // GET api/values
-        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Post>> Get()
         {
