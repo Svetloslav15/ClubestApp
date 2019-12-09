@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ClubestApp.Models;
-using ClubestApp.Data;
-
-namespace ClubestApp.Controllers
+﻿namespace ClubestApp.Controllers
 {
+    using System.Diagnostics;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using ClubestApp.Models;
+    using ClubestApp.Data;
+
     public class HomeController : Controller
     {
         private ApplicationDbContext dbContext;

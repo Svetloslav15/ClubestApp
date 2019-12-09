@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Views\Users\" />
   </ItemGroup>
 
 </Project>

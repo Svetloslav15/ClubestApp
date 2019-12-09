@@ -1,5 +1,6 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿* {
+    font-family: 'Comfortaa', cursive;
+}
 
 a.navbar-brand {
   white-space: normal;
@@ -7,8 +8,6 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
   font-size: 14px;
 }
@@ -26,7 +25,7 @@ html {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: -1px 2px 16px 2px rgba(0,0,0,0.75);
 }
 
 button.accept-policy {
@@ -40,10 +39,12 @@ html {
   position: relative;
   min-height: 100%;
 }
-
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    background-image: url("../images/register-bg.jpg");
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 60px;
 }
 .footer {
   position: absolute;
@@ -53,4 +54,76 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+}
+.link-nav {
+    color: #584e4a;
+    position: relative;
+    text-decoration: none;
+}
+.link-nav:before, .link-nav:after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: white;
+}
+
+.link-nav:before {
+    opacity: 0;
+    transform: translateY(- 8px);
+    transition: transform 0s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s;
+}
+
+.link-nav:after {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+
+.link-nav:hover:before, .link-nav:focus:before, .link-nav:hover:after, .link-nav:focus:after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.link-nav:hover:before, .link-nav:focus:before {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+
+.link-nav:hover:after, .link-nav:focus:after {
+    transition: transform 0s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0s 0.2s;
+}
+
+.alert-info {
+    color: white;
+    background-color: #01A9FE;
+    border-color: #3249A6;
+}
+
+.register-partial {
+    width: 70%;
+}
+
+.ml-3rem {
+    margin-left: 3.5rem !important;
+}
+.font-size-21px {
+    font-size: 21px;
+}
+
+.home-section {
+    margin-top: 10%;
+}
+.text-shadow {
+    text-shadow: 5px -1px 2px rgba(0, 0, 0, 1);
+}
+.title-home {
+    text-shadow: 5px -1px 2px rgba(51, 152, 255, 1);
+    text-transform: uppercase;
+    font-size: 5rem;
+}
+.logo {
+    text-shadow: 0px 0px 13px rgba(2, 2, 2, 1);
+    text-transform: uppercase;
 }

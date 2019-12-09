@@ -4,10 +4,68 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
+    <div class="box-shadow">
+        <h1 class="text-center py-2 mb-3">Регистрация</h1>
+        <!-- Material form contact -->
+        <div class="col-lg-10 mx-auto ">
+            <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
+                <!-- Form -->
+                <form class="text-center" style="color: #757575;" action="#!">
+
+                    <!-- Name -->
+                    <div class="md-form mt-3">
+                        <input type="text" id="materialContactFormName" class="form-control">
+                        <label for="materialContactFormName">Име</label>
+                    </div>
+                    <!-- Name -->
+                    <div class="md-form mt-3">
+                        <input type="text" id="materialContactFormName" class="form-control">
+                        <label for="materialContactFormName">Фамилия</label>
+                    </div>
+                    <!-- E-mail -->
+                    <div class="md-form">
+                        <input type="email" id="materialContactFormEmail" class="form-control">
+                        <label for="materialContactFormEmail">Имейл</label>
+                    </div>
+
+                    <!-- Subject -->
+                    <span>Интереси</span>
+                    <select class="mdb-select">
+                        <option value="1" disabled>Природни науки</option>
+                        <option value="1" selected>Feedback</option>
+                        <option value="2">Report a bug</option>
+                        <option value="3">Feature request</option>
+                        <option value="4">Feature request</option>
+                    </select>
+                    <button class="btn peach-gradient">Peach</button>
+                    <button class="btn purple-gradient">Purple</button>
+                    <button class="btn blue-gradient">Blue</button>
+                    <button class="btn aqua-gradient">Aqua</button>
+                    <!--Message-->
+                    <div class="md-form">
+                        <textarea id="materialContactFormMessage" class="form-control md-textarea" rows="3"></textarea>
+                        <label for="materialContactFormMessage">Message</label>
+                    </div>
+                    <!-- Default checked -->
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="defaultChecked2" checked>
+                        <label class="custom-control-label" for="defaultChecked2">Default checked</label>
+                    </div>
+
+                    <!-- Send button -->
+                    <button class="btn btn-outline-info btn-rounded btn-block z-depth-0 my-4 waves-effect" type="submit">Send</button>
+
+                </form>
+                <!-- Form -->
+
+            </div>
+
+        </div>
+        <!-- Material form contact -->
+        <!--
+        <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
             <hr />
@@ -30,7 +88,8 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </div>
-</div>
+    -->
+    </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
