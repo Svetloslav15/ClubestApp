@@ -19,6 +19,7 @@
     {
         <li class="nav-item">
             <a class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalLoginForm" href="">Регистрация</a>
+            <partial name="_RegisterPartial" />
         </li>
         <li class="nav-item">
             <a class="nav-link text-white link-nav" asp-area="Identity" asp-page="/Account/Login">Вход</a>
@@ -27,7 +28,7 @@
     <li class="nav-item">
         <form class="form-inline ml-auto">
             <div class="md-form my-0">
-                <input class="form-control" type="text" placeholder="Търси" aria-label="Search">
+                <input class="form-control search-input" type="text" placeholder="Търси" aria-label="Search">
             </div>
             <button href="#!" class="btn btn-outline-white btn-rounded btn-md my-0 ml-sm-2" type="submit"><i class="fas fa-search"></i></button>
         </form>
