@@ -38,7 +38,7 @@
             {
                 var user = new User
                 {
-                    UserName = inputModel.FirstName,
+                    UserName = inputModel.Email,
                     Email = inputModel.Email,
                     FirstName = inputModel.FirstName,
                     LastName = inputModel.LastName,
@@ -54,6 +54,20 @@
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+            return Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginInputModel inputModel)
+        {
+            var result = await this._signInManager.PasswordSignInAsync(inputModel.Email, inputModel.Password, true, lockoutOnFailure: true);
+            if (result.Succeeded)
+            {
+                _logger.LogInformation("User logged in.");
+                return Redirect("/");
+            }
+
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Redirect("/");
         }
     }
