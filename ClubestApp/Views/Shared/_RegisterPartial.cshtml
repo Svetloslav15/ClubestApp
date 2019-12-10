@@ -1,6 +1,6 @@
 ﻿@model ClubestApp.Models.InputModels.RegisterInputModel
 
-<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -20,25 +20,25 @@
                     </div>
                     <div class="md-form col-md-6 text-left">
                         <i class="fas fa-user prefix grey-text mt-2 ml-3"></i>
-                        <input type="text" asp-for="LastName" class="form-control validate">
+                        <input type="text" asp-for="LastName" class="form-control validate ml-3rem">
                         <label data-error="" data-success="" asp-for="LastName">Фамилия</label>
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     <div class="md-form col-md-6 text-left">
                         <i class="fas fa-envelope prefix grey-text mt-2 ml-3"></i>
-                        <input type="email" asp-for="Email" class="form-control validate">
+                        <input type="email" asp-for="Email" class="form-control validate ml-3rem">
                         <label data-error="" asp-for="Email" data-success="">Имейл</label>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="md-form col-md-6 text-left">
                         <i class="fas fa-lock prefix grey-text mt-2 ml-3"></i>
-                        <input type="password" asp-for="Password" id="defaultForm-pass" class="form-control validate">
+                        <input type="password" asp-for="Password" id="defaultForm-pass" class="form-control validate ml-3rem">
                         <label data-error="" asp-for="Password" data-success="">Парола</label>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="md-form col-md-12 text-left">
                         <i class="fas fa-lock prefix grey-text mt-3 ml-3"></i>
-                        <input type="password" asp-for="ConfirmPassword" class="form-control validate">
+                        <input type="password" asp-for="ConfirmPassword" class="form-control validate ml-3rem">
                         <label data-error="" asp-for="ConfirmPassword" data-success="">Повтори паролата</label>
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>

@@ -18,10 +18,12 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalLoginForm" href="">Регистрация</a>
+            <a class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalRegisterForm" href="">Регистрация</a>
+            <partial name="_RegisterPartial" />
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white link-nav" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+            <a class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalLoginForm" href="">Вход</a>
+            <partial name="_SignInPartial" />
         </li>
     }
     <li class="nav-item">
