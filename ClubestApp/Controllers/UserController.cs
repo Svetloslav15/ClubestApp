@@ -38,7 +38,7 @@
             {
                 var user = new User
                 {
-                    UserName = inputModel.FirstName,
+                    UserName = inputModel.Email,
                     Email = inputModel.Email,
                     FirstName = inputModel.FirstName,
                     LastName = inputModel.LastName,
