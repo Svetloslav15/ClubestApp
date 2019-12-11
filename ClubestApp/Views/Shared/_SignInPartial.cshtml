@@ -1,0 +1,37 @@
+﻿@model ClubestApp.Models.InputModels.LoginInputModel
+
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Вход</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-controller="User" asp-action="Login" method="post">
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-5">
+                        <i class="fas fa-envelope prefix grey-text ml-3 mt-2"></i>
+                        <input type="email" id="defaultForm-email" asp-for="Email" class="form-control validate ml-3rem">
+                        <label data-error="грешно" data-success="правилно" asp-for="Email" for="defaultForm-email">Имейл</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text ml-3 mt-2"></i>
+                        <input type="password" id="defaultForm-pass" asp-for="Password" class="form-control validate ml-3rem">
+                        <label data-error="грешно" data-success="правилно" asp-for="Password" for="defaultForm-pass">Парола</label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn blue-gradient waves-effect waves-light">Влез</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
