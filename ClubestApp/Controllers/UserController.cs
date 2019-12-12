@@ -5,10 +5,8 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using System.Text.Encodings.Web;
     using System.Threading.Tasks;
 
     public class UserController : Controller

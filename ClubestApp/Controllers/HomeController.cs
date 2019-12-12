@@ -5,17 +5,23 @@
     using Microsoft.AspNetCore.Mvc;
     using ClubestApp.Models;
     using ClubestApp.Data;
+    using ClubestApp.Data.Models;
+    using Microsoft.AspNetCore.Identity;
 
     public class HomeController : Controller
     {
         private ApplicationDbContext dbContext;
-        public HomeController(ApplicationDbContext dbContext)
+        private UserManager<User> userManager;
+
+        public HomeController(ApplicationDbContext dbContext, UserManager<User> userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
-            var users =  this.dbContext.Users.ToList();
+            var user = this.userManager.GetUserAsync(HttpContext.User);
+            
             return View();
         }
 

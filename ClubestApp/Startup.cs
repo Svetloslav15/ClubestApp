@@ -11,6 +11,9 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using ClubestApp.Data.Models;
+    using ClubestApp.Services;
+    using ClubestApp.Data.Seeding;
+    using ClubestApp.Extensions;
 
     public class Startup
     {
@@ -31,6 +34,9 @@
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<AAUserRolesSeeder>();
+            services.AddScoped<SystemAdminSeeder>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -40,8 +46,11 @@
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-            }).AddDefaultUI(UIFramework.Bootstrap4)
+            }).AddRoles<IdentityRole>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddTransient<EmailService>();
 
             services.AddMvc(options =>
             {
@@ -52,6 +61,8 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseSeeding();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -60,7 +71,6 @@
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
