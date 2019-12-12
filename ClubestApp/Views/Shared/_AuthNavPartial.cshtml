@@ -7,11 +7,11 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity.Name!</a>
+            <a class="nav-link text-white mt-2" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, <span class="font-weight-bold">@User.Identity.Name</span>!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Изход</button>
+                <button type="submit" class="nav-link btn btn-link text-white">Изход</button>
             </form>
         </li>
     }
@@ -26,16 +26,4 @@
             <partial name="_SignInPartial" />
         </li>
     }
-    @if (User.IsInRole("SystemAdmin"))
-    {
-        <li>Admin</li>
-    }
-    <li class="nav-item">
-        <form class="form-inline ml-auto">
-            <div class="md-form my-0">
-                <input class="form-control search-input" type="text" placeholder="Търси" aria-label="Search">
-            </div>
-            <button href="#!" class="btn btn-outline-white btn-rounded btn-md my-0 ml-sm-2" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-    </li>
 </ul>
