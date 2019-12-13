@@ -3,7 +3,9 @@
     using ClubestApp.Areas.Identity.Pages.Account;
     using ClubestApp.Common;
     using ClubestApp.Data.Models;
+    using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -14,22 +16,43 @@
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly UserService userService;
 
         public UserController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            UserService userService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this._userManager = userManager;
+            this._signInManager = signInManager;
+            this._logger = logger;
+            this.userService = userService;
         }
 
         public IActionResult Profile()
         {
-            var userId = HttpContext.User.Identity.Name;
-            System.Console.WriteLine(userId);
-            return View();
+            string username = HttpContext.User.Identity.Name;
+            User user = this.userService.FindUserByUsername(username);
+            EditProfileInputModel bindingModel = new EditProfileInputModel()
+            {
+                Email = user.Email,
+                Username = username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return View(bindingModel);
+        }
+
+        [HttpPost]
+        public IActionResult Profile(EditProfileInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                this.userService.EditUser(model);
+            }
+            return this.Redirect("/User/Profile");
         }
 
         public IActionResult ChangePassword()

@@ -1,8 +1,11 @@
-﻿namespace ClubestApp.Models.BindingModels
+﻿using ClubestApp.Models.Contracts;
+
+namespace ClubestApp.Models.BindingModels
 {
-    public class EditProfileBindingModel
+    public class EditProfileBindingModel : IProfile
     {
         public string Username { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
