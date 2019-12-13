@@ -1,4 +1,6 @@
-﻿* {
+﻿@import url('https://fonts.googleapis.com/css?family=Kaushan+Script|Permanent+Marker&display=swap');
+
+* {
     font-family: 'Comfortaa', cursive;
 }
 
@@ -130,4 +132,8 @@ body {
 
 .search-input:-ms-input-placeholder {
     color: white;
+}
+
+.logo-text {
+    font-family: 'Permanent Marker', cursive;
 }

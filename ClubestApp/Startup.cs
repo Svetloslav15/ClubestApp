@@ -51,6 +51,7 @@
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<EmailService>();
+            services.AddTransient<UserService>();
 
             services.AddMvc(options =>
             {

@@ -1,0 +1,54 @@
+﻿@model ClubestApp.Models.BindingModels.EditProfileBindingModel
+
+    <div class="container col-lg-11 my-2 mx-auto bg-white box-shadow">
+        <h2 class="text-center pt-4 pb-2">Моят профил</h2>
+        <div class="row pb-4">
+            <div class="col-lg-3 pb-3 mr-lg-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item active">
+                        <a asp-controller="User" asp-action="Profile" class="text-white">Моят профил</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="ChangePassword">Парола</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="DownloadData">Данни</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <form id="profile-form" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="md-form text-left">
+                        <input type="text" asp-for="Username" disabled class="form-control validate">
+                        <label data-error="" asp-for="Username" data-success="">Име</label>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="md-form text-left">
+                        <input type="text" asp-for="FirstName" class="form-control validate">
+                        <label data-error="" asp-for="FirstName" data-success="">Име</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="md-form text-left">
+                        <input type="text" asp-for="LastName" class="form-control validate">
+                        <label data-error="" asp-for="LastName" data-success="">Име</label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="md-form text-left">
+                        <input type="text" asp-for="Email" class="form-control validate">
+                        <label data-error="" asp-for="Email" data-success="">Име</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="md-form">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="text-center">
+                        <button id="update-profile-button" type="submit" class="btn btn-primary mx-auto waves-effect">Запази</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>

@@ -25,7 +25,19 @@
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Profile()
+        {
+            var userId = HttpContext.User.Identity.Name;
+            System.Console.WriteLine(userId);
+            return View();
+        }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        public IActionResult DownloadData()
         {
             return View();
         }
