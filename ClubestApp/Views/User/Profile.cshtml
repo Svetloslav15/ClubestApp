@@ -1,4 +1,4 @@
-﻿@model ClubestApp.Models.InputModels.EditProfileInputModel
+﻿@model ClubestApp.Models.BindingModels.EditProfileBindingModel
 
     <div class="container col-lg-12 my-2 mx-auto bg-white box-shadow">
         <h2 class="text-center pt-4 pb-2">Моят профил</h2>
@@ -23,11 +23,6 @@
                 <form asp-controller="User" asp-action="Profile" method="post" id="profile-form">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <input type="hidden" asp-for="Username" class="form-control validate">
-                    <div class="md-form text-left">
-                        <input type="text" disabled value="@Model.Username" class="form-control validate">
-                        <label data-error="" asp-for="Username" data-success="">Потребителско име</label>
-                        <span asp-validation-for="Username" class="text-danger"></span>
-                    </div>
                     <div class="md-form text-left">
                         <input type="text" asp-for="FirstName" class="form-control validate">
                         <label data-error="" asp-for="FirstName" data-success="">Име</label>

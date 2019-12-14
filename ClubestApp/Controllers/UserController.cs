@@ -34,7 +34,7 @@
         {
             string username = HttpContext.User.Identity.Name;
             User user = this.userService.FindUserByUsername(username);
-            EditProfileInputModel bindingModel = new EditProfileInputModel()
+            EditProfileBindingModel model = new EditProfileBindingModel()
             {
                 Email = user.Email,
                 Username = username,
@@ -42,7 +42,7 @@
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
             };
-            return View(bindingModel);
+            return View(model);
         }
 
         [HttpPost]
@@ -54,14 +54,30 @@
             }
             return this.Redirect("/User/Profile");
         }
-
         public IActionResult ChangePassword()
         {
             return View();
         }
 
-        public IActionResult DownloadData()
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(PasswordInputModel inputModel)
         {
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.GetUserAsync(User);
+
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, inputModel.OldPassword, inputModel.Password);
+                if (!changePasswordResult.Succeeded)
+                {
+                    await _signInManager.RefreshSignInAsync(user);
+                    ViewData["Message"] = "Успешно сменихте паролата си!";
+                }
+            }
+            return this.View("ChangePassword");
+        }
+
+        public IActionResult DownloadData()
+        {0
             return View();
         }
 
