@@ -20,9 +20,9 @@
             this.signInManager = signInManager;
         }
 
-        public User FindUserByUsername(string username)
+        public User FindUserById(string id)
         {
-            var userdb = this.dbContext.Users.FirstOrDefault(user => user.UserName == username);
+            var userdb = this.dbContext.Users.FirstOrDefault(user => user.Id == id);
             return userdb; 
         }
 
@@ -39,9 +39,11 @@
             {
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
+                user.UserName = model.Email;
+                user.NormalizedUserName = model.Email.ToUpper();
                 user.Email = model.Email;
-                user.PhoneNumber = model.PhoneNumber;
                 user.NormalizedEmail = model.Email.ToUpper();
+                user.PhoneNumber = model.PhoneNumber;
 
                 this.dbContext.SaveChanges();
             }        
