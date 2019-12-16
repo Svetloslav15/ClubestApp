@@ -125,9 +125,11 @@
                     _logger.LogInformation("User logged in.");
                     return Redirect("/");
                 }
+
                 ModelState.AddModelError(UserFields.Email, ErrorMessages.InvalidEmailOrPassword);
                 return this.View();
             }
+
             ModelState.AddModelError(UserFields.Email, ErrorMessages.InvalidEmailOrPassword);
             return this.View();
         }
