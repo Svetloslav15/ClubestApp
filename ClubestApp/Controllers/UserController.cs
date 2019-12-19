@@ -77,7 +77,7 @@
         }
 
         public IActionResult DownloadData()
-        {0
+        {
             return View();
         }
 
