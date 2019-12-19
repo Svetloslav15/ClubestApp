@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class UserController : Controller
@@ -32,16 +33,19 @@
 
         public IActionResult Profile()
         {
-            string username = HttpContext.User.Identity.Name;
-            User user = this.userService.FindUserByUsername(username);
+            //Finds user by his id
+            string id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User user = this.userService.FindUserById(id);
+
             EditProfileBindingModel model = new EditProfileBindingModel()
             {
                 Email = user.Email,
-                Username = username,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
             };
+
             return View(model);
         }
 
@@ -52,6 +56,7 @@
             {
                 this.userService.EditUser(model);
             }
+
             return this.Redirect("/User/Profile");
         }
         public IActionResult ChangePassword()
@@ -120,9 +125,11 @@
                     _logger.LogInformation("User logged in.");
                     return Redirect("/");
                 }
+
                 ModelState.AddModelError(UserFields.Email, ErrorMessages.InvalidEmailOrPassword);
                 return this.View();
             }
+
             ModelState.AddModelError(UserFields.Email, ErrorMessages.InvalidEmailOrPassword);
             return this.View();
         }
