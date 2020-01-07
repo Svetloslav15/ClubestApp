@@ -59,6 +59,7 @@
 
             return this.Redirect("/User/Profile");
         }
+      
         public IActionResult ChangePassword()
         {
             return View();
@@ -72,10 +73,14 @@
                 User user = await _userManager.GetUserAsync(User);
 
                 var changePasswordResult = await _userManager.ChangePasswordAsync(user, inputModel.OldPassword, inputModel.Password);
-                if (!changePasswordResult.Succeeded)
+                if (changePasswordResult.Succeeded)
                 {
                     await _signInManager.RefreshSignInAsync(user);
                     ViewData["Message"] = "Успешно сменихте паролата си!";
+                }
+                else
+                {
+                    ViewData["ЕrrorMessage"] = "Невалидни данни!";
                 }
             }
             return this.View("ChangePassword");
@@ -132,6 +137,18 @@
 
             ModelState.AddModelError(UserFields.Email, ErrorMessages.InvalidEmailOrPassword);
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddInterestsToUser(AddInterestsInputModel inputModel)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.GetUserAsync(User);
+                this.userService.AddInterestsToUser(inputModel, user.Id);
+            }
+
+            return this.Redirect("/");
         }
     }
 }

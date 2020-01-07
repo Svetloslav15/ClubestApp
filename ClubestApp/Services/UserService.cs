@@ -5,7 +5,9 @@
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     public class UserService
@@ -48,6 +50,32 @@
                 this.dbContext.SaveChanges();
             }        
             return user;
+        }
+
+        public User AddInterestsToUser(AddInterestsInputModel inputModel, string userId)
+        {
+            User user = null;
+
+            if (inputModel.Interests.Count != 0)
+            {
+                user = this.FindUserById(userId);
+                user.Interests = InterestsToString(inputModel.Interests);
+
+                this.dbContext.SaveChanges();
+            }
+
+            return user;
+        }
+
+        private string InterestsToString(List<string> interests)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string interest in interests)
+            {
+                sb.Append($"{interest}, ");
+            }
+
+            return sb.ToString().Trim();
         }
     }
 }

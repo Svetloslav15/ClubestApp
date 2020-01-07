@@ -4,25 +4,34 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using ClubestApp.Models;
-    using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using Microsoft.AspNetCore.Identity;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
 
     public class HomeController : Controller
     {
-        private ApplicationDbContext dbContext;
-        private UserManager<User> userManager;
+        private readonly UserManager<User> userManager;
 
-        public HomeController(ApplicationDbContext dbContext, UserManager<User> userManager)
+        public HomeController(UserManager<User> userManager)
         {
-            this.dbContext = dbContext;
             this.userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var user = this.userManager.GetUserAsync(HttpContext.User);
+            var user = await this.userManager.GetUserAsync(HttpContext.User);
             
-            return View();
+            if (user == null)
+            {
+                return this.View("IndexNotLogged");
+            }
+            if (user.Interests == null)
+            {
+                return this.View("AddInterests");
+            }
+
+            //TODO load latest data from clubs
+            return this.View();
         }
 
         public IActionResult Privacy()
