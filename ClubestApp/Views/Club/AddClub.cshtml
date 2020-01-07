@@ -1,0 +1,36 @@
+﻿@model ClubestApp.Models.InputModels.AddClubInputModel
+
+<form class="text-center border border-light p-5" asp-controller="Club" asp-action="AddClub" method="post" style="background-color:powderblue;">
+
+    <p class="h4 mb-4">Регистрирай клуб</p>
+
+    <p>Направи свой собствен клуб</p>
+
+    @*<p>
+            <a href="" target="_blank">See the last newsletter</a>
+        </p>*@
+
+    <!-- Name -->
+    <input type="text" asp-for="Name" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Име">
+
+    <!-- Fee -->
+    <input type="number" asp-for="Fee" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="Такса">
+
+    <!-- FeeType -->
+    <select asp-for="PriceType" id="defaultSubscriptionFormEmail" class="form-control mb-4">
+        <option selected disabled>Вид Такса</option>
+        <option value="montly">Месечна</option>
+        <option value="perHour">За час</option>
+        <option value="free">Безплатно</option>
+    </select>
+
+    <!-- IsPublic -->
+    <span>Публичен ли е твоят клуб</span>
+    <select asp-for="IsPublic" id="defaultSubscriptionFormEmail" class="form-control mb-4">
+        <option value="true">Да</option>
+        <option value="false">Не</option>
+    </select>
+
+    <!-- Sign in button -->
+    <button class="btn btn-info btn-block" type="submit">Регистрирай клуб</button>
+</form>
