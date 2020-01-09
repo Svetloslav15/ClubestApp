@@ -25,7 +25,7 @@
             {
                 return this.View("IndexNotLogged");
             }
-            if (user.Interests == null)
+            if (user.Interests == null || user.Interests == "")
             {
                 return this.View("AddInterests");
             }
