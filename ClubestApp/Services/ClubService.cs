@@ -20,9 +20,9 @@
             Club newClub = new Club
             {
                 Name = model.Name,
-                Fee = model.Fee/ 1.000000000000000000000000000000000m,
+                Fee = (decimal)model.Fee,
                 PriceType = (PriceType)Enum.Parse(typeof(PriceType), model.PriceType, true),
-                IsPublic = model.IsPublic
+                IsPublic = (bool)model.IsPublic
             };
 
             var result = this.dbContext.Clubs.Add(newClub);

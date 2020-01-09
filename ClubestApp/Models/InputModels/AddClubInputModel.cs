@@ -1,21 +1,22 @@
 ﻿namespace ClubestApp.Models.InputModels
 {
+    using ClubestApp.Common;
     using System.ComponentModel.DataAnnotations;
 
     public class AddClubInputModel
     {
-        [Required]
-        [MinLength(3), MaxLength(100)]
+        [Required(ErrorMessage = ErrorMessages.ClubNameRequired)]
+        [StringLength(50, ErrorMessage = ErrorMessages.ClubNameRange, MinimumLength = 3)]
         public string Name { get; set; }
 
-        [Required]
-        [Range(0, 1000)]
-        public decimal Fee { get; set; }
+        [Required(ErrorMessage = ErrorMessages.ClubFeeRequired)]
+        [Range(0, 1000, ErrorMessage = ErrorMessages.ClubFeeRange)]
+        public decimal? Fee { get; set; }
 
-        [Required]
-        public bool IsPublic { get; set; }
+        [Required(ErrorMessage = ErrorMessages.ClubIsPublicRequired)]
+        public bool? IsPublic { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = ErrorMessages.ClubPriceTypeRequired)]
         public string PriceType { get; set; }
     }
 }
