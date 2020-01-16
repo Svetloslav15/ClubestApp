@@ -144,3 +144,6 @@ body {
 .w-45px {
     width: 45px;
 }
+.border-sky-blue {
+    border: 5px solid #32D0F5;
+}

@@ -12,9 +12,11 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm blue-gradient mb-3 py-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm blue-gradient mb-3">
             <div class="container">
-                <a class="navbar-brand text-white logo logo-text" asp-area="" asp-controller="Home" asp-action="Index">CluBest</a>
+                <a class="navbar-brand text-white logo logo-text" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.svg" class="w-75" alt="Clubest" />
+                </a>
                 <button class="aqua-gradient navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,9 +25,6 @@
                     <ul class="navbar-nav justify-content-center flex-grow-1 text-center">
                         <li class="nav-item mt-2">
                             <a class="nav-link link-nav text-white" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                        </li>
-                        <li class="nav-item mt-2 mr-2">
-                            <a class="nav-link link-nav text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Интереси</a>
                         </li>
                         <partial name="_AuthNavPartial.cshtml" />
                         <li class="nav-item">
