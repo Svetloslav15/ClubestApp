@@ -26,6 +26,8 @@
 
         public bool IsPublic { get; set; }
 
+        public string Description { get; set; }
+
         public ICollection<UserClub> ClubUsers { get; set; }
 
         public ICollection<Event> Events { get; set; }

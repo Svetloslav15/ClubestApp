@@ -11,16 +11,9 @@
                     <span asp-validation-for="Name" class="text-black font-weight-bold font-italic"></span>
                 </div>
             </div>
-            <!-- Fee -->
-            <div class="mb-4 col-lg-6">
-                <div class="md-form">
-                    <input type="text" asp-for="Fee" id="form1" class="form-control text-black">
-                    <label for="form1" class="text-black">Такса</label>
-                    <span asp-validation-for="Fee" class="text-black font-weight-bold font-italic"></span>
-                </div>
-            </div>
+
             <!-- FeeType -->
-            <div class="mb-4 col-lg-6">
+            <div class="mb-5 col-lg-6 mt-4">
                 <select asp-for="PriceType" class="custom-select">
                     <option value="" disabled selected>Вид Такса</option>
                     <option value="montly">Месечна</option>
@@ -29,9 +22,18 @@
                 </select>
                 <span asp-validation-for="PriceType" class="text-black font-weight-bold font-italic"></span>
             </div>
+            <!-- Fee -->
+            <div class="mb-4 col-lg-6">
+                <div class="md-form">
+                    <input type="text" asp-for="Fee" id="form1" class="form-control text-black">
+                    <label for="form1" class="text-black">Такса</label>
+                    <span class="note-info">*Aко клубът ви е безплатен напишете за цена 0.</span>
+                    <span asp-validation-for="Fee" class="text-black font-weight-bold font-italic"></span>
+                </div>
+            </div>
             <!-- IsPublic -->
-            <div class="col-lg-6 row text-center">
-                <div class="text-black mt-2 waves-effect waves-light mb-2 d-inline mr-2 col-lg-12">Вид на твоя клуб:</div>
+            <div class="col-lg-6 row text-center mt-2">
+                <div class="text-black mt-2 waves-effect waves-light d-inline mr-2 col-lg-12">Вид на твоя клуб:</div>
 
                 <!-- Default checked -->
 
@@ -42,7 +44,7 @@
 
                 <!-- Default unchecked -->
                 <div class="custom-control custom-radio mb-1 mx-auto" style="display: inline-block">
-                    @Html.RadioButtonFor(model => model.IsPublic, "false", new { @class = "custom-control-input", @id = "defaultUnchecked", @Name = "defaultExampleRadios" }) 
+                    @Html.RadioButtonFor(model => model.IsPublic, "false", new { @class = "custom-control-input", @id = "defaultUnchecked", @Name = "defaultExampleRadios" })
                     <label class="text-black custom-control-label" for="defaultUnchecked">Частен</label>
                 </div>
 
