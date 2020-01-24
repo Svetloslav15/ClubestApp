@@ -95,7 +95,7 @@
 
             //Define mapping table for Users and Clubs
             builder.Entity<UserClub>()
-            .HasKey(uc => new { uc.UserId, uc.ClubId });
+                .HasKey(uc => new { uc.UserId, uc.ClubId });
 
             builder.Entity<UserClub>()
                 .HasOne(uc => uc.User)

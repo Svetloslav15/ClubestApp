@@ -38,7 +38,7 @@
             services.AddScoped<SystemAdminSeeder>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<User>(options =>
             {
