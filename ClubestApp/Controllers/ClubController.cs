@@ -4,6 +4,7 @@
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
 
     public class ClubController : Controller
     {
@@ -22,13 +23,16 @@
         [HttpPost]
         public IActionResult AddClub(AddClubInputModel model)
         {
+
             if (ModelState.IsValid)
             {
-                this.clubService.AddClub(model);
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                this.clubService.AddClub(model, userId);
+
                 return this.Redirect("/Home/Index");
             }
 
-            //ModelState.AddModelError(ClubFields.IsPublic, ErrorMessages.ClubIsPublicRequired);
+
             return this.View();
         }
     }

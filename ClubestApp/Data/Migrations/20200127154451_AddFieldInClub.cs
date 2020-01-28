@@ -1,22 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
-    public partial class AddClubField : Migration
+    public partial class AddFieldInClub : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "Description",
+            migrationBuilder.AddColumn<string>(
+                name: "PictureUrl",
                 table: "Clubs",
-                nullable: false,
-                defaultValue: false);
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Description",
+                name: "PictureUrl",
                 table: "Clubs");
         }
     }

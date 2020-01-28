@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200124172014_AddClubFields")]
-    partial class AddClubFields
+    [Migration("20200128210819_interests-config")]
+    partial class interestsconfig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,11 +30,17 @@ namespace ClubestApp.Data.Migrations
 
                     b.Property<decimal>("Fee");
 
+                    b.Property<string>("Interests");
+
                     b.Property<bool>("IsPublic");
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("PictureUrl");
+
                     b.Property<int>("PriceType");
+
+                    b.Property<string>("Town");
 
                     b.HasKey("Id");
 
