@@ -30,6 +30,8 @@
 
         public User EditUser(EditProfileInputModel model)
         {
+            dbContext.Database.EnsureCreated();
+
             User user = this.dbContext.Users.FirstOrDefault(userDb => userDb.UserName == model.Username);
             bool existWithSameUsername = false;
             if (user.UserName != user.Email)
@@ -67,7 +69,7 @@
             return user;
         }
 
-        private string InterestsToString(List<string> interests)
+        public string InterestsToString(List<string> interests)
         {
             StringBuilder sb = new StringBuilder();
             foreach (string interest in interests)

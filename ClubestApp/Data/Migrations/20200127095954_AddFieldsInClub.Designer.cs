@@ -3,28 +3,34 @@ using System;
 using ClubestApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191106144824_AddFieldForClub")]
-    partial class AddFieldForClub
+    [Migration("20200127095954_AddFieldsInClub")]
+    partial class AddFieldsInClub
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("ClubestApp.Data.Models.Club", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description");
+
                     b.Property<decimal>("Fee");
+
+                    b.Property<string>("Interests");
 
                     b.Property<bool>("IsPublic");
 
@@ -32,9 +38,11 @@ namespace ClubestApp.Data.Migrations
 
                     b.Property<int>("PriceType");
 
+                    b.Property<string>("Town");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Club");
+                    b.ToTable("Clubs");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.ClubAdmin", b =>
@@ -47,7 +55,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("ClubId");
 
-                    b.ToTable("ClubAdmin");
+                    b.ToTable("ClubAdmins");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Comment", b =>
@@ -69,7 +77,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Comment");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Event", b =>
@@ -97,7 +105,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("ClubId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.EventUser", b =>
@@ -110,7 +118,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("EventUser");
+                    b.ToTable("EventUsers");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Notification", b =>
@@ -130,7 +138,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notification");
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Option", b =>
@@ -148,7 +156,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("PollId");
 
-                    b.ToTable("Option");
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Poll", b =>
@@ -168,7 +176,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("ClubId");
 
-                    b.ToTable("Poll");
+                    b.ToTable("Polls");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.PollUser", b =>
@@ -218,7 +226,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("ClubId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.RequestNewClub", b =>
@@ -234,7 +242,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("RequestNewClub");
+                    b.ToTable("RequestNewClubs");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.User", b =>
@@ -288,7 +296,8 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -303,7 +312,7 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("ClubId");
 
-                    b.ToTable("UserClub");
+                    b.ToTable("UserClubs");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.UserCommentDislikes", b =>
@@ -376,7 +385,8 @@ namespace ClubestApp.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -384,7 +394,8 @@ namespace ClubestApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -403,7 +414,8 @@ namespace ClubestApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 

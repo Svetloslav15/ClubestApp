@@ -29,5 +29,13 @@
         public const string ClubIsPublicRequired = "Видът на клуба е задължителен";
 
         public const string ClubNameRange = "Името на клуба трябва да е между {2} и {1} символа";
+
+        public const string ClubDescriptionRequired = "Описанието на клуба е задължително";
+
+        public const string ClubDescriptionRange = "Описанието на клуба трябва да е между {2} и {1} символа";
+
+        public const string ClubTownRequired = "Моля посочете населеното място на клуба";
+
+        public const string ClubInterestsRequired = "Моля изберете поне един интерес за вашия клуб";
     }
 }

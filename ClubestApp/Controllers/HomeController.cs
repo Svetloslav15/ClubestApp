@@ -23,6 +23,7 @@
             this.userManager = userManager;
             this.clubService = clubService;
         }
+
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);

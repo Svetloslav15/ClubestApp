@@ -1,6 +1,9 @@
 ﻿namespace ClubestApp.Models.InputModels
 {
     using ClubestApp.Common;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Http.Internal;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class AddClubInputModel
@@ -18,5 +21,17 @@
 
         [Required(ErrorMessage = ErrorMessages.ClubPriceTypeRequired)]
         public string PriceType { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ClubDescriptionRequired)]
+        [StringLength(300, ErrorMessage = ErrorMessages.ClubDescriptionRange, MinimumLength = 20)]
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ClubTownRequired)]
+        public string Town { get; set; }
+
+        public IFormFile ImageFile { get; set; }
+
+        [Required(ErrorMessage = ErrorMessages.ClubInterestsRequired)]
+        public List<string> Interests { get; set; }
     }
 }
