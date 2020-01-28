@@ -8,14 +8,20 @@
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
+    using ClubestApp.Services;
+    using System.Reflection;
+    using System.Collections.Generic;
+    using System.Text;
 
     public class HomeController : Controller
     {
         private readonly UserManager<User> userManager;
+        private readonly ClubService clubService;
 
-        public HomeController(UserManager<User> userManager)
+        public HomeController(UserManager<User> userManager, ClubService clubService)
         {
             this.userManager = userManager;
+            this.clubService = clubService;
         }
         public async Task<IActionResult> Index()
         {
@@ -27,7 +33,8 @@
             }
             if (user.Interests == null || user.Interests == "")
             {
-                return this.View("AddInterests");
+                var interests = this.clubService.GetInterests();            
+                return this.View("AddInterests", interests);
             }
 
             //TODO load latest data from clubs

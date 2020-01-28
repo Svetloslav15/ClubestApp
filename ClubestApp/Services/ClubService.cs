@@ -4,11 +4,17 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
+    using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
 
     public class ClubService
     {
         private ApplicationDbContext dbContext;
+
+        private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
 
         public ClubService(ApplicationDbContext dbContext)
         {
@@ -29,6 +35,19 @@
             this.dbContext.SaveChanges();
 
             return result.Entity;
+        }
+
+        public Dictionary<string, Dictionary<string, string>> GetInterests()
+        {
+            string interests = "";
+            using (StreamReader reader = new StreamReader(interestsPath, Encoding.GetEncoding("windows-1251")))
+            {
+                interests = reader.ReadToEnd();
+            }
+
+            var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
+                                Dictionary<string, string>>>(interests);
+            return interestsJson;
         }
     }
 }
