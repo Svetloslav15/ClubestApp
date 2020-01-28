@@ -6,10 +6,10 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
+    using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Security.Claims;
     using System.Text;
 
     public class ClubService
@@ -17,19 +17,25 @@
         private ApplicationDbContext dbContext;
         private readonly UserService userService;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
-        Cloudinary cloudinary = new Cloudinary(
-             new Account(
-                "dzivpr6fj",
-                "293667553261184",
-                "ox1flaUkgDEl5B-7KfVQXGzuISs"));
+        private Cloudinary cloudinary;
+        private IConfiguration configuration;
 
         public ClubService(ApplicationDbContext dbContext,
-            UserService userService)
+                           UserService userService,
+                           IConfiguration configuration)
         {
             this.dbContext = dbContext;
             this.userService = userService;
+            this.configuration = configuration;
+            this.cloudinary = new Cloudinary(
+                                        new Account(
+                                             configuration.GetConnectionString("CloudinaryCloudName"),
+                                             configuration.GetConnectionString("CloudinaryApiKey"),
+                                             configuration.GetConnectionString("CloudinaryAppSecret"))
+                                        );
         }
 
+        //TODO add roles
         public ClubAdmin AddClubAdmin(Club club, User user)
         {
             ClubAdmin newClubAdmin = new ClubAdmin()
@@ -42,8 +48,6 @@
 
             return result.Entity;
         }
-
-        
 
         public Club AddClub(AddClubInputModel model, string userId)
         {
@@ -68,8 +72,7 @@
                 File.Delete(filePath);
                 currentUrl = uploadResult.Uri.AbsoluteUri;
             }
-
-
+            
             Club newClub = new Club
             {
                 Name = model.Name,
