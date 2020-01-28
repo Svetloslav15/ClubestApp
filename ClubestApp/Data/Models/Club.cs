@@ -28,6 +28,12 @@
 
         public string Description { get; set; }
 
+        public string Town { get; set; }
+
+        public string Interests { get; set; }
+
+        public string PictureUrl { get; set; }
+
         public ICollection<UserClub> ClubUsers { get; set; }
 
         public ICollection<Event> Events { get; set; }

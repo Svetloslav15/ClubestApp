@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -28,11 +28,17 @@ namespace ClubestApp.Data.Migrations
 
                     b.Property<decimal>("Fee");
 
+                    b.Property<string>("Interests");
+
                     b.Property<bool>("IsPublic");
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("PictureUrl");
+
                     b.Property<int>("PriceType");
+
+                    b.Property<string>("Town");
 
                     b.HasKey("Id");
 
