@@ -8,10 +8,8 @@
                     List<string> tempInterests = new List<string>();
                     foreach (var interest in item.Value)
                     {
-                        var result = interest.Value;
-                        byte[] bytes = Encoding.Default.GetBytes(result);
-                        string resultEncoded = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                        tempInterests.Add(resultEncoded);
+                        var result = interest.Value.ToString();
+                        tempInterests.Add(result);
                     }
 
                     <div class="col-lg-3 row border mx-auto m-1 p-1">

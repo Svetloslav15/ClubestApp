@@ -39,14 +39,10 @@
 
         public Dictionary<string, Dictionary<string, string>> GetInterests()
         {
-            string interests = "";
-            using (StreamReader reader = new StreamReader(interestsPath, Encoding.GetEncoding("windows-1251")))
-            {
-                interests = reader.ReadToEnd();
-            }
+            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("windows-1251"));
 
             var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
-                                Dictionary<string, string>>>(interests);
+                                Dictionary<string, string>>>(interestsToText);
             return interestsJson;
         }
     }
