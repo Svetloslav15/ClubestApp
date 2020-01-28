@@ -6,9 +6,14 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
+<<<<<<< HEAD
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Microsoft.Extensions.Configuration;
+=======
+    using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
+>>>>>>> 999826864d61fa4f34c9ac009b279bc5dfff391f
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -100,6 +105,16 @@
             return result.Entity;
         }
 
+        private string InterestsToString(List<string> interests)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string interest in interests)
+            {
+                sb.Append($"{interest}, ");
+            }
+
+            return sb.ToString().Trim();
+        }
         public Dictionary<string, Dictionary<string, string>> GetInterests()
         {
             string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("windows-1251"));
