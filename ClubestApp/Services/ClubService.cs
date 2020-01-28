@@ -7,6 +7,7 @@
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
     using Microsoft.Extensions.Configuration;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -19,6 +20,7 @@
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
         private Cloudinary cloudinary;
         private IConfiguration configuration;
+        private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
 
         public ClubService(ApplicationDbContext dbContext,
                            UserService userService,
@@ -107,6 +109,13 @@
             }
 
             return sb.ToString().Trim();
+        public Dictionary<string, Dictionary<string, string>> GetInterests()
+        {
+            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("windows-1251"));
+
+            var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
+                                Dictionary<string, string>>>(interestsToText);
+            return interestsJson;
         }
     }
 }

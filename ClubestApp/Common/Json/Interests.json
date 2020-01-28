@@ -1,0 +1,118 @@
+{
+  "1": {
+    "english": "maths",
+    "bulgarian": "Математика"
+  },
+  "2": {
+    "english": "informatics",
+    "bulgarian": "Информатика"
+  },
+  "3": {
+    "english": "physics",
+    "bulgarian": "Физика"
+  },
+  "4": {
+    "english": "chemistry",
+    "bulgarian": "Химия"
+  },
+  "5": {
+    "english": "biology",
+    "bulgarian": "Биология"
+  },
+  "6": {
+    "english": "phylosophy",
+    "bulgarian": "Философия"
+  },
+  "7": {
+    "english": "history",
+    "bulgarian": "История"
+  },
+  "8": {
+    "english": "literature",
+    "bulgarian": "Литература"
+  },
+  "9": {
+    "english": "music",
+    "bulgarian": "Музика"
+  },
+  "10": {
+    "english": "languages",
+    "bulgarian": "Езици"
+  },
+  "11": {
+    "english": "soccer",
+    "bulgarian": "Футбол"
+  },
+  "12": {
+    "english": "basketball",
+    "bulgarian": "Баскетбол"
+  },
+  "13": {
+    "english": "volleyball",
+    "bulgarian": "Волейбол"
+  },
+  "14": {
+    "english": "table-tennis",
+    "bulgarian": "Тенис на маса"
+  },
+  "15": {
+    "english": "tennis",
+    "bulgarian": "Тенис"
+  },
+  "16": {
+    "english": "boxing",
+    "bulgarian": "Бокс"
+  },
+  "17": {
+    "english": "fitnes",
+    "bulgarian": "Фитнес"
+  },
+  "18": {
+    "english": "gymnastics",
+    "bulgarian": "Гимнастика"
+  },
+  "19": {
+    "english": "athletics",
+    "bulgarian": "Лека атлетика"
+  },
+  "20": {
+    "english": "entrepreneurship",
+    "bulgarian": "Предприемачество"
+  },
+  "21": {
+    "english": "software-engineering",
+    "bulgarian": "Софтуерно инжинерство"
+  },
+  "22": {
+    "english": "ecology",
+    "bulgarian": "Екология"
+  },
+  "23": {
+    "english": "digital-marketing",
+    "bulgarian": "Дигитален маркетинг"
+  },
+  "24": {
+    "english": "singing",
+    "bulgarian": "Пеене"
+  },
+  "25": {
+    "english": "singing",
+    "bulgarian": "Танци"
+  },
+  "26": {
+    "english": "drawing",
+    "bulgarian": "Рисуване"
+  },
+  "27": {
+    "english": "photography",
+    "bulgarian": "Фотография"
+  },
+  "28": {
+    "english": "theatre",
+    "bulgarian": "Театър"
+  },
+  "29": {
+    "english": "design",
+    "bulgarian": "Дизайн"
+  },
+}

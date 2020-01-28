@@ -1,216 +1,27 @@
-﻿<div class="col-lg-12 py-2 mx-auto bg-white box-shadow row">
+﻿@using System.Text;
+<div class="col-lg-12 py-2 mx-auto bg-white box-shadow row">
     <h3 class="h3 text-center my-3 text-primary mx-auto">Нямате избрани интереси. Избери интереси и влез в клуб!</h3>
         <form class="col-lg-12 row mb-5" asp-controller="User" asp-action="AddInterestsToUser" method="post">
-            <div class="col-lg-4 row mx-auto">
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" class="custom-control-input" value="maths" id="maths">
-                        <label class="custom-control-label" for="maths">Математика</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="informatics" class="custom-control-input" id="informatics">
-                        <label class="custom-control-label" for="informatics">Информатика</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="physics"  class="custom-control-input" id="physics">
-                        <label class="custom-control-label" for="physics">Физика</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="chemistry" class="custom-control-input" id="chemistry">
-                        <label class="custom-control-label" for="chemistry">Химия</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="biology" class="custom-control-input" id="biology">
-                        <label class="custom-control-label" for="biology">Биология</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="phylosophy" class="custom-control-input" id="phylosophy">
-                        <label class="custom-control-label" for="phylosophy">Философия</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="history" class="custom-control-input" id="history">
-                        <label class="custom-control-label" for="history">История</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="literature" class="custom-control-input" id="literature">
-                        <label class="custom-control-label" for="literature">Литература</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="music" class="custom-control-input" id="music">
-                        <label class="custom-control-label" for="music">Музика</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="languages" class="custom-control-input" id="languages">
-                        <label class="custom-control-label" for="languages">Езици</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 row mx-auto">
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="soccer" class="custom-control-input" id="soccer">
-                        <label class="custom-control-label" for="soccer">Футбол</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="basketball" class="custom-control-input" id="basketball">
-                        <label class="custom-control-label" for="basketball">Баскетбол</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="volleyball" class="custom-control-input" id="volleyball">
-                        <label class="custom-control-label" for="volleyball">Волейбол</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="table-tennis" class="custom-control-input" id="table-tennis">
-                        <label class="custom-control-label" for="table-tennis">Тенис на маса</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="tennis" class="custom-control-input" id="tennis">
-                        <label class="custom-control-label" for="tennis">Тенис на корт</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="boxing" class="custom-control-input" id="boxing">
-                        <label class="custom-control-label" for="boxing">Бокс</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="fitnes" class="custom-control-input" id="fitnes">
-                        <label class="custom-control-label" for="fitnes">Фитнес</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="gymnastics" class="custom-control-input" id="gymnastics">
-                        <label class="custom-control-label" for="gymnastics">Гимнастика</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="athletics" class="custom-control-input" id="athletics">
-                        <label class="custom-control-label" for="athletics">Лека атлетика</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 row mx-auto">
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-2">
-                    <div class="custom-control custom-checkbox col-lg-10 pt-1">
-                        <input type="checkbox" name="Interests" value="entrepreneurship" class="custom-control-input" id="entrepreneurship">
-                        <label class="custom-control-label" for="entrepreneurship">Предприемачество</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="software-engineering" class="custom-control-input" id="software-engineering">
-                        <label class="custom-control-label" for="software-engineering">Софтуерно инжинерство</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="ecology" class="custom-control-input" id="ecology">
-                        <label class="custom-control-label" for="ecology">Екология</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="digital-marketing" class="custom-control-input" id="digital-marketing">
-                        <label class="custom-control-label" for="digital-marketing">Дигитален маркетинг</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="singing" class="custom-control-input" id="singing">
-                        <label class="custom-control-label" for="singing">Пеене</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="dancing" class="custom-control-input" id="dancing">
-                        <label class="custom-control-label" for="dancing">Танци</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="drawing" class="custom-control-input" id="drawing">
-                        <label class="custom-control-label" for="drawing">Рисуване</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="photography" class="custom-control-input" id="photography">
-                        <label class="custom-control-label" for="photography">Фотография</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="theatre" class="custom-control-input" id="theatre">
-                        <label class="custom-control-label" for="theatre">Театър</label>
-                    </div>
-                </div>
-                <div class="row border m-1 p-1">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                    <div class="custom-control custom-checkbox col-lg-9 pt-1">
-                        <input type="checkbox" name="Interests" value="design" class="custom-control-input" id="design">
-                        <label class="custom-control-label" for="design">Дизайн</label>
-                    </div>
-                </div>
-            </div>
+            <div class="col-lg-12 row text-center mx-auto">
+                @foreach (var item in Model)
+                {
+                    List<string> tempInterests = new List<string>();
+                    foreach (var interest in item.Value)
+                    {
+                        var result = interest.Value.ToString();
+                        tempInterests.Add(result);
+                    }
 
+                    <div class="col-lg-3 row border mx-auto m-1 p-1">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
+                        <div class="custom-control custom-checkbox col-lg-9 pt-1">
+                            <input type="checkbox" name="Interests" class="custom-control-input" value="@tempInterests[0]" id="@tempInterests[0]">
+                            <label class="custom-control-label" for="@tempInterests[0]">@tempInterests[1]</label>
+                        </div>
+                    </div>
+                }
+
+            </div>
             <div class="mx-auto mt-3">
                 <input type="submit" class="btn blue-gradient" value="Виж клубове" />
             </div>
