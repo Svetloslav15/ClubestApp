@@ -2,13 +2,11 @@
 {
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
-    using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
 
     public class UserService
     {
@@ -24,7 +22,7 @@
 
         public User FindUserById(string id)
         {
-            var userdb = this.dbContext.Users.FirstOrDefault(user => user.Id == id);
+            User userdb = this.dbContext.Users.FirstOrDefault(user => user.Id == id);
             return userdb; 
         }
 

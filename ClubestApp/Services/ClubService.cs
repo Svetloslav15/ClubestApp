@@ -6,27 +6,23 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
-<<<<<<< HEAD
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
-    using Microsoft.Extensions.Configuration;
-=======
-    using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
->>>>>>> 999826864d61fa4f34c9ac009b279bc5dfff391f
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     public class ClubService
     {
-        private ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
         private readonly UserService userService;
-        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
-        private Cloudinary cloudinary;
-        private IConfiguration configuration;
+        private readonly Cloudinary cloudinary;
+        private readonly IConfiguration configuration;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
 
         public ClubService(ApplicationDbContext dbContext,
                            UserService userService,
@@ -37,10 +33,36 @@
             this.configuration = configuration;
             this.cloudinary = new Cloudinary(
                                         new Account(
-                                             configuration.GetConnectionString("CloudinaryCloudName"),
-                                             configuration.GetConnectionString("CloudinaryApiKey"),
-                                             configuration.GetConnectionString("CloudinaryAppSecret"))
+                                             this.configuration.GetConnectionString("CloudinaryCloudName"),
+                                             this.configuration.GetConnectionString("CloudinaryApiKey"),
+                                             this.configuration.GetConnectionString("CloudinaryAppSecret"))
                                         );
+        }
+
+        private string InterestsToString(List<string> interests)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string interest in interests)
+            {
+                sb.Append($"{interest}, ");
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        private List<string> ParseInterests(string interestsString)
+        {
+            string pattern = "[a-zA-Z-]+";
+            Regex regex = new Regex(pattern);
+            MatchCollection matches = regex.Matches(interestsString);
+            List<string> interests = new List<string>();
+
+            foreach (Match match in matches)
+            {
+                interests.Add(match.Value);
+            }
+
+            return interests;
         }
 
         //TODO add roles
@@ -105,16 +127,6 @@
             return result.Entity;
         }
 
-        private string InterestsToString(List<string> interests)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (string interest in interests)
-            {
-                sb.Append($"{interest}, ");
-            }
-
-            return sb.ToString().Trim();
-        }
         public Dictionary<string, Dictionary<string, string>> GetInterests()
         {
             string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("windows-1251"));
@@ -122,6 +134,14 @@
             var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
                                 Dictionary<string, string>>>(interestsToText);
             return interestsJson;
+        }
+
+        //TODO
+        public List<Club> GetPotentialClubs(string userInterestsString)
+        {
+            List<string> userInterests = this.ParseInterests(userInterestsString);
+
+            return null;
         }
     }
 }
