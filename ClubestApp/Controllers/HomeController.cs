@@ -1,17 +1,12 @@
 ﻿namespace ClubestApp.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using ClubestApp.Models;
     using ClubestApp.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
-    using Newtonsoft.Json;
     using ClubestApp.Services;
-    using System.Reflection;
-    using System.Collections.Generic;
-    using System.Text;
 
     public class HomeController : Controller
     {

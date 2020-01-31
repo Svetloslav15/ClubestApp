@@ -3,12 +3,13 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
 
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly SignInManager<User> signInManager;
         private ApplicationDbContext dbContext;

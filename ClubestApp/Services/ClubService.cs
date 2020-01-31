@@ -6,6 +6,7 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Services.Contracts;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
@@ -15,17 +16,17 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
-    public class ClubService
+    public class ClubService : IClubService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserService userService;
+        private readonly IUserService userService;
         private readonly Cloudinary cloudinary;
         private readonly IConfiguration configuration;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
 
         public ClubService(ApplicationDbContext dbContext,
-                           UserService userService,
+                           IUserService userService,
                            IConfiguration configuration)
         {
             this.dbContext = dbContext;

@@ -6,6 +6,7 @@
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using ClubestApp.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -17,13 +18,13 @@
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly UserService userService;
+        private readonly IUserService userService;
 
         public UserController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            UserService userService)
+            IUserService userService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;

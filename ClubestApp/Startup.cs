@@ -51,7 +51,7 @@
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<EmailService>();
-            services.AddTransient<UserService>();
+            services.AddTransient<IUserService>();
             services.AddTransient<ClubService>();
 
             services.AddMvc(options =>
