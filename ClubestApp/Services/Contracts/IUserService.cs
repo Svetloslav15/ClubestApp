@@ -1,12 +1,9 @@
-﻿using ClubestApp.Data.Models;
-using ClubestApp.Models.InputModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ClubestApp.Services.Contracts
+﻿namespace ClubestApp.Services.Contracts
 {
+    using ClubestApp.Data.Models;
+    using ClubestApp.Models.InputModels;
+    using System.Collections.Generic;
+
     public interface IUserService
     {
         User FindUserById(string id);
@@ -15,6 +12,6 @@ namespace ClubestApp.Services.Contracts
 
         User AddInterestsToUser(AddInterestsInputModel inputModel, string userId);
 
-        string InterestsToString(List<string> interests)
+        string InterestsToString(List<string> interests);
     }
 }

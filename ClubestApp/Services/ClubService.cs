@@ -130,7 +130,7 @@
 
         public Dictionary<string, Dictionary<string, string>> GetInterests()
         {
-            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("windows-1251"));
+            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("utf-8"));
 
             var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
                                 Dictionary<string, string>>>(interestsToText);

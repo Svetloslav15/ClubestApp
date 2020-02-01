@@ -14,6 +14,7 @@
     using ClubestApp.Services;
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
+    using ClubestApp.Services.Contracts;
 
     public class Startup
     {
