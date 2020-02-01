@@ -8,6 +8,8 @@
 
         public const string LastNameRequired = "Фамилията е задължителна";
 
+        public const string TownRequired = "Градът е задължителен";
+
         public const string PasswordRequired = "Паролата е задължителна";
 
         public const string PasswordsDontMatch = "Паролите не съвпадат";

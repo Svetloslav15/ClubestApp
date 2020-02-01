@@ -7,6 +7,8 @@
         public const string LastName = "LastName";
 
         public const string Email = "Email";
+        
+        public const string Town = "Town";
 
         public const string Password = "Password";
 

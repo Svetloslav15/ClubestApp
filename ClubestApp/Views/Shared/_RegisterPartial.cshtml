@@ -32,6 +32,12 @@
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="md-form col-md-6 text-left">
+                        <i class="fas fa-city prefix grey-text mt-2 ml-3"></i>
+                        <input type="text" asp-for="Town" class="form-control validate ml-3rem">
+                        <label data-error="" asp-for="Town" data-success="">Град</label>
+                        <span asp-validation-for="Town" class="text-danger"></span>
+                    </div>
+                    <div class="md-form col-md-12 text-left">
                         <i class="fas fa-lock prefix grey-text mt-2 ml-3"></i>
                         <input type="password" asp-for="Password" id="defaultForm-pass" class="form-control validate ml-3rem">
                         <label data-error="" asp-for="Password" data-success="">Парола</label>

@@ -18,6 +18,10 @@
         [Display(Name = UserFields.Email)]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = ErrorMessages.TownRequired)]
+        [Display(Name = UserFields.Town)]
+        public string Town { get; set; }
+
         [Required(ErrorMessage = ErrorMessages.PasswordRequired)]
         [StringLength(100, ErrorMessage = ErrorMessages.MinLength, MinimumLength = 6)]
         [DataType(DataType.Password)]
