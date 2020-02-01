@@ -1,6 +1,7 @@
 ﻿namespace ClubestApp.Controllers
 {
     using ClubestApp.Common;
+    using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,15 @@
 
         public IActionResult AddClub()
         {
-            return this.View();
+            AddClubInputModel model = new AddClubInputModel();
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
         }
 
         [HttpPost]
         public IActionResult AddClub(AddClubInputModel model)
         {
-
             if (ModelState.IsValid)
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -32,8 +35,16 @@
                 return this.Redirect("/Home/Index");
             }
 
-
             return this.View();
+        }
+
+        [HttpGet]
+        public IActionResult AllClubs()
+        {
+            //Get all clubs from db
+            GetClubsBindingModel[] model = clubService.GetAllClubsBindingModel();
+
+            return View(model);
         }
     }
 }

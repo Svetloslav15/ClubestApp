@@ -1,118 +1,118 @@
 {
   "1": {
     "english": "maths",
-    "bulgarian": "Математика"
+    "bulgarian": "РњР°С‚РµРјР°С‚РёРєР°"
   },
   "2": {
     "english": "informatics",
-    "bulgarian": "Информатика"
+    "bulgarian": "РРЅС„РѕСЂРјР°С‚РёРєР°"
   },
   "3": {
     "english": "physics",
-    "bulgarian": "Физика"
+    "bulgarian": "Р¤РёР·РёРєР°"
   },
   "4": {
     "english": "chemistry",
-    "bulgarian": "Химия"
+    "bulgarian": "РҐРёРјРёСЏ"
   },
   "5": {
     "english": "biology",
-    "bulgarian": "Биология"
+    "bulgarian": "Р‘РёРѕР»РѕРіРёСЏ"
   },
   "6": {
     "english": "phylosophy",
-    "bulgarian": "Философия"
+    "bulgarian": "Р¤РёР»РѕСЃРѕС„РёСЏ"
   },
   "7": {
     "english": "history",
-    "bulgarian": "История"
+    "bulgarian": "РСЃС‚РѕСЂРёСЏ"
   },
   "8": {
     "english": "literature",
-    "bulgarian": "Литература"
+    "bulgarian": "Р›РёС‚РµСЂР°С‚СѓСЂР°"
   },
   "9": {
     "english": "music",
-    "bulgarian": "Музика"
+    "bulgarian": "РњСѓР·РёРєР°"
   },
   "10": {
     "english": "languages",
-    "bulgarian": "Езици"
+    "bulgarian": "Р•Р·РёС†Рё"
   },
   "11": {
     "english": "soccer",
-    "bulgarian": "Футбол"
+    "bulgarian": "Р¤СѓС‚Р±РѕР»"
   },
   "12": {
     "english": "basketball",
-    "bulgarian": "Баскетбол"
+    "bulgarian": "Р‘Р°СЃРєРµС‚Р±РѕР»"
   },
   "13": {
     "english": "volleyball",
-    "bulgarian": "Волейбол"
+    "bulgarian": "Р’РѕР»РµР№Р±РѕР»"
   },
   "14": {
     "english": "table-tennis",
-    "bulgarian": "Тенис на маса"
+    "bulgarian": "РўРµРЅРёСЃ РЅР° РјР°СЃР°"
   },
   "15": {
     "english": "tennis",
-    "bulgarian": "Тенис"
+    "bulgarian": "РўРµРЅРёСЃ"
   },
   "16": {
     "english": "boxing",
-    "bulgarian": "Бокс"
+    "bulgarian": "Р‘РѕРєСЃ"
   },
   "17": {
     "english": "fitnes",
-    "bulgarian": "Фитнес"
+    "bulgarian": "Р¤РёС‚РЅРµСЃ"
   },
   "18": {
     "english": "gymnastics",
-    "bulgarian": "Гимнастика"
+    "bulgarian": "Р“РёРјРЅР°СЃС‚РёРєР°"
   },
   "19": {
     "english": "athletics",
-    "bulgarian": "Лека атлетика"
+    "bulgarian": "Р›РµРєР° Р°С‚Р»РµС‚РёРєР°"
   },
   "20": {
     "english": "entrepreneurship",
-    "bulgarian": "Предприемачество"
+    "bulgarian": "РџСЂРµРґРїСЂРёРµРјР°С‡РµСЃС‚РІРѕ"
   },
   "21": {
     "english": "software-engineering",
-    "bulgarian": "Софтуерно инжинерство"
+    "bulgarian": "РЎРѕС„С‚СѓРµСЂРЅРѕ РёРЅР¶РёРЅРµСЂСЃС‚РІРѕ"
   },
   "22": {
     "english": "ecology",
-    "bulgarian": "Екология"
+    "bulgarian": "Р•РєРѕР»РѕРіРёСЏ"
   },
   "23": {
     "english": "digital-marketing",
-    "bulgarian": "Дигитален маркетинг"
+    "bulgarian": "Р”РёРіРёС‚Р°Р»РµРЅ РјР°СЂРєРµС‚РёРЅРі"
   },
   "24": {
     "english": "singing",
-    "bulgarian": "Пеене"
+    "bulgarian": "РџРµРµРЅРµ"
   },
   "25": {
     "english": "singing",
-    "bulgarian": "Танци"
+    "bulgarian": "РўР°РЅС†Рё"
   },
   "26": {
     "english": "drawing",
-    "bulgarian": "Рисуване"
+    "bulgarian": "Р РёСЃСѓРІР°РЅРµ"
   },
   "27": {
     "english": "photography",
-    "bulgarian": "Фотография"
+    "bulgarian": "Р¤РѕС‚РѕРіСЂР°С„РёСЏ"
   },
   "28": {
     "english": "theatre",
-    "bulgarian": "Театър"
+    "bulgarian": "РўРµР°С‚СЉСЂ"
   },
   "29": {
     "english": "design",
-    "bulgarian": "Дизайн"
-  },
+    "bulgarian": "Р”РёР·Р°Р№РЅ"
+  }
 }
