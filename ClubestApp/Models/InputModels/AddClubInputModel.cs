@@ -32,6 +32,8 @@
         public IFormFile ImageFile { get; set; }
 
         [Required(ErrorMessage = ErrorMessages.ClubInterestsRequired)]
-        public List<string> Interests { get; set; }
+        public List<string> Interests { get; set; } = new List<string>();
+
+        public Dictionary<string, Dictionary<string, string>> InterestsToList { get; set; } = new Dictionary<string, Dictionary<string, string>>();
     }
 }

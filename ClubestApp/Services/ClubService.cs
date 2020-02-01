@@ -5,6 +5,7 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
+    using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -37,6 +38,20 @@
                                              this.configuration.GetConnectionString("CloudinaryApiKey"),
                                              this.configuration.GetConnectionString("CloudinaryAppSecret"))
                                         );
+        }
+
+        internal GetClubsBindingModel[] GetAllClubsBindingModel()
+        {
+            GetClubsBindingModel[] models = dbContext.Clubs
+                .Select(c => new GetClubsBindingModel
+                {
+                    Name = c.Name,
+                    PictureUrl = c.PictureUrl,
+                    Town = c.Town
+                })
+                .ToArray();
+
+            return models;
         }
 
         private string InterestsToString(List<string> interests)
