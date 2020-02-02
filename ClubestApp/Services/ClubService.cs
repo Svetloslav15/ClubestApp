@@ -152,11 +152,29 @@
         }
 
         //TODO
-        public List<Club> GetPotentialClubs(string userInterestsString)
+        public List<Club> GetPotentialClubs(string userInterestsString, string userTown)
         {
             List<string> userInterests = this.ParseInterests(userInterestsString);
+            List<Club> allClubs = this.dbContext.Clubs.ToList();
+            List<Club> potentialClubs = new List<Club>();
+            Regex regex = new Regex("[a-zA-Z-]+");
 
-            return null;
+            foreach (Club club in allClubs)
+            {
+                if (club.Town.ToLower() == userTown.ToLower())
+                {
+                    MatchCollection matches = regex.Matches(club.Interests);
+                    foreach (Match match in matches)
+                    {
+                        string interest = match.Value;
+                        if (userInterests.Any(userInterest => userInterest == interest))
+                        {
+                            potentialClubs.Add(club);
+                        }
+                    }
+                }
+            }
+            return potentialClubs;
         }
     }
 }
