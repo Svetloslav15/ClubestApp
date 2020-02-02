@@ -25,6 +25,8 @@
 
         public string LastName { get; set; }
 
+        public string Town { get; set; }
+
         public string Interests { get; set; }
 
         public ICollection<Post> Posts { get; set; }

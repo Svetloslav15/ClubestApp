@@ -102,6 +102,7 @@
                     Email = inputModel.Email,
                     FirstName = inputModel.FirstName,
                     LastName = inputModel.LastName,
+                    Town = inputModel.Town
                 };
                 var result = await _userManager.CreateAsync(user, inputModel.Password);
                 if (result.Succeeded)
