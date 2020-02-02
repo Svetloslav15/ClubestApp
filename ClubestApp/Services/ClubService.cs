@@ -40,14 +40,35 @@
                                         );
         }
 
+        internal PrivateClubBindingModel GetClub(string id)
+        {
+            PrivateClubBindingModel model = dbContext.Clubs
+                .Where(c => c.Id == id)
+                .Select(c => new PrivateClubBindingModel
+                {
+                    Name = c.Name,
+                    Fee = c.Fee,
+                    Description = c.Description,
+                    Town = c.Town,
+                    Interests = c.Interests,
+                    PictureUrl = c.PictureUrl,
+                    PriceType = (PriceType)c.PriceType
+                })
+                .FirstOrDefault();
+
+            return model;
+        }
+
         internal GetClubsBindingModel[] GetAllClubsBindingModel()
         {
             GetClubsBindingModel[] models = dbContext.Clubs
                 .Select(c => new GetClubsBindingModel
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     PictureUrl = c.PictureUrl,
-                    Town = c.Town
+                    Town = c.Town,
+                    IsPublic = c.IsPublic
                 })
                 .ToArray();
 

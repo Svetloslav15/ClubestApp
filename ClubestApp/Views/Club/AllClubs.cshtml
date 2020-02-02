@@ -22,7 +22,16 @@
                             От @club.Town
                         </p>
                         <!-- Button -->
-                        <a href="#" class="btn btn-primary">Виж клуб</a>
+                        @if (club.IsPublic == false)
+                        {
+                            <a href="/Club/PrivateClub/@club.Id" class="btn btn-primary">Виж клуб</a>
+                            <i class="fas fa-lock"></i>
+                        }
+                        else
+                        {
+                            <a href="/Club/PrivateClub/@club.Id" class="btn btn-primary">Виж клуб</a>
+                            <i class="fas fa-lock-open"></i>
+                        }
                     </div>
                 </div>
                 <!-- Card -->

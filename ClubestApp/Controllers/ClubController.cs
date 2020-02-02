@@ -46,5 +46,18 @@
 
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult PrivateClub(string id)
+        {
+            PrivateClubBindingModel model = clubService.GetClub(id);
+
+            if (model == null)
+            {
+                return View("Error");
+            }
+
+            return View(model);
+        }
     }
 }
