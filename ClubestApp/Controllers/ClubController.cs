@@ -1,6 +1,5 @@
 ﻿namespace ClubestApp.Controllers
 {
-    using ClubestApp.Common;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
@@ -9,7 +8,7 @@
 
     public class ClubController : Controller
     {
-        private ClubService clubService;
+        private readonly ClubService clubService;
 
         public ClubController(ClubService clubService)
         {
@@ -34,28 +33,16 @@
 
                 return this.Redirect("/Home/Index");
             }
-
-            return this.View();
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
         }
 
         [HttpGet]
         public IActionResult AllClubs()
         {
             //Get all clubs from db
-            GetClubsBindingModel[] model = clubService.GetAllClubsBindingModel();
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult PrivateClub(string id)
-        {
-            PrivateClubBindingModel model = clubService.GetClub(id);
-
-            if (model == null)
-            {
-                return View("Error");
-            }
+            GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel();
 
             return View(model);
         }

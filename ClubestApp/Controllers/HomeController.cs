@@ -7,11 +7,8 @@
     using ClubestApp.Data.Models;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
-    using Newtonsoft.Json;
     using ClubestApp.Services;
-    using System.Reflection;
     using System.Collections.Generic;
-    using System.Text;
 
     public class HomeController : Controller
     {
@@ -37,14 +34,14 @@
                 var interests = this.clubService.GetInterests();            
                 return this.View("AddInterests", interests);
             }
+            if (user.UserClubs.Count() == 0)
+            {
+                List<Club> clubs = this.clubService.GetPotentialClubs(user.Interests, user.Town);
+                return this.View("PotentialClubs", clubs);
+            }
 
             //TODO load latest data from clubs
             return this.View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
