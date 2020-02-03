@@ -19,6 +19,7 @@
             this.UserVotedPolls = new HashSet<PollVotedUsers>();
             this.UserPostLikes = new HashSet<UserPostLikes>();
             this.UserPostDislikes = new HashSet<UserPostDislikes>();
+            this.JoinClubRequests = new HashSet<JoinClubRequest>();
         }
 
         public string FirstName { get; set; }
@@ -52,5 +53,7 @@
         public ICollection<UserPostLikes> UserPostLikes { get; set; }
 
         public ICollection<UserPostDislikes> UserPostDislikes { get; set; }
+
+        public ICollection<JoinClubRequest> JoinClubRequests { get; set; }
     }
 }

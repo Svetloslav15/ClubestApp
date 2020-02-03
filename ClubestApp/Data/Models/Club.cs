@@ -15,6 +15,7 @@
             this.ClubAdmins = new HashSet<ClubAdmin>();
             this.Polls = new HashSet<Poll>();
             this.Posts = new HashSet<Post>();
+            this.JoinClubRequests = new HashSet<JoinClubRequest>();
         }
 
         [Key]
@@ -45,5 +46,7 @@
         public ICollection<Post> Posts { get; set; }
 
         public PriceType PriceType { get; set; }
+        
+        public ICollection<JoinClubRequest> JoinClubRequests { get; set; }
     }
 }
