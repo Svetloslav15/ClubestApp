@@ -1,19 +1,24 @@
 ﻿namespace ClubestApp.Controllers
 {
-    using ClubestApp.Common;
+    using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class ClubController : Controller
     {
-        private ClubService clubService;
+        private readonly ClubService clubService;
+        private readonly UserManager<User> userManager;
 
-        public ClubController(ClubService clubService)
+        public ClubController(ClubService clubService,
+               UserManager<User> userManager)
         {
             this.clubService = clubService;
+            this.userManager = userManager;
         }
 
         public IActionResult AddClub()
@@ -34,30 +39,27 @@
 
                 return this.Redirect("/Home/Index");
             }
-
-            return this.View();
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
         }
 
         [HttpGet]
         public IActionResult AllClubs()
         {
             //Get all clubs from db
-            GetClubsBindingModel[] model = clubService.GetAllClubsBindingModel();
+            GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel();
 
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult PrivateClub(string id)
+        public async Task<IActionResult> JoinClub(string id)
         {
-            PrivateClubBindingModel model = clubService.GetClub(id);
-
-            if (model == null)
-            {
-                return View("Error");
-            }
-
-            return View(model);
+            User user = await this.userManager.GetUserAsync(HttpContext.User);
+            JoinClubRequest request = this.clubService.CreateJoinRequestClub(id, user);
+            
+            return this.Redirect("/?jcr=true");
         }
     }
 }

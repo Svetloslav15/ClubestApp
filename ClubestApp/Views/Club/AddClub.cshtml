@@ -1,5 +1,5 @@
 ﻿@model ClubestApp.Models.InputModels.AddClubInputModel
-<form class="container border- bg-white border-sky-blue box-shadow p-5" asp-controller="Club" asp-action="AddClub" method="post" enctype="multipart/form-data" runat="server">
+<form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddClub" method="post" enctype="multipart/form-data" runat="server">
     <p class="text-center h4 mb-4 text-black mt-2">Регистрирация на клуб</p>
     <!-- Name -->
     <div class="row">
@@ -103,7 +103,7 @@
                 }
             </select>
             <span class="note-info">
-                *Задръжте CTRL(За Windows) или Command(За Mac) за да изберете
+                *Задръжте CTRL за да изберете
                 повече от един интерес
             </span>
             <span asp-validation-for="Interests" class="text-danger"></span>

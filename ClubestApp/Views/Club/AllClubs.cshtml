@@ -2,26 +2,17 @@
 @{
     ViewData["Title"] = "PrivateClub";
 }
-    <div class="container-fluid">
+    <div class="container-fluid border-deep-blue">
         <div class="row">
             @foreach (var club in Model)
             {
-                <!-- Card -->
                 <div class="card col-lg-4">
-
-                    <!-- Card image -->
                     <img class="card-img-top" src="@club.PictureUrl" alt="Card image cap">
-
-                    <!-- Card content -->
                     <div class="card-body">
-
-                        <!-- Title -->
                         <h4 class="card-title"><a>@club.Name</a></h4>
-                        <!-- Text -->
                         <p class="card-text">
                             От @club.Town
                         </p>
-                        <!-- Button -->
                         @if (club.IsPublic == false)
                         {
                             <a href="/Club/PrivateClub/@club.Id" class="btn btn-primary">Виж клуб</a>
@@ -34,7 +25,6 @@
                         }
                     </div>
                 </div>
-                <!-- Card -->
             }
         </div>
     </div>

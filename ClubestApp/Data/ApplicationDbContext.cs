@@ -41,6 +41,8 @@
 
         public DbSet<UserPostDislikes> UserPostDislikes { get; set; }
 
+        public DbSet<JoinClubRequest> JoinClubRequests { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -92,6 +94,18 @@
                 .WithOne(comment => comment.Post)
                 .HasForeignKey(comment => comment.PostId);
             /**/
+
+            //Define 1-M realtions for JoinClubRequest
+            builder.Entity<JoinClubRequest>()
+                .HasOne(jrc => jrc.User)
+                .WithMany(user => user.JoinClubRequests)
+                .HasForeignKey(jrc => jrc.UserId);
+
+            builder.Entity<JoinClubRequest>()
+               .HasOne(jrc => jrc.Club)
+               .WithMany(club => club.JoinClubRequests)
+               .HasForeignKey(jrc => jrc.ClubId);
+
 
             //Define mapping table for Users and Clubs
             builder.Entity<UserClub>()

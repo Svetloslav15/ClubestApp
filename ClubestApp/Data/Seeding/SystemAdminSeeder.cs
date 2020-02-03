@@ -10,7 +10,7 @@
     {
         private readonly UserManager<User> userManager;
 
-        private IConfiguration configuration;
+        private readonly IConfiguration configuration;
 
         public SystemAdminSeeder(UserManager<User> userManager,
                                  IConfiguration configuration)
