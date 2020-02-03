@@ -40,7 +40,7 @@
                                         );
         }
 
-        internal PrivateClubBindingModel GetClub(string id)
+        public PrivateClubBindingModel GetClub(string id)
         {
             PrivateClubBindingModel model = dbContext.Clubs
                 .Where(c => c.Id == id)
@@ -59,7 +59,7 @@
             return model;
         }
 
-        internal GetClubsBindingModel[] GetAllClubsBindingModel()
+        public GetClubsBindingModel[] GetAllClubsBindingModel()
         {
             GetClubsBindingModel[] models = dbContext.Clubs
                 .Select(c => new GetClubsBindingModel
@@ -172,7 +172,6 @@
             return interestsJson;
         }
 
-        //TODO
         public List<Club> GetPotentialClubs(string userInterestsString, string userTown)
         {
             List<string> userInterests = this.ParseInterests(userInterestsString);
@@ -194,6 +193,28 @@
                 }
             }
             return potentialClubs;
+        }
+
+        public Club GetClubById(string clubId)
+        {
+            return this.dbContext.Clubs.FirstOrDefault(club => club.Id == clubId);
+        }
+
+        public JoinClubRequest CreateJoinRequestClub(string clubId, User user)
+        {
+            Club club = this.GetClubById(clubId);
+            JoinClubRequest joinClubRequest = new JoinClubRequest()
+            {
+                ClubId = clubId,
+                Club = club,
+                User = user,
+                UserId = user.Id
+            };
+
+            this.dbContext.JoinClubRequests.Add(joinClubRequest);
+            this.dbContext.SaveChanges();
+
+            return joinClubRequest;
         }
     }
 }

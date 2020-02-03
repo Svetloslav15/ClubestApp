@@ -21,7 +21,7 @@
             this.clubService = clubService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery(Name = "jcr")] bool hasJoinedClub)
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
             

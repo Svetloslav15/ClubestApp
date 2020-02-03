@@ -163,3 +163,7 @@ body {
 .bg-p-center {
     background-position: center center;
 }
+.w-23rem {
+    width: 21rem;
+    height: 100%;
+}

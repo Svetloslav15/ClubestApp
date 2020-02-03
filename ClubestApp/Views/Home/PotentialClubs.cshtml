@@ -7,7 +7,7 @@
 
         @foreach (var club in Model)
         {
-            <div class="card card-image mx-1 bg-p-center"
+            <div class="card card-image w-23rem mx-1 bg-p-center"
                  style="background-image: url(@club.PictureUrl);">
                 <div class="text-white d-flex align-items-center rgba-black-strong py-5 px-4">
                     <div>
@@ -15,10 +15,10 @@
                         <h3 class="card-title pt-2"><strong>@club.Name</strong></h3>
                         <h7 class="">Град: @club.Town</h7>
                         <p class="pt-2">
-                            @club.Description.Substring(0, 30)...
+                            @club.Description.Substring(0, 20)...
                         </p>
                         <div class="col-lg-12 text-center">
-                            <a class="btn text-white bg-white blue-gradient btn-outline-white">
+                            <a href="/Club/JoinClub/@club.Id"class="btn text-white bg-white blue-gradient btn-outline-white">
                                 <i class="fas fa-clone left"></i>
                                 Влез в клуб
                             </a>

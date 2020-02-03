@@ -1,18 +1,24 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class ClubController : Controller
     {
         private readonly ClubService clubService;
+        private readonly UserManager<User> userManager;
 
-        public ClubController(ClubService clubService)
+        public ClubController(ClubService clubService,
+               UserManager<User> userManager)
         {
             this.clubService = clubService;
+            this.userManager = userManager;
         }
 
         public IActionResult AddClub()
@@ -45,6 +51,15 @@
             GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel();
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> JoinClub(string id)
+        {
+            User user = await this.userManager.GetUserAsync(HttpContext.User);
+            JoinClubRequest request = this.clubService.CreateJoinRequestClub(id, user);
+            
+            return this.Redirect("/?jcr=true");
         }
     }
 }
