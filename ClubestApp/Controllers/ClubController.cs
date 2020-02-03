@@ -6,6 +6,7 @@
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -45,12 +46,15 @@
         }
 
         [HttpGet]
-        public IActionResult AllClubs()
+        public IActionResult AllClubs(IList<Club> clubs)
         {
-            //Get all clubs from db
-            GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel();
+            if (clubs.Count == 0)
+            {
+                clubs = this.clubService.GetAllClubs();
+            }
+            GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel(clubs);
 
-            return View(model);
+            return this.View(model);
         }
 
         [HttpGet]
@@ -60,6 +64,20 @@
             JoinClubRequest request = this.clubService.CreateJoinRequestClub(id, user);
             
             return this.Redirect("/?jcr=true");
+        }
+
+        [HttpGet]
+        public IActionResult SearchClub([FromQuery(Name = "club")] string userInput)
+        {
+            IList<Club> clubs = this.clubService.GetAllClubs();
+            
+            if (userInput != null && userInput != "")
+            {
+                clubs = this.clubService.FilterClubsBySearchInput(userInput);
+            }
+            
+            GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel(clubs);
+            return this.View("AllClubs", model);
         }
     }
 }
