@@ -1,30 +1,52 @@
 ﻿@model ClubestApp.Models.BindingModels.GetClubsBindingModel[]
 @{
-    ViewData["Title"] = "PrivateClub";
+    ViewData["Title"] = "AllClubs";
 }
-    <div class="container-fluid border-deep-blue">
-        <div class="row">
-            @foreach (var club in Model)
-            {
-                <div class="card col-lg-4">
-                    <img class="card-img-top" src="@club.PictureUrl" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title"><a>@club.Name</a></h4>
-                        <p class="card-text">
-                            От @club.Town
-                        </p>
-                        @if (club.IsPublic == false)
-                        {
-                            <a href="/Club/PrivateClub/@club.Id" class="btn btn-primary">Виж клуб</a>
-                            <i class="fas fa-lock"></i>
-                        }
-                        else
-                        {
-                            <a href="/Club/PrivateClub/@club.Id" class="btn btn-primary">Виж клуб</a>
-                            <i class="fas fa-lock-open"></i>
-                        }
+    <div class="container-fluid bg-white border-deep-blue">
+        <div class="col-lg-12">
+            <form asp-controller="Club" asp-action="SearchClub" method="get">
+                <div class="md-form col-lg-6 mx-auto">
+                    <input type="text" id="club" name="club" class="form-control">
+                    <label for="form1">Въведи клуб: </label>
+                    <div class="text-center">
+                        <button type="submit"
+                                data-toggle="tooltip" data-placement="top" title="Търси"
+                                class="btn mx-auto text-white blue-gradient mt-1 btn-outline-white">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
+            </form>
+        </div>
+        <div class="row">
+            @if (@Model.ToList().Count() != 0)
+            {
+                @foreach (var club in Model)
+                {
+                    <div class="card card-image mx-auto w-23rem bg-p-center"
+                         style="background-image: url(@club.PictureUrl);">
+                        <div class="text-white d-flex align-items-center rgba-black-strong py-5 px-4">
+                            <div>
+                                <h5 class="pink-text"><i class="fas fa-chart-pie"></i></h5>
+                                <h4 class="card-title pt-2"><strong>@club.Name</strong></h4>
+                                <h7 class="">Град: @club.Town</h7>
+                                <div class="col-lg-12 text-center">
+                                    <a href="/Club/Details/@club.Id"
+                                       data-toggle="tooltip" data-placement="top" title="Виж клуб"
+                                       class="btn text-white bg-white blue-gradient mt-4 btn-outline-white">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else 
+            {
+                <div class="mx-auto">
+                    <h3 class="mx-auto pb-4">Няма намерени резултати</h3>
+                </div>  
             }
         </div>
     </div>

@@ -59,9 +59,13 @@
             return model;
         }
 
-        public GetClubsBindingModel[] GetAllClubsBindingModel()
+        public IList<Club> GetAllClubs()
         {
-            GetClubsBindingModel[] models = dbContext.Clubs
+            return this.dbContext.Clubs.ToList();
+        }
+        public GetClubsBindingModel[] GetAllClubsBindingModel(IList<Club> clubs)
+        {
+            GetClubsBindingModel[] models = clubs
                 .Select(c => new GetClubsBindingModel
                 {
                     Id = c.Id,
@@ -215,6 +219,31 @@
             this.dbContext.SaveChanges();
 
             return joinClubRequest;
+        }
+
+        public IList<Club> FilterClubsBySearchInput(string userInput)
+        {
+            userInput = userInput
+                .Trim()
+                .ToLower();
+
+            IList<Club> clubs = this.GetAllClubs();
+            IList<Club> result = new List<Club>();
+            if (userInput == null || userInput == "")
+            {
+                return clubs;
+            }
+
+            foreach (Club club in clubs)
+            {
+                if (club.Name.ToLower().Contains(userInput) || club.Description.ToLower().Contains(userInput) ||
+                    club.Town.ToLower().Contains(userInput) || club.Interests.ToLower().Contains(userInput))
+                {
+                    result.Add(club);
+                }
+            }
+
+            return result;
         }
     }
 }
