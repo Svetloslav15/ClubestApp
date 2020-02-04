@@ -170,3 +170,14 @@ body {
     top: -10px;
     left: -5px;
 }
+.font-size-18 {
+    font-size: 18px;
+}
+
+.border-left-1 {
+    border-left: 1px solid white;
+}
+
+.border-right-1 {
+    border-right: 1px solid white;
+}

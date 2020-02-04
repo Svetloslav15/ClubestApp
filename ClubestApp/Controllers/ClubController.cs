@@ -79,5 +79,17 @@
             GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel(clubs);
             return this.View("AllClubs", model);
         }
+
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            Club club = this.clubService.GetClubById(id);
+            ClubDetailsBindingModel bindingModel = new ClubDetailsBindingModel()
+            {
+                Club = club
+            };
+
+            return this.View(bindingModel);
+        }    
     }
 }

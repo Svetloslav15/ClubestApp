@@ -1,0 +1,56 @@
+﻿@model ClubestApp.Models.BindingModels.ClubDetailsBindingModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+        <div class="col-lg-12 row">
+            <div class="col-lg-4 p-3">
+                <img src="@Model.Club.PictureUrl" alt="@Model.Club.Name" class="w-100 h-100" />
+            </div>
+            <div class="col-lg-8 box-shadow p-3 mt-3">
+                <h3>@Model.Club.Name</h3>
+            </div>
+        </div>
+        <nav class="navbar col-lg-12 navbar-expand-lg navbar-dark primary-color">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="basicExampleNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Постове</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link border-left-1 border-right-1" href="#">Членове</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Анкети</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Събития</a>
+                    </li>
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!--/.Navbar-->
+        <div class="col-lg-2">
+            SideNav
+        </div>
+        <div class="col-lg-10">
+            <div>
+            </div>
+        </div>
+    </div>
