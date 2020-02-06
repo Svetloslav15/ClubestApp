@@ -26,7 +26,7 @@
                 UserName = this.configuration.GetConnectionString("SystemAdminEmail"),
                 Email = this.configuration.GetConnectionString("SystemAdminEmail"),
                 FirstName = UserRoles.SystemAdmin,
-                LastName = UserRoles.SystemAdmin
+                LastName = UserRoles.SystemAdmin,
             };
 
             IdentityResult result = await this.userManager.CreateAsync(user, this.configuration.GetConnectionString("SystemAdminPassword"));

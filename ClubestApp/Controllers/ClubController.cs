@@ -1,11 +1,13 @@
 ﻿namespace ClubestApp.Controllers
 {
     using ClubestApp.Data.Models;
+    using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -84,9 +86,11 @@
         public IActionResult Details(string id)
         {
             Club club = this.clubService.GetClubById(id);
+            string clubPriceType = club.PriceType.ToString();
             ClubDetailsBindingModel bindingModel = new ClubDetailsBindingModel()
             {
-                Club = club
+                Club = club,
+                ClubPriceType = clubPriceType
             };
 
             return this.View(bindingModel);

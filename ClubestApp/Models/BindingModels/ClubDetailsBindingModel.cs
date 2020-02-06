@@ -5,5 +5,7 @@
     public class ClubDetailsBindingModel
     {
         public Club Club { get; set; }
+
+        public string ClubPriceType { get; set; }
     }
 }
