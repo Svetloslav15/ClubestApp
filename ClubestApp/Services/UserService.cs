@@ -126,5 +126,17 @@
 
             return user;
         }
+
+        internal bool IsFileValid(IFormFile photoFile)
+        {
+            string[] validTypes = new string[] { "image/x-png", "image/gif" , "image/jpeg", "image/jpg" };
+
+            if (validTypes.Contains(photoFile.ContentType) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

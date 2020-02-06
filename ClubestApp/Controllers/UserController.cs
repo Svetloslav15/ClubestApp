@@ -159,6 +159,13 @@
         [HttpPost]
         public async Task<IActionResult> ChangePhoto(EditProfileInputModel inputModel)
         {
+            bool isFileValid = userService.IsFileValid(inputModel.PhotoFile);
+
+            if (isFileValid == false)
+            {
+                return this.RedirectToAction("Profile");
+            }
+
             User user = await _userManager.GetUserAsync(User);
 
             //Change only user's photo without checking other data
