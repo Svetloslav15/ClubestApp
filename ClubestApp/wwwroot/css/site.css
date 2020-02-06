@@ -181,3 +181,8 @@ body {
 .border-right-1 {
     border-right: 1px solid white;
 }
+
+.border-x-1 {
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
