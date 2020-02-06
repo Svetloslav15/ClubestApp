@@ -14,27 +14,25 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm blue-gradient mb-3">
             <div class="container">
-                <a class="navbar-brand text-white logo logo-text" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/logo.svg" class="w-75" alt="Clubest" />
+                <a class="navbar-brand text-white " asp-area="" asp-controller="Home" asp-action="Index">
+                    <!--<img src="~/images/logo.svg" class="w-75" alt="Clubest" />-->
+                    CLUBEST
                 </a>
                 <button class="aqua-gradient navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav justify-content-center flex-grow-1 text-center">
-                        <li class="nav-item mt-2">
-                            <a class="nav-link link-nav text-white" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-                        </li>
-                        <partial name="_AuthNavPartial.cshtml" />
-                        <li class="nav-item">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 text-center">
+                        <li class="nav-item col-lg-4 mx-auto">
                             <form class="form-inline ml-auto">
-                                <div class="md-form my-0">
-                                    <input class="form-control search-input" type="text" placeholder="Търси" aria-label="Search">
-                                </div>
-                                <button href="#!" class="btn btn-outline-white btn-rounded btn-md my-0 ml-sm-2" type="submit"><i class="fas fa-search"></i></button>
+                                <input type="text" class="form-control" placeholder="Търси..." aria-label="Search">
                             </form>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-nav text-white f-size-13" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                        </li>
+                        <partial name="_AuthNavPartial.cshtml" />
                     </ul>
                 </div>
             </div>

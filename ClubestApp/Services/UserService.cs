@@ -12,7 +12,7 @@
     public class UserService
     {
         private readonly SignInManager<User> signInManager;
-        private ApplicationDbContext dbContext;
+        private readonly ApplicationDbContext dbContext;
 
         public UserService(ApplicationDbContext dbContext,
                            SignInManager<User> signInManager)

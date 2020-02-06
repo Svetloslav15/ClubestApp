@@ -9,33 +9,42 @@
         user = await UserManager.GetUserAsync(User);
     }
 }
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-white mt-2" asp-controller="User" asp-action="Profile" title="Manage">Здравей, <span class="font-weight-bold">@user.FirstName</span>!</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white mt-2" asp-controller="Club" asp-action="AddClub" title="Manage">Добави Клуб</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white mt-2" asp-controller="Club" asp-action="AllClubs" title="Manage">Всички клубове</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-white">Изход</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item mt-2">
-            <a id="register-link" class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalRegisterForm" href="">Регистрация</a>
-            <partial name="_RegisterPartial" />
-        </li>
-        <li class="nav-item mt-2 mr-2">
-            <a id="login-link" class="nav-link text-white link-nav" data-toggle="modal" data-target="#modalLoginForm" href="">Вход</a>
-            <partial name="_SignInPartial" />
-        </li>
-    }
-</ul>
+    <ul class="navbar-nav">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <li class="nav-item">
+                <a class="nav-link link-nav text-white f-size-13" asp-controller="Club" asp-action="AddClub">Добави Клуб</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-nav text-white f-size-13" asp-controller="Club" asp-action="AllClubs">Клубове</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-nav text-white f-size-13" asp-controller="User" asp-action="Profile">
+                    Здравей, <span class="font-weight-bold">@user.FirstName</span>!
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white f-size-13" href="#">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge badge-danger notification-badge">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white font-size-18" asp-controller="User" asp-action="Logout"
+                   data-toggle="tooltip" data-placement="bottom" title="Изход">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a id="register-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalRegisterForm" href="">Регистрация</a>
+                <partial name="_RegisterPartial" />
+            </li>
+            <li class="nav-item mr-2">
+                <a id="login-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalLoginForm" href="">Вход</a>
+                <partial name="_SignInPartial" />
+            </li>
+        }
+    </ul>
