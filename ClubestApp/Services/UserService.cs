@@ -17,10 +17,10 @@
     public class UserService
     {
         private readonly SignInManager<User> signInManager;
-        private ApplicationDbContext dbContext;
         private readonly Cloudinary cloudinary;
         private readonly IConfiguration configuration;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
+        private readonly ApplicationDbContext dbContext;
 
         public UserService(ApplicationDbContext dbContext,
                            SignInManager<User> signInManager,

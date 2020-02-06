@@ -144,6 +144,12 @@
             return this.View();
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await this._signInManager.SignOutAsync();
+            return this.Redirect("/");
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddInterestsToUser(AddInterestsInputModel inputModel)
         {
