@@ -18,6 +18,7 @@
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserService userService;
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
 
         public UserController(
             UserManager<User> userManager,
@@ -44,6 +45,8 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
+                PictureUrl = user.PictureUrl != null ? user.PictureUrl
+                                : defaultPictureUrl
             };
 
             return View(model);
@@ -59,7 +62,7 @@
 
             return this.Redirect("/User/Profile");
         }
-      
+
         public IActionResult ChangePassword()
         {
             return View();
@@ -151,6 +154,17 @@
             }
 
             return this.Redirect("/");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePhoto(EditProfileInputModel inputModel)
+        {
+            User user = await _userManager.GetUserAsync(User);
+
+            //Change only user's photo without checking other data
+            this.userService.ChangeProfilePicture(user, inputModel.PhotoFile);
+
+            return this.Redirect("/User/Profile");
         }
     }
 }

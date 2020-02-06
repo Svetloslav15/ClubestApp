@@ -1,0 +1,33 @@
+﻿@model ClubestApp.Models.BindingModels.EditProfileBindingModel
+
+@{
+    ViewData["Title"] = "ChangePhotoPartial";
+}
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Смяна на снимка</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-controller="User" asp-action="ChangePhoto" method="post" enctype="multipart/form-data" runat="server">
+                <div class="modal-body">
+                    <label>Избери Снимка</label>
+                    <div class="md-form">
+                        <div class="md-form">
+                            <input type="file" asp-for="PhotoFile" name="PhotoFile" id="form1" class="form-control text-black">
+                            <span asp-validation-for="PhotoFile" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                    <button type="submit" class="btn btn-primary">Запази снимка</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
