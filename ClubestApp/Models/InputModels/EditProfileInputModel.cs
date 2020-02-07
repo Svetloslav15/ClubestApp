@@ -1,6 +1,7 @@
 ﻿namespace ClubestApp.Models.InputModels
 {
     using ClubestApp.Models.Contracts;
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     public class EditProfileInputModel : IProfile
@@ -19,5 +20,7 @@
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public IFormFile PhotoFile { get; set; }
     }
 }

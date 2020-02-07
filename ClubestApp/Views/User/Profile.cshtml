@@ -19,8 +19,8 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-6">
-            <form asp-controller="User" asp-action="Profile" method="post" id="profile-form">
+        <div class="col-md-5">
+            <form asp-controller="User" asp-action="Profile" method="post" id="profile-form" enctype="multipart/form-data" runat="server">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <input type="hidden" asp-for="Username" class="form-control validate">
                 <div class="md-form text-left">
@@ -43,11 +43,18 @@
                     <input asp-for="PhoneNumber" class="form-control" />
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
+
                 <div class="text-center">
                     <button id="update-profile-button" type="submit" class="btn btn-primary mx-auto waves-effect">Запази</button>
                 </div>
             </form>
         </div>
-
+        <div class="col-lg-3">
+            <img src="@Model.PictureUrl" class="profile-picture" alt="Alternate Text" />
+            <div class="text-center">
+                <button id="update-profile-button" type="button" class="btn btn-primary mx-auto waves-effect" data-toggle="modal" data-target="#basicExampleModal">Смени Снимка</button>
+                <partial name="_ChangePhotoPartial" />
+            </div>
+        </div>
     </div>
 </div>

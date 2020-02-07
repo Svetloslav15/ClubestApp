@@ -23,10 +23,10 @@
                 </li>
             </ul>
         </div>
-            <div class="col-lg-12 py-2 mx-auto border-deep-blue bg-white box-shadow row">
+            <div class="col-lg-8 py-2 mx-auto border-deep-blue bg-white box-shadow row">
                 <h3 class="h3 text-center my-3 text-primary mx-auto">От тук можеш да виждаш и да променяш своите интереси</h3>
                 <form class="col-lg-12 row mb-5" asp-controller="User" asp-action="Interest" method="post">
-                    <div class="col-lg-12 row text-center mx-auto">
+                    <div class="col-lg-12 row mx-auto text-left">
                         @foreach (var item in Model.AllInterests)
                         {
                             List<string> tempInterests = new List<string>();
@@ -36,9 +36,9 @@
                                 tempInterests.Add(result);
                             }
 
-                            <div class="col-lg-3 row border mx-auto m-1 p-1">
-                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
-                                <div class="custom-control custom-checkbox col-lg-9 pt-1">
+                            <div class="col-lg-4 row border mx-auto m-1 p-1">
+                                @*<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">*@
+                                <div class="custom-control custom-checkbox col-lg-9 pt-1 text-left">
                                     @if (Model.UserInterests.Contains(tempInterests[0]))
                                     {
                                         <input type="checkbox" name="Interests" class="custom-control-input" value="@tempInterests[0]" id="@tempInterests[0]" checked>
