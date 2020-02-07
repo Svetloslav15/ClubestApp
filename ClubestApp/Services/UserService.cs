@@ -1,24 +1,40 @@
 ﻿namespace ClubestApp.Services
 {
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.Configuration;
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
 
     public class UserService
     {
         private readonly SignInManager<User> signInManager;
+        private readonly Cloudinary cloudinary;
+        private readonly IConfiguration configuration;
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
         private readonly ApplicationDbContext dbContext;
 
         public UserService(ApplicationDbContext dbContext,
-                           SignInManager<User> signInManager)
+                           SignInManager<User> signInManager,
+                           IConfiguration configuration)
         {
             this.dbContext = dbContext;
             this.signInManager = signInManager;
+            this.configuration = configuration;
+            this.cloudinary = new Cloudinary(
+                                        new Account(
+                                             this.configuration.GetConnectionString("CloudinaryCloudName"),
+                                             this.configuration.GetConnectionString("CloudinaryApiKey"),
+                                             this.configuration.GetConnectionString("CloudinaryAppSecret"))
+                                        );
         }
 
         public User FindUserById(string id)
@@ -29,8 +45,6 @@
 
         public User EditUser(EditProfileInputModel model)
         {
-            dbContext.Database.EnsureCreated();
-
             User user = this.dbContext.Users.FirstOrDefault(userDb => userDb.UserName == model.Username);
             bool existWithSameUsername = false;
             if (user.UserName != user.Email)
@@ -50,6 +64,7 @@
 
                 this.dbContext.SaveChanges();
             }        
+
             return user;
         }
 
@@ -77,6 +92,51 @@
             }
 
             return sb.ToString().Trim();
+        }
+
+        internal User ChangeProfilePicture(User user, IFormFile photoFile)
+        {
+            //Work on image
+            string currentUrl = "";
+            if (photoFile != null)
+            {
+                string filePath = Path.GetFileName(photoFile.FileName);
+                using (var stream = File.Create(filePath))
+                {
+                    photoFile.CopyToAsync(stream).GetAwaiter().GetResult();
+                }
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(filePath),
+                    PublicId = $"ClubestPics/{photoFile.FileName}"
+                };
+
+                //Deletes file in pc and uploads it in cloud
+                var uploadResult = cloudinary.Upload(uploadParams);
+                File.Delete(filePath);
+                currentUrl = uploadResult.Uri.AbsoluteUri;
+            }
+
+            user.PictureUrl = currentUrl != ""
+                ? currentUrl
+                : defaultPictureUrl;
+
+            this.dbContext.SaveChanges();
+
+            return user;
+        }
+
+        internal bool IsFileValid(IFormFile photoFile)
+        {
+            string[] validTypes = new string[] { "image/x-png", "image/gif" , "image/jpeg", "image/jpg" };
+
+            if (validTypes.Contains(photoFile.ContentType) == false)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

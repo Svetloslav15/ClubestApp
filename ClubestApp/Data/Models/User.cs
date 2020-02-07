@@ -30,6 +30,8 @@
 
         public string Interests { get; set; }
 
+        public string PictureUrl { get; set; }
+
         public ICollection<Post> Posts { get; set; }
 
         public ICollection<UserClub> UserClubs { get; set; }

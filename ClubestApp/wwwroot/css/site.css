@@ -159,7 +159,8 @@ body {
     height: 100%;
     margin: 10px 0;
 }
-
+.profile-picture {
+    width: 100%;
 .f-size-13 {
     font-size: 14px;
     font-weight: bold;
