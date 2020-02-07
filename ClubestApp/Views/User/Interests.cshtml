@@ -1,0 +1,63 @@
+﻿@model ClubestApp.Models.BindingModels.EditInterestsBindingModel
+
+@{
+    ViewData["Title"] = "EditInterests";
+}
+
+<div class="container col-lg-12 my-2 mx-auto border-deep-blue bg-white box-shadow">
+    <h2 class="text-center pt-4 pb-2">Моят профил</h2>
+    <div class="row pb-4">
+        <div class="col-lg-3 pb-3 mr-lg-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="Profile">Моят профил</a>
+                </li>
+                <li class="list-group-item active">
+                    <a asp-controller="User" asp-action="Interests" class="text-white">Мойте интереси</a>
+                </li>
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="ChangePassword">Парола</a>
+                </li>
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="DownloadData">Данни</a>
+                </li>
+            </ul>
+        </div>
+            <div class="col-lg-12 py-2 mx-auto border-deep-blue bg-white box-shadow row">
+                <h3 class="h3 text-center my-3 text-primary mx-auto">От тук можеш да виждаш и да променяш своите интереси</h3>
+                <form class="col-lg-12 row mb-5" asp-controller="User" asp-action="Interest" method="post">
+                    <div class="col-lg-12 row text-center mx-auto">
+                        @foreach (var item in Model.AllInterests)
+                        {
+                            List<string> tempInterests = new List<string>();
+                            foreach (var interest in item.Value)
+                            {
+                                var result = interest.Value.ToString();
+                                tempInterests.Add(result);
+                            }
+
+                            <div class="col-lg-3 row border mx-auto m-1 p-1">
+                                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">
+                                <div class="custom-control custom-checkbox col-lg-9 pt-1">
+                                    @if (Model.UserInterests.Contains(tempInterests[0]))
+                                    {
+                                        <input type="checkbox" name="Interests" class="custom-control-input" value="@tempInterests[0]" id="@tempInterests[0]" checked>
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="Interests" class="custom-control-input" value="@tempInterests[0]" id="@tempInterests[0]">
+                                    }
+
+                                    <label class="custom-control-label" for="@tempInterests[0]">@tempInterests[1]</label>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="mx-auto mt-3">
+                        <input type="submit" class="btn blue-gradient" value="Запази промените" />
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>

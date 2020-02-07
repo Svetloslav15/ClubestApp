@@ -5,7 +5,9 @@
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
 
@@ -13,6 +15,7 @@
     {
         private readonly SignInManager<User> signInManager;
         private readonly ApplicationDbContext dbContext;
+        private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
 
         public UserService(ApplicationDbContext dbContext,
                            SignInManager<User> signInManager)
@@ -76,7 +79,16 @@
                 sb.Append($"{interest}, ");
             }
 
-            return sb.ToString().Trim();
+            return sb.ToString();
+        }
+
+        public Dictionary<string, Dictionary<string, string>> GetInterests()
+        {
+            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("utf-8"));
+
+            var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
+                                Dictionary<string, string>>>(interestsToText);
+            return interestsJson;
         }
     }
 }

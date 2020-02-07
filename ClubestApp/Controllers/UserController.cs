@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -59,7 +60,7 @@
 
             return this.Redirect("/User/Profile");
         }
-      
+
         public IActionResult ChangePassword()
         {
             return View();
@@ -157,6 +158,34 @@
             }
 
             return this.Redirect("/");
+        }
+
+        public async Task<IActionResult> Interests()
+        {
+
+            User user = await _userManager.GetUserAsync(User);
+            EditInterestsBindingModel model = new EditInterestsBindingModel
+            {
+                AllInterests = userService.GetInterests(),
+                UserInterests = user.Interests.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Interests(AddInterestsInputModel inputModel)
+        {
+
+            //Removing all interests and adding new one(in case of deleting old interests)
+            if (ModelState.IsValid)
+            {
+                User user = await _userManager.GetUserAsync(User);
+                user.Interests = "";
+                this.userService.AddInterestsToUser(inputModel, user.Id);
+            }
+
+            return this.Redirect("Interests");
         }
     }
 }
