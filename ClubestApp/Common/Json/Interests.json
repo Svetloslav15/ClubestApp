@@ -1,118 +1,147 @@
 {
   "1": {
     "english": "maths",
-    "bulgarian": "Математика"
+    "bulgarian": "Математика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581095944/ClubestInterests/math.png"
   },
   "2": {
     "english": "informatics",
-    "bulgarian": "Информатика"
+    "bulgarian": "Информатика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357986/ClubestInterests/computer-icons-computer-programming-programmer-avatar-computer-software-png-favpng-WQ1ZtKCYF5XLrSUkpmfPZUcBr_g3f7pz.jpg"
   },
   "3": {
     "english": "physics",
-    "bulgarian": "Физика"
+    "bulgarian": "Физика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358077/ClubestInterests/Nuclear_Physics_1080x1080_ijctoy.jpg"
   },
   "4": {
     "english": "chemistry",
-    "bulgarian": "Химия"
+    "bulgarian": "Химия",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357255/ClubestInterests/square-xsml-chemistry-2_hwpwv7.png"
   },
   "5": {
     "english": "biology",
-    "bulgarian": "Биология"
+    "bulgarian": "Биология",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581356952/ClubestInterests/biology_yc6rqf.jpg"
   },
   "6": {
     "english": "phylosophy",
-    "bulgarian": "Философия"
+    "bulgarian": "Философия",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357330/ClubestInterests/Philosophy_c2yvec.jpg"
   },
   "7": {
     "english": "history",
-    "bulgarian": "История"
+    "bulgarian": "История",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357388/ClubestInterests/db-subject-culture-history_nehzbm.png"
   },
   "8": {
     "english": "literature",
-    "bulgarian": "Литература"
+    "bulgarian": "Литература",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357440/ClubestInterests/z_jun-p11-Literature_ifxemf.jpg"
   },
   "9": {
     "english": "music",
-    "bulgarian": "Музика"
+    "bulgarian": "Музика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358150/ClubestInterests/84438442-music-notes-song-melody-or-tune-flat-vector-icon-for-musical-apps-and-websites_d4jcqn.jpg"
   },
   "10": {
     "english": "languages",
-    "bulgarian": "Езици"
+    "bulgarian": "Езици",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357499/ClubestInterests/English-2-512_erdaoj.png"
   },
   "11": {
     "english": "soccer",
-    "bulgarian": "Футбол"
+    "bulgarian": "Футбол",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357540/ClubestInterests/circle-design-avatar-cartoon-football-video-games-color-sports-equipment-world-png-clip-art_dvwzqx.png"
   },
   "12": {
     "english": "basketball",
-    "bulgarian": "Баскетбол"
+    "bulgarian": "Баскетбол",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357591/ClubestInterests/download_pjjd0w.png"
   },
   "13": {
     "english": "volleyball",
-    "bulgarian": "Волейбол"
+    "bulgarian": "Волейбол",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357629/ClubestInterests/5393515900_7b0e0014e7_w2nrqh.jpg"
   },
   "14": {
     "english": "table-tennis",
-    "bulgarian": "Тенис на маса"
+    "bulgarian": "Тенис на маса",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357656/ClubestInterests/image_x1nnll.jpg"
   },
   "15": {
     "english": "tennis",
-    "bulgarian": "Тенис"
+    "bulgarian": "Тенис",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357707/ClubestInterests/78651039-ethlete-practicing-tennis-avatar-vector-illustration-design_q6wmgo.jpg"
   },
   "16": {
     "english": "boxing",
-    "bulgarian": "Бокс"
+    "bulgarian": "Бокс",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357777/ClubestInterests/sport_avatar_man_boy-17-512_ie2i5p.png"
   },
   "17": {
     "english": "fitnes",
-    "bulgarian": "Фитнес"
+    "bulgarian": "Фитнес",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357806/ClubestInterests/weight__dumbbell__fitness__gym__lifter__avatar__body-512_iiegrm.png"
   },
   "18": {
     "english": "gymnastics",
-    "bulgarian": "Гимнастика"
+    "bulgarian": "Гимнастика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357841/ClubestInterests/80685273-avatar-gymnastic-girl-icon-over-white-background-vector-illustration_ftvl7o.jpg"
   },
   "19": {
     "english": "athletics",
-    "bulgarian": "Лека атлетика"
+    "bulgarian": "Лека атлетика",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581357883/ClubestInterests/man-athlete-running-avatar-vector_dr3i6a.jpg"
   },
   "20": {
     "english": "entrepreneurship",
-    "bulgarian": "Предприемачество"
+    "bulgarian": "Предприемачество",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358238/ClubestInterests/images_yyu1q0.png"
   },
   "21": {
     "english": "software-engineering",
-    "bulgarian": "Софтуерно инжинерство"
+    "bulgarian": "Софтуерно инжинерство",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358358/ClubestInterests/319-3193035_technology-clipart-software-engineer-_udppbu.png"
   },
   "22": {
     "english": "ecology",
-    "bulgarian": "Екология"
+    "bulgarian": "Екология",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358604/ClubestInterests/download_t9ormd.jpg"
   },
   "23": {
     "english": "digital-marketing",
-    "bulgarian": "Дигитален маркетинг"
+    "bulgarian": "Дигитален маркетинг",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358741/ClubestInterests/depositphotos_128695402-stock-illustration-tablet-and-digital-marketing-design_izfior.jpg"
   },
   "24": {
     "english": "singing",
-    "bulgarian": "Пеене"
+    "bulgarian": "Пеене",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358818/ClubestInterests/girl-head-emoji-personage-icon-with-facial-emotions-avatar-character-woman-show-singing-face-with-different-female-emotions-concept-flat-design-MXM78T_h35ap9.jpg"
   },
   "25": {
     "english": "dancing",
-    "bulgarian": "Танци"
+    "bulgarian": "Танци",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581358936/ClubestInterests/4e372f5cfde1dc880525df3e72f7aa0e_hlly95.jpg"
   },
   "26": {
     "english": "drawing",
-    "bulgarian": "Рисуване"
+    "bulgarian": "Рисуване",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581359081/ClubestInterests/unnamed_eqwwn7.jpg"
   },
   "27": {
     "english": "photography",
-    "bulgarian": "Фотография"
+    "bulgarian": "Фотография",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581359152/ClubestInterests/unnamed_rb61fi.jpg"
   },
   "28": {
     "english": "theatre",
-    "bulgarian": "Театър"
+    "bulgarian": "Театър",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581359200/ClubestInterests/free-theatre-vector_bibdkm.jpg"
   },
   "29": {
     "english": "design",
-    "bulgarian": "Дизайн"
+    "bulgarian": "Дизайн",
+    "photo": "https://res.cloudinary.com/dzivpr6fj/image/upload/v1581359248/ClubestInterests/free-vector-image-designs-header_pfs1g4.png"
   }
 }
