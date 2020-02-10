@@ -7,6 +7,7 @@
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Newtonsoft.Json;
     using Microsoft.Extensions.Configuration;
     using System;
     using System.Collections.Generic;
@@ -21,6 +22,7 @@
         private readonly IConfiguration configuration;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
         private readonly ApplicationDbContext dbContext;
+        private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
 
         public UserService(ApplicationDbContext dbContext,
                            SignInManager<User> signInManager,
@@ -91,7 +93,16 @@
                 sb.Append($"{interest}, ");
             }
 
-            return sb.ToString().Trim();
+            return sb.ToString();
+        }
+
+        public Dictionary<string, Dictionary<string, string>> GetInterests()
+        {
+            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("utf-8"));
+
+            var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
+                                Dictionary<string, string>>>(interestsToText);
+            return interestsJson;
         }
 
         internal User ChangeProfilePicture(User user, IFormFile photoFile)
