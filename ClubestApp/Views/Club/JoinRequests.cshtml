@@ -17,7 +17,7 @@
                     @foreach (var request in Model.JoinClubRequests)
                     {
                         <div class="container box-shadow-light row mt-3 mx-auto p-2 border">
-                            <img src="@request.User.PictureUrl" class="avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
+                            <img src="@request.User.PictureUrl" class="w-25 avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
                             <h5 class="ml-3 mt-lg-3">@request.User.FirstName @request.User.LastName</h5>
                             <div class="ml-auto row">
                                 <form asp-controller="Club" asp-action="ApproveJoinRequestClub" method="post" class="d-inline p-2">
