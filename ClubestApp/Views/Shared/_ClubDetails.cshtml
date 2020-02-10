@@ -1,0 +1,41 @@
+﻿<div class="col-lg-12 row">
+    <div class="col-lg-4 p-3">
+        <img src="@Model.Club.PictureUrl" alt="@Model.Club.Name" class="w-100 h-100" />
+    </div>
+    <div class="col-lg-8 box-shadow p-3 mt-3">
+        <h3 class="text-center text-uppercase mb-3 h3">@Model.Club.Name</h3>
+        <h5>Град: @Model.Club.Town</h5>
+        @if (Model.ClubPriceType == "Free")
+        {
+            <h5>Такса: <span class="font-weight-bold text-uppercase">Безплатно</span></h5>
+        }
+        else if (Model.ClubPriceType == "Montly")
+        {
+            <h5>Месечна Такса: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
+        }
+        else if (Model.ClubPriceType == "PerHour")
+        {
+            <h5>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
+        }
+        <p>@Model.Club.Description</p>
+    </div>
+</div>
+<div class="col-lg-12">
+    <ul class="nav justify-content-center primary-color lighten-4">
+        <li class="nav-item waves-effect">
+            <a class="nav-link text-white" href="/Club/Details/@Model.Club.Id">Постове</a>
+        </li>
+        <li class="nav-item waves-effect">
+            <a class="nav-link text-white" href="#!">Членове</a>
+        </li>
+        <li class="nav-item waves-effect">
+            <a class="nav-link text-white" href="#!">Събития</a>
+        </li>
+        <li class="nav-item waves-effect">
+            <a class="nav-link text-white" href="#!">Анкети</a>
+        </li>
+        <li class="nav-item waves-effect">
+            <a class="nav-link text-white" href="/Club/JoinRequests/@Model.Club.Id">Заявки</a>
+        </li>
+    </ul>
+</div>

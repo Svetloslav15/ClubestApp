@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Data.Models
 {
+    using ClubestApp.Data.Models.Enums;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +9,7 @@
         public JoinClubRequest()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.IsApproved = false;
+            this.RequestType = RequestType.Waiting;
         }
 
         [Key]
@@ -22,6 +23,6 @@
 
         public Club Club { get; set; }
 
-        public bool IsApproved { get; set; }
+        public RequestType RequestType { get; set; }
     }
 }

@@ -7,6 +7,7 @@
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
@@ -15,6 +16,7 @@
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
 
     public class ClubService
     {
@@ -128,7 +130,9 @@
                 string filePath = Path.GetFileName(model.ImageFile.FileName);
                 using (var stream = File.Create(filePath))
                 {
-                    model.ImageFile.CopyToAsync(stream).GetAwaiter().GetResult();
+                    model.ImageFile.CopyToAsync(stream)
+                        .GetAwaiter()
+                        .GetResult();
                 }
 
                 var uploadParams = new ImageUploadParams()
@@ -244,6 +248,33 @@
             }
 
             return result;
+        }
+
+        public IList<JoinClubRequest> GetJoinClubRequestsForAClub(string clubId)
+        {
+            return this.dbContext.JoinClubRequests
+                .Include(x => x.User)
+                .Where(x => x.ClubId == clubId)
+                .ToList();
+        }
+
+        public JoinClubRequest ApproveJoinClubRequest(string requestId, int requestType)
+        {
+            JoinClubRequest request = this.dbContext.JoinClubRequests
+                .FirstOrDefault(x => x.Id == requestId);
+            
+            if (requestType == 1)
+            {
+                request.RequestType = RequestType.Approved;
+            }
+            else if (requestType == 2)
+            {
+                request.RequestType = RequestType.Removed;
+            }
+
+            this.dbContext.SaveChanges();
+
+            return request;
         }
     }
 }

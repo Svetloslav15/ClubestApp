@@ -5,10 +5,13 @@
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -94,6 +97,28 @@
             };
 
             return this.View(bindingModel);
-        }    
+        }
+
+        [Authorize]
+        public IActionResult JoinRequests(string id)
+        {
+            Club club = this.clubService.GetClubById(id);
+            string clubPriceType = club.PriceType.ToString();
+            List<JoinClubRequest> requests = this.clubService.GetJoinClubRequestsForAClub(id).ToList();
+
+            ClubDetailsRequestsBindingModel requestsBindingModel = new ClubDetailsRequestsBindingModel()
+            {
+                Club = club,
+                ClubPriceType = clubPriceType,
+                JoinClubRequests = requests
+            };
+
+            return this.View(requestsBindingModel);
+        }
+
+        public IActionResult ApproveJoinRequestClub([FromQuery(Name= "type")] int requestType)
+        {
+            return null;
+        }
     }
 }

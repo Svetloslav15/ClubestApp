@@ -94,7 +94,7 @@
             return sb.ToString().Trim();
         }
 
-        internal User ChangeProfilePicture(User user, IFormFile photoFile)
+        public User ChangeProfilePicture(User user, IFormFile photoFile)
         {
             //Work on image
             string currentUrl = "";
@@ -127,9 +127,12 @@
             return user;
         }
 
-        internal bool IsFileValid(IFormFile photoFile)
+        public bool IsFileValid(IFormFile photoFile)
         {
-            string[] validTypes = new string[] { "image/x-png", "image/gif" , "image/jpeg", "image/jpg" };
+            string[] validTypes = new string[] 
+            {
+                "image/x-png", "image/gif" , "image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg"
+            };
 
             if (validTypes.Contains(photoFile.ContentType) == false)
             {

@@ -1,0 +1,34 @@
+﻿@model ClubestApp.Models.BindingModels.ClubDetailsRequestsBindingModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+        <partial name="../Shared/_ClubDetails.cshtml" />
+
+        <!--/.Navbar-->
+        <div class="col-lg-4">
+            SideNav
+        </div>
+        <div class="col-lg-8 border">
+            <div>
+                @foreach (var request in Model.JoinClubRequests)
+                {
+                    <div class="container box-shadow-light row mt-3 mx-auto p-2 border">
+                        <img src="@request.User.PictureUrl" class="avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
+                        <h5 class="ml-3 mt-lg-3">@request.User.FirstName @request.User.LastName</h5>
+                        <div class="ml-auto">
+                            <button class="btn btn-success waves-effect"
+                                    data-toggle="tooltip" data-placement="top" title="Удобри заявката">
+                                <i class="far fa-check-circle fa-lg"></i>
+                            </button>
+                            <button class="btn btn-danger waves-effect"
+                                    data-toggle="tooltip" data-placement="top" title="Изтрии заявката">
+                                <i class="fas fa-trash-alt fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
