@@ -14,6 +14,7 @@
     using ClubestApp.Services;
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
+    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {
@@ -38,7 +39,10 @@
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                        Configuration.GetConnectionString("DefaultConnection")
+                    )
+                );
+
             services.AddDefaultIdentity<User>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -46,12 +50,14 @@
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
             }).AddRoles<IdentityRole>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+              .AddDefaultUI(UIFramework.Bootstrap4)
+              .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             services.AddTransient<EmailService>();
             services.AddTransient<UserService>();
             services.AddTransient<ClubService>();
+            services.AddTransient<RequestService>();
 
             services.AddMvc(options =>
             {

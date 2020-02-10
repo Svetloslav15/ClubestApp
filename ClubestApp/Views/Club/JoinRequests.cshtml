@@ -1,0 +1,51 @@
+﻿@model ClubestApp.Models.BindingModels.ClubDetailsRequestsBindingModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+    <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+        <partial name="../Shared/_ClubDetails.cshtml" />
+
+        <!--/.Navbar-->
+        <div class="col-lg-4">
+            SideNav
+        </div>
+        <div class="col-lg-8 border">
+            <div>
+                @if (Model.JoinClubRequests.Count > 0)
+                {
+                    @foreach (var request in Model.JoinClubRequests)
+                    {
+                        <div class="container box-shadow-light row mt-3 mx-auto p-2 border">
+                            <img src="@request.User.PictureUrl" class="avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
+                            <h5 class="ml-3 mt-lg-3">@request.User.FirstName @request.User.LastName</h5>
+                            <div class="ml-auto row">
+                                <form asp-controller="Club" asp-action="ApproveJoinRequestClub" method="post" class="d-inline p-2">
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.ClubId" value="@Model.Club.Id" />
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.RequestId" value="@request.Id" />
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.RequestType" value="1" />
+                                    <button type="submit" class="btn btn-success waves-effect"
+                                            data-toggle="tooltip" data-placement="top" title="Удобри заявката">
+                                        <i class="far fa-check-circle fa-lg"></i>
+                                    </button>
+                                </form>
+                                <form asp-controller="Club" asp-action="ApproveJoinRequestClub" method="post" class="d-inline p-2">
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.ClubId" value="@Model.Club.Id" />
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.RequestId" value="@request.Id" />
+                                    <input type="hidden" asp-for="RequestApproveBindingModel.RequestType" value="2" />
+                                    <button type="submit" class="btn btn-danger waves-effect"
+                                            data-toggle="tooltip" data-placement="top" title="Изтрии заявката">
+                                        <i class="fas fa-trash-alt fa-lg"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3 class="text-primary text-center my-5">Няма налични заявки!</h3>
+                }
+            </div>
+        </div>
+    </div>

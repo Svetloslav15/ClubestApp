@@ -7,6 +7,7 @@
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
@@ -128,7 +129,9 @@
                 string filePath = Path.GetFileName(model.ImageFile.FileName);
                 using (var stream = File.Create(filePath))
                 {
-                    model.ImageFile.CopyToAsync(stream).GetAwaiter().GetResult();
+                    model.ImageFile.CopyToAsync(stream)
+                        .GetAwaiter()
+                        .GetResult();
                 }
 
                 var uploadParams = new ImageUploadParams()
@@ -204,23 +207,6 @@
             return this.dbContext.Clubs.FirstOrDefault(club => club.Id == clubId);
         }
 
-        public JoinClubRequest CreateJoinRequestClub(string clubId, User user)
-        {
-            Club club = this.GetClubById(clubId);
-            JoinClubRequest joinClubRequest = new JoinClubRequest()
-            {
-                ClubId = clubId,
-                Club = club,
-                User = user,
-                UserId = user.Id
-            };
-
-            this.dbContext.JoinClubRequests.Add(joinClubRequest);
-            this.dbContext.SaveChanges();
-
-            return joinClubRequest;
-        }
-
         public IList<Club> FilterClubsBySearchInput(string userInput)
         {
             userInput = userInput
@@ -244,6 +230,6 @@
             }
 
             return result;
-        }
+        }    
     }
 }

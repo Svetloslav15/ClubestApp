@@ -201,6 +201,11 @@
         [HttpPost]
         public async Task<IActionResult> ChangePhoto(EditProfileInputModel inputModel)
         {
+            if (inputModel.PhotoFile == null)
+            {
+                return this.Redirect("/User/Profile");
+            }
+
             bool isFileValid = userService.IsFileValid(inputModel.PhotoFile);
 
             if (isFileValid == false)
