@@ -166,16 +166,16 @@
 
         public async Task<IActionResult> Interests()
         {
-
             User user = await _userManager.GetUserAsync(User);
             EditInterestsBindingModel model = new EditInterestsBindingModel
             {
                 AllInterests = userService.GetInterests(),
-                UserInterests = user.Interests.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
+                UserInterests = user.Interests?.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
             };
 
             return this.View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Interests(AddInterestsInputModel inputModel)
