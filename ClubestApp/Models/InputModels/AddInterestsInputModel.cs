@@ -5,7 +5,6 @@
 
     public class AddInterestsInputModel
     {
-        [Required]
         public List<string> Interests { get; set; }
     }
 }

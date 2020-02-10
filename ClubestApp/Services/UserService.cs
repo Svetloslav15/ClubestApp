@@ -105,7 +105,7 @@
             return interestsJson;
         }
 
-        internal User ChangeProfilePicture(User user, IFormFile photoFile)
+        public User ChangeProfilePicture(User user, IFormFile photoFile)
         {
             //Work on image
             string currentUrl = "";
@@ -138,7 +138,7 @@
             return user;
         }
 
-        internal bool IsFileValid(IFormFile photoFile)
+        public bool IsFileValid(IFormFile photoFile)
         {
             string[] validTypes = new string[] { "image/x-png", "image/gif" , "image/jpeg", "image/jpg" };
 
@@ -148,6 +148,16 @@
             }
 
             return true;
+        }
+
+        public void RemoveUserAllInterests(User user)
+        {
+            this.dbContext
+                .Users
+                .FirstOrDefault(x => x.Id == user.Id)
+                .Interests = "";
+
+            this.dbContext.SaveChanges();
         }
     }
 }
