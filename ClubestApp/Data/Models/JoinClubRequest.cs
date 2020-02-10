@@ -9,7 +9,7 @@
         public JoinClubRequest()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.RequestType = RequestType.Waiting;
+            this.RequestType = RequestType.Pending;
         }
 
         [Key]

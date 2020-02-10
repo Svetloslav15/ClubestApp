@@ -16,7 +16,6 @@
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
 
     public class ClubService
     {
@@ -208,23 +207,6 @@
             return this.dbContext.Clubs.FirstOrDefault(club => club.Id == clubId);
         }
 
-        public JoinClubRequest CreateJoinRequestClub(string clubId, User user)
-        {
-            Club club = this.GetClubById(clubId);
-            JoinClubRequest joinClubRequest = new JoinClubRequest()
-            {
-                ClubId = clubId,
-                Club = club,
-                User = user,
-                UserId = user.Id
-            };
-
-            this.dbContext.JoinClubRequests.Add(joinClubRequest);
-            this.dbContext.SaveChanges();
-
-            return joinClubRequest;
-        }
-
         public IList<Club> FilterClubsBySearchInput(string userInput)
         {
             userInput = userInput
@@ -248,33 +230,6 @@
             }
 
             return result;
-        }
-
-        public IList<JoinClubRequest> GetJoinClubRequestsForAClub(string clubId)
-        {
-            return this.dbContext.JoinClubRequests
-                .Include(x => x.User)
-                .Where(x => x.ClubId == clubId)
-                .ToList();
-        }
-
-        public JoinClubRequest ApproveJoinClubRequest(string requestId, int requestType)
-        {
-            JoinClubRequest request = this.dbContext.JoinClubRequests
-                .FirstOrDefault(x => x.Id == requestId);
-            
-            if (requestType == 1)
-            {
-                request.RequestType = RequestType.Approved;
-            }
-            else if (requestType == 2)
-            {
-                request.RequestType = RequestType.Removed;
-            }
-
-            this.dbContext.SaveChanges();
-
-            return request;
-        }
+        }    
     }
 }

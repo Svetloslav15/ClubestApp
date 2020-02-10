@@ -1,7 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
     using ClubestApp.Data.Models;
-    using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
@@ -10,7 +9,6 @@
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -19,12 +17,15 @@
     {
         private readonly ClubService clubService;
         private readonly UserManager<User> userManager;
+        private readonly RequestService requestService;
 
         public ClubController(ClubService clubService,
-               UserManager<User> userManager)
+                    UserManager<User> userManager,
+                    RequestService requestService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
+            this.requestService = requestService;
         }
 
         public IActionResult AddClub()
@@ -66,7 +67,7 @@
         public async Task<IActionResult> JoinClub(string id)
         {
             User user = await this.userManager.GetUserAsync(HttpContext.User);
-            JoinClubRequest request = this.clubService.CreateJoinRequestClub(id, user);
+            JoinClubRequest request = this.requestService.CreateJoinRequestClub(id, user);
             
             return this.Redirect("/?jcr=true");
         }
@@ -104,7 +105,7 @@
         {
             Club club = this.clubService.GetClubById(id);
             string clubPriceType = club.PriceType.ToString();
-            List<JoinClubRequest> requests = this.clubService.GetJoinClubRequestsForAClub(id).ToList();
+            List<JoinClubRequest> requests = this.requestService.GetJoinClubRequestsForAClub(id).ToList();
 
             ClubDetailsRequestsBindingModel requestsBindingModel = new ClubDetailsRequestsBindingModel()
             {
@@ -116,9 +117,11 @@
             return this.View(requestsBindingModel);
         }
 
-        public IActionResult ApproveJoinRequestClub([FromQuery(Name= "type")] int requestType)
+        [HttpPost]
+        public IActionResult ApproveJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
-            return null;
+            JoinClubRequest request = this.requestService.ApproveJoinClubRequest(model.RequestApproveBindingModel.RequestId, model.RequestApproveBindingModel.RequestType);
+            return this.Redirect($"/Club/JoinRequests/{model.RequestApproveBindingModel.ClubId}");
         }
     }
 }

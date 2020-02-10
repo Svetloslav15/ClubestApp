@@ -2,7 +2,7 @@
 {
     public enum RequestType
     {
-        Waiting = 0,
+        Pending = 0,
         Approved,
         Removed
     }

@@ -57,6 +57,7 @@
             services.AddTransient<EmailService>();
             services.AddTransient<UserService>();
             services.AddTransient<ClubService>();
+            services.AddTransient<RequestService>();
 
             services.AddMvc(options =>
             {

@@ -9,6 +9,8 @@
 
         public string ClubPriceType { get; set; }
 
+        public RequestApproveBindingModel RequestApproveBindingModel { get; set; }
+
         public List<JoinClubRequest> JoinClubRequests { get; set; }
     }
 }
