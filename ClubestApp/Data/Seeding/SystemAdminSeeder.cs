@@ -31,7 +31,6 @@
 
             IdentityResult result = await this.userManager.CreateAsync(user, this.configuration.GetConnectionString("SystemAdminPassword"));
             IdentityResult roleResult = await this.userManager.AddToRoleAsync(user, UserRoles.SystemAdmin);
-            System.Console.WriteLine(roleResult.Succeeded);
         }
     }
 }
