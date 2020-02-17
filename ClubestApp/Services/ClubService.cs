@@ -170,6 +170,25 @@
             return result.Entity;
         }
 
+        public ListClubMemebersBindingModel GetMemberInClub(string clubId)
+        {
+            return new ListClubMemebersBindingModel()
+            {
+                Club = this.GetClubById(clubId),
+                ClubPriceType = this.GetClubById(clubId).PriceType.ToString(),
+                Members = this.dbContext
+                    .UserClubs
+                    .Where(x => x.ClubId == clubId)
+                    .Select(x => new MemberItemBindingModel
+                    {
+                        FirstName = x.User.FirstName,
+                        LastName = x.User.LastName,
+                        PictureUrl = x.User.PictureUrl,
+                    })
+                    .ToList()
+            };
+        }
+
         public Dictionary<string, Dictionary<string, string>> GetInterests()
         {
             string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("utf-8"));

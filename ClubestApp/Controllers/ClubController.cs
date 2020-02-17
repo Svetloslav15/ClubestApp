@@ -123,5 +123,11 @@
             JoinClubRequest request = this.requestService.ApproveJoinClubRequest(model.RequestApproveBindingModel.RequestId, model.RequestApproveBindingModel.RequestType);
             return this.Redirect($"/Club/JoinRequests/{model.RequestApproveBindingModel.ClubId}");
         }
+
+        public IActionResult ListMembers(string id)
+        {
+            ListClubMemebersBindingModel model = this.clubService.GetMemberInClub(id);
+            return View(model);
+        }
     }
 }
