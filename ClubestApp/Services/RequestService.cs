@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class RequestService
     {
@@ -20,9 +21,9 @@
             this.clubService = clubService;
         }
 
-        public JoinClubRequest CreateJoinRequestClub(string clubId, User user)
+        public async Task<JoinClubRequest> CreateJoinRequestClub(string clubId, User user)
         {
-            Club club = this.clubService.GetClubById(clubId);
+            Club club = await this.clubService.GetClubById(clubId);
             JoinClubRequest joinClubRequest = new JoinClubRequest()
             {
                 ClubId = clubId,
@@ -31,30 +32,30 @@
                 UserId = user.Id
             };
 
-            bool anyPreviousRequest = this.dbContext.JoinClubRequests.Any(x => x.ClubId == clubId && x.UserId == user.Id);
+            bool anyPreviousRequest = await this.dbContext.JoinClubRequests.AnyAsync(x => x.ClubId == clubId && x.UserId == user.Id);
             if (anyPreviousRequest)
             {
                 return null;
             }
 
-            this.dbContext.JoinClubRequests.Add(joinClubRequest);
-            this.dbContext.SaveChanges();
+            await this.dbContext.JoinClubRequests.AddAsync(joinClubRequest);
+            await this.dbContext.SaveChangesAsync();
 
             return joinClubRequest;
         }
 
-        public IList<JoinClubRequest> GetJoinClubRequestsForAClub(string clubId)
+        public async Task<IList<JoinClubRequest>> GetJoinClubRequestsForAClub(string clubId)
         {
-            return this.dbContext.JoinClubRequests
+            return await this.dbContext.JoinClubRequests
                 .Include(x => x.User)
                 .Where(x => x.ClubId == clubId && x.RequestType == RequestType.Pending)
-                .ToList();
+                .ToListAsync();
         }
 
-        public JoinClubRequest ApproveJoinClubRequest(string requestId, int requestType)
+        public async Task<JoinClubRequest> ApproveJoinClubRequest(string requestId, int requestType)
         {
-            JoinClubRequest request = this.dbContext.JoinClubRequests
-                .FirstOrDefault(x => x.Id == requestId);
+            JoinClubRequest request = await this.dbContext.JoinClubRequests
+                .FirstOrDefaultAsync(x => x.Id == requestId);
 
             if (requestType == 1)
             {
@@ -65,7 +66,7 @@
                 request.RequestType = RequestType.Removed;
             }
 
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return request;
         }

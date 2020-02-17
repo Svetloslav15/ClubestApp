@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
     using ClubestApp.Services;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
 
     public class HomeController : Controller
     {
@@ -49,6 +50,12 @@
         public IActionResult Error()
         {
             this.Response.StatusCode = 404;
+            return this.View();
+        }
+
+        [Authorize(Roles = "SystemAdmin,ClubAdmin")]
+        public IActionResult Administration()
+        {
             return this.View();
         }
     }
