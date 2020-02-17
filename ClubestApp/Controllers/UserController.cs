@@ -177,12 +177,19 @@
             return this.View(model);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Interests(AddInterestsInputModel inputModel)
         {
 
             //Removing all interests and adding new one(in case of deleting old interests)
-            if (ModelState.IsValid)
+            if (inputModel.Interests == null)
+            {
+                User user = await _userManager.GetUserAsync(User);
+                user.Interests = "";
+                this.userService.RemoveUserAllInterests(user);
+            }
+            else
             {
                 User user = await _userManager.GetUserAsync(User);
                 user.Interests = "";

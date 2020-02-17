@@ -156,5 +156,15 @@
 
             return true;
         }
+
+        public void RemoveUserAllInterests(User user)
+        {
+            this.dbContext
+                .Users
+                .FirstOrDefault(x => x.Id == user.Id)
+                .Interests = "";
+
+            this.dbContext.SaveChanges();
+        }
     }
 }

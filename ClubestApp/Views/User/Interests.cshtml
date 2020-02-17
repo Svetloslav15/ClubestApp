@@ -39,7 +39,7 @@
                             <div class="col-lg-4 row border mx-auto m-1 p-1">
                                 @*<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20).jpg" alt="Avatar" class="md-avatar rounded-circle col-3">*@
                                 <div class="custom-control custom-checkbox col-lg-9 pt-1 text-left">
-                                    @if (Model.UserInterests.Contains(tempInterests[0]))
+                                    @if (Model.UserInterests?.Contains(tempInterests[0]) == true)
                                     {
                                         <input type="checkbox" name="Interests" class="custom-control-input" value="@tempInterests[0]" id="@tempInterests[0]" checked>
                                     }
