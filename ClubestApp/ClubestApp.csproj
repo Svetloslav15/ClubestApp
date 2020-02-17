@@ -17,4 +17,9 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\Posts\" />
+  </ItemGroup>
+
 </Project>
