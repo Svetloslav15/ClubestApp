@@ -127,9 +127,9 @@
             return this.Redirect($"/Club/JoinRequests/{model.RequestApproveBindingModel.ClubId}");
         }
 
-        public IActionResult ListMembers(string id)
+        public async Task<IActionResult> ListMembers(string id)
         {
-            ListClubMemebersBindingModel model = this.clubService.GetMemberInClub(id);
+            ListClubMemebersBindingModel model = await this.clubService.GetMemberInClub(id);
             return View(model);
         }
     }

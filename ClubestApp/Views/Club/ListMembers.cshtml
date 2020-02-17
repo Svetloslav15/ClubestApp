@@ -16,9 +16,51 @@
             {
                 @foreach (var member in Model.Members)
                 {
-                    <div class="container box-shadow-light row mt-3 mx-auto p-2 border">
-                        <img src="@member.PictureUrl" class="avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
-                        <h5 class="ml-3 mt-lg-3">@member.FirstName member.LastName</h5>
+                    string id = 'a' + member.Id + 'a';
+                    <a data-toggle="modal" data-target="#@id">
+                        <div class="container box-shadow-light row mt-3 mx-auto p-2 border">
+                            <img src="@member.PictureUrl" class="avatar rounded-circle z-depth-0 w-image-request" alt="Alternate Text" />
+                            <h5 class="ml-3 mt-lg-3">@member.FirstName @member.LastName</h5>
+                        </div>
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="@id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Информация за потребител</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!--Body-->
+                                <div class="modal-body">
+
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <img src="@member.PictureUrl"
+                                                 class="img-fluid" alt="">
+                                        </div>
+
+                                        <div class="col-7">
+                                            <p><strong>@member.FirstName @member.LastName</strong></p>
+                                            @if (member.Town != null)
+                                            {
+                                                <p><strong>От @member.Town</strong></p>
+                                            }
+                                            @if (member.Number != null)
+                                            {
+                                                <p><strong>Телефон: @member.Number</strong></p>
+                                            }
+                                            <p><strong>Имейл: @member.Email</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/.Content-->
+                        </div>
                     </div>
                 }
             }

@@ -46,8 +46,7 @@
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                PictureUrl = user.PictureUrl != null ? user.PictureUrl
-                                : defaultPictureUrl
+                PictureUrl = user.PictureUrl
             };
 
             return View(model);
@@ -107,7 +106,8 @@
                     Email = inputModel.Email,
                     FirstName = inputModel.FirstName,
                     LastName = inputModel.LastName,
-                    Town = inputModel.Town
+                    Town = inputModel.Town,
+                    PictureUrl = defaultPictureUrl
                 };
                 var result = await _userManager.CreateAsync(user, inputModel.Password);
                 if (result.Succeeded)
