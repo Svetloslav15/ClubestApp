@@ -33,11 +33,11 @@
             this.userService = userService;
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             //Finds user by his id
             string id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            User user = this.userService.FindUserById(id);
+            User user = await this.userService.FindUserById(id);
 
             EditProfileBindingModel model = new EditProfileBindingModel()
             {
@@ -54,11 +54,11 @@
         }
 
         [HttpPost]
-        public IActionResult Profile(EditProfileInputModel model)
+        public async Task<IActionResult> Profile(EditProfileInputModel model)
         {
             if (ModelState.IsValid)
             {
-                this.userService.EditUser(model);
+                await this.userService.EditUser(model);
             }
 
             return this.Redirect("/User/Profile");
@@ -90,6 +90,7 @@
             return this.View("ChangePassword");
         }
 
+        //TODO
         public IActionResult DownloadData()
         {
             return View();
@@ -157,7 +158,7 @@
             if (ModelState.IsValid)
             {
                 User user = await _userManager.GetUserAsync(User);
-                this.userService.AddInterestsToUser(inputModel, user.Id);
+                await this.userService.AddInterestsToUser(inputModel, user.Id);
             }
 
             return this.Redirect("/");
@@ -169,8 +170,8 @@
             User user = await _userManager.GetUserAsync(User);
             EditInterestsBindingModel model = new EditInterestsBindingModel
             {
-                AllInterests = userService.GetInterests(),
-                UserInterests = user.Interests?.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
+                AllInterests = await this.userService.GetInterests(),
+                UserInterests = user.Interests.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
             };
 
             return this.View(model);
@@ -192,7 +193,7 @@
             {
                 User user = await _userManager.GetUserAsync(User);
                 user.Interests = "";
-                this.userService.AddInterestsToUser(inputModel, user.Id);
+                await this.userService.AddInterestsToUser(inputModel, user.Id);
             }
 
             return this.Redirect("Interests");
@@ -206,17 +207,17 @@
                 return this.Redirect("/User/Profile");
             }
 
-            bool isFileValid = userService.IsFileValid(inputModel.PhotoFile);
+            bool isFileValid = this.userService.IsFileValid(inputModel.PhotoFile);
 
             if (isFileValid == false)
             {
                 return this.RedirectToAction("Profile");
             }
 
-            User user = await _userManager.GetUserAsync(User);
+            User user = await this._userManager.GetUserAsync(User);
 
             //Change only user's photo without checking other data
-            this.userService.ChangeProfilePicture(user, inputModel.PhotoFile);
+            await this.userService.ChangeProfilePicture(user, inputModel.PhotoFile);
 
             return this.Redirect("/User/Profile");
         }

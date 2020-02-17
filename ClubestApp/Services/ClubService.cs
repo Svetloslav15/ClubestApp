@@ -16,6 +16,7 @@
     using System.Linq;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
 
     public class ClubService
     {
@@ -41,9 +42,9 @@
                                         );
         }
 
-        public PrivateClubBindingModel GetClub(string id)
+        public async Task<PrivateClubBindingModel> GetClub(string id)
         {
-            PrivateClubBindingModel model = dbContext.Clubs
+            PrivateClubBindingModel model = await dbContext.Clubs
                 .Where(c => c.Id == id)
                 .Select(c => new PrivateClubBindingModel
                 {
@@ -55,14 +56,14 @@
                     PictureUrl = c.PictureUrl,
                     PriceType = (PriceType)c.PriceType
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return model;
         }
 
-        public IList<Club> GetAllClubs()
+        public async Task<IList<Club>> GetAllClubs()
         {
-            return this.dbContext.Clubs.ToList();
+            return await this.dbContext.Clubs.ToListAsync();
         }
         public GetClubsBindingModel[] GetAllClubsBindingModel(IList<Club> clubs)
         {
@@ -120,7 +121,7 @@
             return result.Entity;
         }
 
-        public Club AddClub(AddClubInputModel model, string userId)
+        public async Task<Club> AddClub(AddClubInputModel model, string userId)
         {
             //Work on image
             string currentUrl = "";
@@ -141,7 +142,7 @@
                 };
 
                 //Deletes file in pc and uploads it in cloud
-                var uploadResult = cloudinary.Upload(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 File.Delete(filePath);
                 currentUrl = uploadResult.Uri.AbsoluteUri;
             }
@@ -160,12 +161,12 @@
                 Interests = this.userService.InterestsToString(model.Interests)
             };
 
-            User user = this.userService.FindUserById(userId);
+            User user = await this.userService.FindUserById(userId);
 
             this.AddClubAdmin(newClub, user);
 
-            var result = this.dbContext.Clubs.Add(newClub);
-            this.dbContext.SaveChanges();
+            var result = await this.dbContext.Clubs.AddAsync(newClub);
+            await this.dbContext.SaveChangesAsync();
 
             return result.Entity;
         }
@@ -202,18 +203,18 @@
             return potentialClubs;
         }
 
-        public Club GetClubById(string clubId)
+        public async Task<Club> GetClubById(string clubId)
         {
-            return this.dbContext.Clubs.FirstOrDefault(club => club.Id == clubId);
+            return await this.dbContext.Clubs.FirstOrDefaultAsync(club => club.Id == clubId);
         }
 
-        public IList<Club> FilterClubsBySearchInput(string userInput)
+        public async Task<IList<Club>> FilterClubsBySearchInput(string userInput)
         {
             userInput = userInput
                 .Trim()
                 .ToLower();
 
-            IList<Club> clubs = this.GetAllClubs();
+            IList<Club> clubs = await this.GetAllClubs();
             IList<Club> result = new List<Club>();
             if (userInput == null || userInput == "")
             {
