@@ -146,7 +146,7 @@
                 File.Delete(filePath);
                 currentUrl = uploadResult.Uri.AbsoluteUri;
             }
-            
+
             Club newClub = new Club
             {
                 Name = model.Name,
@@ -169,6 +169,37 @@
             await this.dbContext.SaveChangesAsync();
 
             return result.Entity;
+        }
+
+        public async Task<ListClubMemebersBindingModel> GetMemberInClub(string clubId)
+        {
+            return new ListClubMemebersBindingModel()
+            {
+                Club = await this.GetClubById(clubId),
+                ClubPriceType = await this.GetClubPriceType(clubId),
+                Members = await this.dbContext
+                    .UserClubs
+                    .Where(x => x.ClubId == clubId)
+                    .Select(x => new MemberItemBindingModel
+                    {
+                        FirstName = x.User.FirstName,
+                        LastName = x.User.LastName,
+                        PictureUrl = x.User.PictureUrl,
+                        Id = x.UserId,
+                        Town = x.User.Town,
+                        Email = x.User.Email,
+                        Number = x.User.PhoneNumber
+                    })
+                    .ToListAsync()
+            };
+        }
+
+        private async Task<string> GetClubPriceType(string clubId)
+        {
+            return await this.dbContext.Clubs
+                .Where(x => x.Id == clubId)
+                .Select(x => x.PriceType.ToString())
+                .FirstOrDefaultAsync();
         }
 
         public Dictionary<string, Dictionary<string, string>> GetInterests()
@@ -231,6 +262,6 @@
             }
 
             return result;
-        }    
+        }
     }
 }
