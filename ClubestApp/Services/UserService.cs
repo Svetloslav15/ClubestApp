@@ -14,6 +14,8 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
 
     public class UserService
     {
@@ -39,19 +41,19 @@
                                         );
         }
 
-        public User FindUserById(string id)
+        public async Task<User> FindUserById(string id)
         {
-            User userdb = this.dbContext.Users.FirstOrDefault(user => user.Id == id);
+            User userdb = await this.dbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
             return userdb; 
         }
 
-        public User EditUser(EditProfileInputModel model)
+        public async Task<User> EditUser(EditProfileInputModel model)
         {
-            User user = this.dbContext.Users.FirstOrDefault(userDb => userDb.UserName == model.Username);
+            User user = await this.dbContext.Users.FirstOrDefaultAsync(userDb => userDb.UserName == model.Username);
             bool existWithSameUsername = false;
             if (user.UserName != user.Email)
             {
-                existWithSameUsername = this.dbContext.Users.Any(userDb => userDb.UserName == model.Email);
+                existWithSameUsername = await this.dbContext.Users.AnyAsync(userDb => userDb.UserName == model.Email);
             }
 
             if (!existWithSameUsername)
@@ -64,22 +66,22 @@
                 user.NormalizedEmail = model.Email.ToUpper();
                 user.PhoneNumber = model.PhoneNumber;
 
-                this.dbContext.SaveChanges();
+                await this.dbContext.SaveChangesAsync();
             }        
 
             return user;
         }
 
-        public User AddInterestsToUser(AddInterestsInputModel inputModel, string userId)
+        public async Task<User> AddInterestsToUser(AddInterestsInputModel inputModel, string userId)
         {
             User user = null;
 
             if (inputModel.Interests.Count != 0)
             {
-                user = this.FindUserById(userId);
+                user = await this.FindUserById(userId);
                 user.Interests = InterestsToString(inputModel.Interests);
 
-                this.dbContext.SaveChanges();
+                await this.dbContext.SaveChangesAsync();
             }
 
             return user;
@@ -96,16 +98,16 @@
             return sb.ToString();
         }
 
-        public Dictionary<string, Dictionary<string, string>> GetInterests()
+        public async Task<Dictionary<string, Dictionary<string, string>>> GetInterests()
         {
-            string interestsToText = File.ReadAllText(interestsPath, Encoding.GetEncoding("utf-8"));
+            string interestsToText = await File.ReadAllTextAsync(interestsPath, Encoding.GetEncoding("utf-8"));
 
             var interestsJson = JsonConvert.DeserializeObject<Dictionary<string,
                                 Dictionary<string, string>>>(interestsToText);
             return interestsJson;
         }
 
-        public User ChangeProfilePicture(User user, IFormFile photoFile)
+        public async Task<User> ChangeProfilePicture(User user, IFormFile photoFile)
         {
             //Work on image
             string currentUrl = "";
@@ -114,7 +116,9 @@
                 string filePath = Path.GetFileName(photoFile.FileName);
                 using (var stream = File.Create(filePath))
                 {
-                    photoFile.CopyToAsync(stream).GetAwaiter().GetResult();
+                    photoFile.CopyToAsync(stream)
+                        .GetAwaiter()
+                        .GetResult();
                 }
 
                 var uploadParams = new ImageUploadParams()
@@ -124,7 +128,7 @@
                 };
 
                 //Deletes file in pc and uploads it in cloud
-                var uploadResult = cloudinary.Upload(uploadParams);
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
                 File.Delete(filePath);
                 currentUrl = uploadResult.Uri.AbsoluteUri;
             }
@@ -133,7 +137,7 @@
                 ? currentUrl
                 : defaultPictureUrl;
 
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
 
             return user;
         }
