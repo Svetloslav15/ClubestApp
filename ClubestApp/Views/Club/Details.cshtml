@@ -19,13 +19,15 @@
                         </div>
                         <input type="hidden" name="ClubId" value="@Model.Club.Id" />
                         <div class="row">
-                            <div class="input-group col-lg-6">
+                            <div class="col-lg-6 input-group">
                                 <div class="custom-file">
                                     <input type="file" accept="image/*" name="FormFile" id="FormFile" />
                                     <label class="custom-file-label" for="FormFile">Избери файл... </label>
                                 </div>
                             </div>
-                            <input type="submit" class="btn blue-gradient waves-effect mx-auto" value="Добави"/>
+                            <div class="col-lg-6 text-right">
+                                <input type="submit" class="btn blue-gradient waves-effect" value="Добави" />
+                            </div>
                         </div>
                     </form>
                 </div>

@@ -248,3 +248,9 @@
 .btn-padding-smaller {
     padding: .84rem 1.7rem !important;
 }
+
+.w-interest-image {
+    width: 30px !important;
+    height: 30px !important;
+    margin: 5px;
+}
