@@ -46,6 +46,7 @@
 
                 return this.Redirect("/Home/Index");
             }
+
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
@@ -131,6 +132,36 @@
         {
             ListClubMemebersBindingModel model = await this.clubService.GetMemberInClub(id);
             return View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditClubInputModel model, string id)
+        {
+            bool isFileValid = true;
+            if (model.ImageFile != null)
+            {
+                isFileValid = this.clubService.IsFileValid(model.ImageFile);
+            }
+
+            if (ModelState.IsValid || isFileValid)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                await this.clubService.EditClub(model, id);
+
+                return this.Redirect("/Club/Details/" + id);
+            }
+
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+
+            return this.View(model);
         }
     }
 }

@@ -7,6 +7,7 @@
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
@@ -86,7 +87,7 @@
             StringBuilder sb = new StringBuilder();
             foreach (string interest in interests)
             {
-                sb.Append($"{interest}, ");
+                sb.Append($"{interest},");
             }
 
             return sb.ToString().Trim();
@@ -171,6 +172,82 @@
             return result.Entity;
         }
 
+        internal async Task<Club> EditClub(EditClubInputModel model, string id)
+        {
+            //Work on image
+            string currentUrl = "";
+            if (model.ImageFile != null)
+            {
+                string filePath = Path.GetFileName(model.ImageFile.FileName);
+                using (var stream = File.Create(filePath))
+                {
+                    model.ImageFile.CopyToAsync(stream)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(filePath),
+                    PublicId = $"ClubestPics/{model.ImageFile.FileName}"
+                };
+
+                //Deletes file in pc and uploads it in cloud
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                File.Delete(filePath);
+                currentUrl = uploadResult.Uri.AbsoluteUri;
+            }
+
+            Club club = await this.dbContext
+                .Clubs
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            club.Name = model.Name;
+            club.Fee = (decimal)model.Fee;
+            club.PriceType = (PriceType)Enum.Parse(typeof(PriceType), model.PriceType, true);
+            club.IsPublic = (bool)model.IsPublic;
+            club.Description = model.Description;
+            club.Town = model.Town;
+            club.PictureUrl = currentUrl != ""
+                ? currentUrl
+                : model.PictureUrl;
+            club.Interests = this.userService.InterestsToString(model.Interests);
+
+            await this.dbContext.SaveChangesAsync();
+
+            return club;
+        }
+
+        public async Task<EditClubBindingModel> GetEditClubModel(string id)
+        {
+            string interests = await this.dbContext
+                .Clubs
+                .Where(x => x.Id == id)
+                .Select(x => x.Interests)
+                .FirstOrDefaultAsync();
+            List<string> interestsToList = interests.Split(",").ToList();
+
+            var model = await this.dbContext
+                .Clubs
+                .Where(x => x.Id == id)
+                .Select(x => new EditClubBindingModel
+                {
+                    Name = x.Name,
+                    PriceType = x.PriceType.ToString(),
+                    Fee = x.Fee,
+                    Id = x.Id,
+                    Description = x.Description,
+                    PictureUrl = x.PictureUrl,
+                    Interests = interestsToList,
+                    IsPublic = x.IsPublic,
+                    Town = x.Town,
+                    InterestsToList = this.GetInterests()
+                })
+                .FirstOrDefaultAsync();
+
+            return model;
+        }
+
         public async Task<ListClubMemebersBindingModel> GetMemberInClub(string clubId)
         {
             return new ListClubMemebersBindingModel()
@@ -188,7 +265,7 @@
                         Id = x.UserId,
                         Town = x.User.Town,
                         Email = x.User.Email,
-                        Number = x.User.PhoneNumber
+                        Number = x.User.PhoneNumber,
                     })
                     .ToListAsync()
             };
@@ -262,6 +339,21 @@
             }
 
             return result;
+        }
+
+        public bool IsFileValid(IFormFile photoFile)
+        {
+            string[] validTypes = new string[]
+            {
+                "image/x-png", "image/gif" , "image/jpeg", "image/jpg", "image/png", "image/gif", "image/svg"
+            };
+
+            if (validTypes.Contains(photoFile.ContentType) == false)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

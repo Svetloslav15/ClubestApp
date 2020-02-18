@@ -2,22 +2,27 @@
     <div class="px-0 col-lg-4 p-3">
         <img src="@Model.Club.PictureUrl" alt="@Model.Club.Name" class="w-100 h-100" />
     </div>
-    <div class="px-0 col-lg-8 box-shadow p-3 mt-3">
-        <h3 class="text-center text-uppercase mb-3 h3">@Model.Club.Name</h3>
-        <h5>Град: @Model.Club.Town</h5>
-        @if (Model.ClubPriceType == "Free")
-        {
-            <h5>Такса: <span class="font-weight-bold text-uppercase">Безплатно</span></h5>
-        }
-        else if (Model.ClubPriceType == "Montly")
-        {
-            <h5>Месечна Такса: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
-        }
-        else if (Model.ClubPriceType == "PerHour")
-        {
-            <h5>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
-        }
-        <p>@Model.Club.Description</p>
+    <div class="px-0 col-lg-8 box-shadow p-3 mt-3 row">
+        <div class="col-lg-10">
+            <h3 class="text-center text-uppercase mb-3 h3">@Model.Club.Name</h3>
+            <h5>Град: @Model.Club.Town</h5>
+            @if (Model.ClubPriceType == "Free")
+            {
+                <h5>Такса: <span class="font-weight-bold text-uppercase">Безплатно</span></h5>
+            }
+            else if (Model.ClubPriceType == "Montly")
+            {
+                <h5>Месечна Такса: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
+            }
+            else if (Model.ClubPriceType == "PerHour")
+            {
+                <h5>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
+            }
+            <p>@Model.Club.Description</p>
+        </div>
+        <div class="col-lg-2">
+            <a href="/Club/Edit/@Model.Club.Id" title="Редактирай клуб" class="btn btn-primary px-3 d-block"><i class="fas fa-edit"></i></a>
+        </div>
     </div>
 </div>
 <div class="px-0 col-lg-12">
