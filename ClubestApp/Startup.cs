@@ -14,7 +14,6 @@
     using ClubestApp.Services;
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
-    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {
@@ -58,6 +57,8 @@
             services.AddTransient<UserService>();
             services.AddTransient<ClubService>();
             services.AddTransient<RequestService>();
+            services.AddTransient<CloudinaryService>();
+            services.AddTransient<PostService>();
 
             services.AddMvc(options =>
             {

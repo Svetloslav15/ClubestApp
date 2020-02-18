@@ -245,3 +245,6 @@
  .w-5rem {
      width: 5rem;
 }
+.btn-padding-smaller {
+    padding: .84rem 1.7rem !important;
+}

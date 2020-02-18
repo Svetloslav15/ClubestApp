@@ -31,7 +31,7 @@
                 }); ;
             }
 
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }
