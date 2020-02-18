@@ -36,5 +36,7 @@
             }
             return this.Redirect($"/Club/Details/{inputModel.ClubId}");
         }
+
+
     }
 }

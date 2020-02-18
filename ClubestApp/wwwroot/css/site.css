@@ -254,3 +254,16 @@
     height: 30px !important;
     margin: 5px;
 }
+
+.btn-rounded-custom {
+    border-radius: 8.125rem !important;
+    padding: .84rem 1.2rem !important;
+}
+
+.w-30px {
+    width: 30px;
+}
+
+.border-radius-rounded {
+    border-radius: 40%;
+}

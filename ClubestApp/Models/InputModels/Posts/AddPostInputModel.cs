@@ -7,7 +7,7 @@
     public class AddPostInputModel
     {
         [Required]
-        [MaxLength(300)]
+        [MaxLength(400)]
         public string Content { get; set; }
         
         public IFormFile FormFile { get; set; }
