@@ -37,6 +37,27 @@
             return this.Redirect($"/Club/Details/{inputModel.ClubId}");
         }
 
+        public async Task<IActionResult> Like(string id, [FromQuery] string clubId)
+        {
+            User user = await this.userManager.GetUserAsync(User);
+            await this.postService.LikePost(id, user);
 
+            return this.Redirect($"/Club/Details/{clubId}#{id}");
+        }
+
+        public async Task<IActionResult> Dislike(string id, [FromQuery] string clubId)
+        {
+            User user = await this.userManager.GetUserAsync(User);
+            await this.postService.DislikePost(id, user);
+
+            return this.Redirect($"/Club/Details/{clubId}#{id}");
+        }
+
+        public async Task<IActionResult> Delete(string id, [FromQuery] string clubId)
+        {
+            await this.postService.DeletePost(id);
+
+            return this.Redirect($"/Club/Details/{clubId}");
+        }
     }
 }

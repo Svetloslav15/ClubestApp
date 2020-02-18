@@ -41,7 +41,11 @@
 
         public async Task<Post> GetPostById(string postId)
         {
-            return await this.dbContext.Posts.FirstOrDefaultAsync(post => post.Id == postId);
+            return await this.dbContext.Posts
+                .Include(post => post.UserPostLikes)
+                .Include(post => post.UserPostDislikes)
+                .Include(post => post.Comments)
+                .FirstOrDefaultAsync(post => post.Id == postId);
         }
 
         public async Task<Post> AddPost(AddPostInputModel inputModel)
@@ -78,47 +82,74 @@
             return await this.dbContext.Posts
                 .Where(post => post.ClubId == clubId)
                 .Include(post => post.Author)
+                .Include(post => post.UserPostLikes)
+                .Include(post => post.UserPostDislikes)
+                .Include(post => post.Comments)
                 .OrderByDescending(post => post.DateTime)
                 .ToListAsync();
         }
 
-        public async Task<UserPostLikes> LikePost(string postId, string userId)
+        public async Task<Post> LikePost(string postId, User user)
         {
             Post post = await this.GetPostById(postId);
-            User user = await this.userService.FindUserById(userId);
-
-            UserPostLikes userPostLikes = new UserPostLikes()
+            if (!post.UserPostLikes.Any(x => x.UserId == user.Id))
             {
-                User = user,
-                UserId = userId,
-                Post = post,
-                PostId = postId
-            };
+                UserPostLikes userPostLikes = new UserPostLikes()
+                {
+                    User = user,
+                    UserId = user.Id,
+                    Post = post,
+                    PostId = postId
+                };
 
-            await this.dbContext.UserPostLikes.AddAsync(userPostLikes);
+                await this.dbContext.UserPostLikes.AddAsync(userPostLikes);
+            }
+            if (post.UserPostDislikes.Any(x => x.UserId == user.Id))
+            {
+                UserPostDislikes entity = await this.dbContext.UserPostDislikes.FirstOrDefaultAsync(x => x.UserId == user.Id);
+                this.dbContext.UserPostDislikes.Remove(entity);
+            }
+
             await this.dbContext.SaveChangesAsync();
 
-            return userPostLikes;
+            return post;
         }
 
-        public async Task<UserPostDislikes> DislikePost(string postId, string userId)
+        public async Task<Post> DislikePost(string postId, User user)
         {
             Post post = await this.GetPostById(postId);
-            User user = await this.userService.FindUserById(userId);
 
-            UserPostDislikes userPostDislikes = new UserPostDislikes()
+            if (!post.UserPostDislikes.Any(x => x.UserId == user.Id))
             {
-                User = user,
-                UserId = userId,
-                Post = post,
-                PostId = postId
-            };
+                UserPostDislikes userPostDislikes = new UserPostDislikes()
+                {
+                    User = user,
+                    UserId = user.Id,
+                    Post = post,
+                    PostId = postId
+                };
 
-            await this.dbContext.UserPostDislikes.AddAsync(userPostDislikes);
+                await this.dbContext.UserPostDislikes.AddAsync(userPostDislikes);
+            }
+            if (post.UserPostLikes.Any(x => x.UserId == user.Id))
+            {
+                UserPostLikes entity = await this.dbContext.UserPostLikes.FirstOrDefaultAsync(x => x.UserId == user.Id);
+                this.dbContext.UserPostLikes.Remove(entity);
+            }
+            
             await this.dbContext.SaveChangesAsync();
 
-            return userPostDislikes;
+            return post;
         }
 
+        public async Task<Post> DeletePost(string postId)
+        {
+            Post post = await this.GetPostById(postId);
+            this.dbContext.Posts.Remove(post);
+
+            await this.dbContext.SaveChangesAsync();
+
+            return post;
+        }
     }
 }
