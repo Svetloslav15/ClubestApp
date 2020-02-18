@@ -9,10 +9,13 @@
                 @post.Author.FirstName @post.Author.LastName
             </span>
             <span class="float-right">
-                <a href="/Post/Delete/@post.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
-                   data-toggle="tooltip" data-placement="top" title="Изтрий пост">
-                    <i class="fas fa-trash-alt"></i>
-                </a>
+                @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
+                {
+                    <a href="/Post/Delete/@post.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
+                       data-toggle="tooltip" data-placement="top" title="Изтрий пост">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                }
                 <a href="/Post/Like/@post.Id?clubId=@Model.Club.Id" class="mr-2">
                     <span class="h3">@post.UserPostLikes.Count</span>
                     <i class="far fa-thumbs-up fa-2x"></i>
