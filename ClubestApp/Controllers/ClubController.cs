@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
@@ -150,7 +151,7 @@
                 isFileValid = this.clubService.IsFileValid(model.ImageFile);
             }
 
-            if (ModelState.IsValid || isFileValid)
+            if (ModelState.IsValid && isFileValid && model.Interests.Any() == true)
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 await this.clubService.EditClub(model, id);
@@ -161,7 +162,24 @@
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
 
-            return this.View(model);
+            if (model.Interests.Any() == false)
+            {
+                ModelState.AddModelError(ClubFields.Interests, ErrorMessages.ClubInterestsRequired);
+            }
+            var bindingModel = new EditClubBindingModel()
+            {
+                Id = id,
+                Name = model.Name,
+                Fee = model.Fee,
+                IsPublic = model.IsPublic,
+                PriceType = model.PriceType,
+                Description = model.Description,
+                Town = model.Town,
+                PictureUrl = model.PictureUrl,
+                ImageFile = model.ImageFile,
+                InterestsToList = interests
+            };
+            return this.View(bindingModel);
         }
     }
 }

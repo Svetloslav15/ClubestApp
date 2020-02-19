@@ -36,6 +36,7 @@
         [Required(ErrorMessage = ErrorMessages.ClubInterestsRequired)]
         public List<string> Interests { get; set; } = new List<string>();
 
+        [Required(ErrorMessage = ErrorMessages.ClubInterestsRequired)]
         public Dictionary<string, Dictionary<string, string>> InterestsToList { get; set; } = new Dictionary<string, Dictionary<string, string>>();
     }
 }
