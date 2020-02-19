@@ -1,0 +1,49 @@
+﻿@model ClubestApp.Models.BindingModels.ListPollsBindingModel
+
+@{
+    ViewData["Title"] = "Polls";
+}
+
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+
+    <!--/.Navbar-->
+    <div class="col-lg-4">
+        SideNav
+    </div>
+    <div class="col-lg-8 border">
+        <button type="button" title="Добави Анкета" class="btn btn-primary px-3 float-right col-lg-1"><i class="fas fa-plus-circle"></i></button>
+        <div class="row">
+            @if (Model.Polls.Count > 0)
+            {
+                foreach (var poll in Model.Polls)
+                {
+
+                    <div class="col-lg-4 col-md-6 mt-2 mb-2">
+                        <!--Panel-->
+                        <div class="card text-center">
+                            <div class=" card-header success-color white-text">
+                                Анкета
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">@poll.VotesCount Гласували</h4>
+                                <p class="card-text">@poll.Content</p>
+                                <a class="btn btn-success btn-sm">Гласувай</a>
+                            </div>
+                            <div class="card-footer text-muted success-color white-text">
+                                <p class="mb-0">@poll.ExpiredDate.Subtract(DateTime.UtcNow).Days дни до изтичане</p>
+                            </div>
+                        </div>
+                        <!--/.Panel-->
+                    </div>
+                    <!-- Grid column -->
+                }
+            }
+            else
+            {
+                <h3 class="text-primary text-center my-5">В момента няма анкети!</h3>
+            }
+        </div>
+    </div>
+
+</div>

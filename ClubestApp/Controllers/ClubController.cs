@@ -132,5 +132,12 @@
             ListClubMemebersBindingModel model = await this.clubService.GetMemberInClub(id);
             return View(model);
         }
+
+        public async Task<IActionResult> Polls(string id)
+        {
+            ListPollsBindingModel model = await this.clubService.GetPollsModel(id);
+
+            return this.View(model);
+        }
     }
 }

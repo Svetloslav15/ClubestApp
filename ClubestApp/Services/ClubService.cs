@@ -171,6 +171,32 @@
             return result.Entity;
         }
 
+        public async Task<ListPollsBindingModel> GetPollsModel(string clubId)
+        {
+            Club club = await this.dbContext
+                .Clubs
+                .FirstOrDefaultAsync(x => x.Id == clubId);
+
+            ListPollsBindingModel result = new ListPollsBindingModel
+            {
+                ClubPriceType = club.PriceType.ToString(),
+                Club = club,
+                Polls = this.dbContext
+                        .Polls
+                        .Where(x => x.ClubId == clubId)
+                        .Select(x => new PollItemBindingModel
+                        {
+                            Id = x.Id,
+                            Content = x.Content,
+                            VotesCount = x.PollVotedUsers.Count,
+                            ExpiredDate = x.ExpiredDate,
+                        })
+                        .ToList()
+            };
+
+            return result;
+        }
+
         public async Task<ListClubMemebersBindingModel> GetMemberInClub(string clubId)
         {
             return new ListClubMemebersBindingModel()
