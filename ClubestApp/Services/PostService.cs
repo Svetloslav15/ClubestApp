@@ -41,11 +41,20 @@
 
         public async Task<Post> GetPostById(string postId)
         {
-            return await this.dbContext.Posts
+            Post postEntity = await this.dbContext.Posts
                 .Include(post => post.UserPostLikes)
                 .Include(post => post.UserPostDislikes)
                 .Include(post => post.Comments)
+                    .ThenInclude(comment => comment.UserCommentDislikes)
+                .Include(post => post.Comments)
+                    .ThenInclude(comment => comment.UserCommentLikes)
                 .FirstOrDefaultAsync(post => post.Id == postId);
+
+            postEntity.Comments = postEntity.Comments
+                .OrderBy(comment => comment.Date)
+                .ToList();
+
+            return postEntity;
         }
 
         public async Task<Post> AddPost(AddPostInputModel inputModel)
@@ -79,7 +88,7 @@
 
         public async Task<IList<Post>> GetAllPostsForClub(string clubId)
         {
-            return await this.dbContext.Posts
+            IList<Post> posts = await this.dbContext.Posts
                 .Where(post => post.ClubId == clubId)
                 .Include(post => post.Author)
                 .Include(post => post.UserPostLikes)
@@ -87,6 +96,15 @@
                 .Include(post => post.Comments)
                 .OrderByDescending(post => post.DateTime)
                 .ToListAsync();
+
+            foreach (Post post in posts)
+            {
+                post.Comments = post.Comments
+                    .OrderByDescending(comment => comment.Date)
+                    .ToList();
+            }
+
+            return posts;
         }
 
         public async Task<Post> LikePost(string postId, User user)

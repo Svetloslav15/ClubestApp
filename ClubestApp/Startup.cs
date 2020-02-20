@@ -59,6 +59,7 @@
             services.AddTransient<RequestService>();
             services.AddTransient<CloudinaryService>();
             services.AddTransient<PostService>();
+            services.AddTransient<CommentService>();
 
             services.AddMvc(options =>
             {
