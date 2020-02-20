@@ -1,0 +1,135 @@
+﻿@model ClubestApp.Models.BindingModels.EditClubBindingModel
+
+@{
+    ViewData["Title"] = "EditClub";
+}
+
+<form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="Edit/@Model.Id" method="post" enctype="multipart/form-data" runat="server">
+    <p class="text-center h4 mb-4 text-black mt-2">Регистрирация на клуб</p>
+    <!-- Name -->
+    <div class="row">
+        <div class="mb-4 col-lg-6">
+            <div class="md-form">
+                <input type="text" asp-for="Name" id="form1" class="form-control text-black">
+                <label for="form1" class="text-black">Име</label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- FeeType -->
+        <div class="mb-5 col-lg-6 mt-4">
+            <select asp-for="PriceType" class="custom-select">
+                <option value="" disabled selected>Вид Такса</option>
+                <option value="montly">Месечна</option>
+                <option value="perHour">За час</option>
+                <option value="free">Безплатно</option>
+            </select>
+            <span asp-validation-for="PriceType" class="text-danger"></span>
+        </div>
+
+        <!-- Fee -->
+        <div class="mb-4 col-lg-6">
+            <div class="md-form">
+                <input type="text" asp-for="Fee" id="form1" class="form-control text-black">
+                <label for="form1" class="text-black">Такса</label>
+                <span class="note-info">*Aко клубът ви е безплатен напишете за цена 0.</span>
+                <span asp-validation-for="Fee" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- IsPublic -->
+        <div class="col-lg-6 row text-center">
+            <div class="text-black mt-2 waves-effect waves-light mb-2 d-inline mr-2 col-lg-12">Вид на твоя клуб:</div>
+
+            <!--Checked -->
+
+            <div class="custom-control custom-radio mx-auto" style="display: inline-block">
+                @Html.RadioButtonFor(model => model.IsPublic, "true", new { @checked = "checked", @class = "custom-control-input", @id = "defaultChecked", @Name = "defaultExampleRadios" })
+                <label class="text-black custom-control-label" for="defaultChecked">Публичен</label>
+            </div>
+
+            <!--Unchecked -->
+            <div class="custom-control custom-radio mb-1 mx-auto" style="display: inline-block">
+                @Html.RadioButtonFor(model => model.IsPublic, "false", new { @class = "custom-control-input", @id = "defaultUnchecked", @Name = "defaultExampleRadios" })
+                <label class="text-black custom-control-label" for="defaultUnchecked">Частен</label>
+            </div>
+
+            <div class="font-weight-bold font-italic mx-auto">
+                <span asp-validation-for="IsPublic" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="md-form">
+            <div class="mb-4 col-lg-11">
+                <textarea id="form7" asp-for="Description" class="md-textarea form-control" rows="3" maxlength="300"></textarea>
+                <label for="form7">Описание</label>
+                <span class="note-info">*Опишете детайли за клуба(например адрес, посещения и т.н.)</span>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Town -->
+        <div class="mb-4 col-lg-5">
+            <div class="md-form">
+                <input type="text" asp-for="Town" id="form1" class="form-control text-black">
+                <label for="form1" class="text-black">Населено Място</label>
+                <span asp-validation-for="Town" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-4 col-lg-6">
+            <label for="form1" class="text-black">Снимка на клуба</label>
+            <div class="md-form">
+                <input type="file" asp-for="ImageFile" name="ImageFile" id="form1" class="form-control text-black">
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+            <h5>Сегашна снимка:</h5>
+            <img src="@Model.PictureUrl" alt="Alternate Text" class="w-100 profile-picture" />
+            <input type="text" name="PictureUrl" asp-for="PictureUrl" value="@Model.PictureUrl" hidden/>
+        </div>
+
+        <!-- Interests -->
+
+
+        <div class="mb-5 col-lg-6 mt-4">
+            <label for="form1" class="text-black">Интереси</label>
+            <select asp-for="Interests" class="custom-select" multiple>
+                @foreach (var item in Model.InterestsToList)
+                {
+                    List<string> tempInterests = new List<string>();
+                    foreach (var interest in item.Value)
+                    {
+                        var result = interest.Value.ToString();
+                        tempInterests.Add(result);
+                    }
+
+                    @if (Model.Interests.Contains(tempInterests[0].ToLower()))
+                    {
+                        <option value="@tempInterests[0]" selected>@tempInterests[1]</option>
+                    }
+                    else
+                    {
+                        <option value="@tempInterests[0]">@tempInterests[1]</option>
+                    }
+                }
+            </select>
+            <span class="note-info">
+                *Задръжте CTRL за да изберете
+                повече от един интерес
+            </span>
+            <span asp-validation-for="Interests" class="text-danger"></span>
+        </div>
+
+
+    </div>
+
+
+    <!-- Sign in button -->
+    <div class="text-center mt-5">
+        <input type="submit" class="btn text-white bg-white blue-gradient btn-outline-white" value="Добави" />
+    </div>
+</form>

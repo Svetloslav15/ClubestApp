@@ -171,7 +171,7 @@
             EditInterestsBindingModel model = new EditInterestsBindingModel
             {
                 AllInterests = await this.userService.GetInterests(),
-                UserInterests = user.Interests.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
+                UserInterests = user.Interests.Split(",", System.StringSplitOptions.RemoveEmptyEntries).ToList()
             };
 
             return this.View(model);
