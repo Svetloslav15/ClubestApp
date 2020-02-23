@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
@@ -49,6 +50,7 @@
 
                 return this.Redirect("/Home/Index");
             }
+
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
@@ -136,6 +138,53 @@
         {
             ListClubMemebersBindingModel model = await this.clubService.GetMemberInClub(id);
             return View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditClubInputModel model, string id)
+        {
+            bool isFileValid = true;
+            if (model.ImageFile != null)
+            {
+                isFileValid = this.clubService.IsFileValid(model.ImageFile);
+            }
+
+            if (ModelState.IsValid && isFileValid && model.Interests.Any() == true)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                await this.clubService.EditClub(model, id);
+
+                return this.Redirect("/Club/Details/" + id);
+            }
+
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+
+            if (model.Interests.Any() == false)
+            {
+                ModelState.AddModelError(ClubFields.Interests, ErrorMessages.ClubInterestsRequired);
+            }
+            var bindingModel = new EditClubBindingModel()
+            {
+                Id = id,
+                Name = model.Name,
+                Fee = model.Fee,
+                IsPublic = model.IsPublic,
+                PriceType = model.PriceType,
+                Description = model.Description,
+                Town = model.Town,
+                PictureUrl = model.PictureUrl,
+                ImageFile = model.ImageFile,
+                InterestsToList = interests
+            };
+            return this.View(bindingModel);
         }
     }
 }

@@ -92,10 +92,10 @@
             StringBuilder sb = new StringBuilder();
             foreach (string interest in interests)
             {
-                sb.Append($"{interest}, ");
+                sb.Append($"{interest},");
             }
 
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
 
         public async Task<Dictionary<string, Dictionary<string, string>>> GetInterests()

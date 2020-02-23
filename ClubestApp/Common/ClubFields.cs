@@ -6,5 +6,6 @@
 
         public const string PriceType = "PriceType";
 
+        public const string Interests = "Interests";
     }
 }
