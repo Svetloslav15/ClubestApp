@@ -20,6 +20,8 @@
 
         public string Content { get; set; }
 
+        public string FileUrlOrLink { get; set; }
+
         public PostType PostType { get; set; }
 
         public ICollection<UserPostLikes> UserPostLikes { get; set; }

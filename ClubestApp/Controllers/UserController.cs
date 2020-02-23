@@ -19,18 +19,21 @@
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserService userService;
+        private readonly ClubService clubService;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
 
         public UserController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            UserService userService)
+            UserService userService,
+            ClubService clubService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
             this.userService = userService;
+            this.clubService = clubService;
         }
 
         public async Task<IActionResult> Profile()
@@ -171,7 +174,7 @@
             EditInterestsBindingModel model = new EditInterestsBindingModel
             {
                 AllInterests = await this.userService.GetInterests(),
-                UserInterests = user.Interests.Split(", ", System.StringSplitOptions.RemoveEmptyEntries).ToList()
+                UserInterests = user.Interests.Split(",", System.StringSplitOptions.RemoveEmptyEntries).ToList()
             };
 
             return this.View(model);

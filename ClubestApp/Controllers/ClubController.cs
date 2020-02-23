@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
@@ -18,14 +19,17 @@
         private readonly ClubService clubService;
         private readonly UserManager<User> userManager;
         private readonly RequestService requestService;
+        private readonly PostService postService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
-                    RequestService requestService)
+                    RequestService requestService,
+                    PostService postService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
             this.requestService = requestService;
+            this.postService = postService;
         }
 
         public IActionResult AddClub()
@@ -92,10 +96,12 @@
         {
             Club club = await this.clubService.GetClubById(id);
             string clubPriceType = club.PriceType.ToString();
+            IList<Post> postsForClub = await this.postService.GetAllPostsForClub(club.Id);
             ClubDetailsBindingModel bindingModel = new ClubDetailsBindingModel()
             {
                 Club = club,
-                ClubPriceType = clubPriceType
+                ClubPriceType = clubPriceType,
+                Posts = postsForClub
             };
 
             return this.View(bindingModel);
@@ -139,6 +145,10 @@
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ListPollsBindingModel model = await this.clubService.GetPollsModel(id, userId);
             ViewData["validation"] = validation;
+        }
+        public async Task<IActionResult> Edit(string id)
+        {
+            EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
 
             return this.View(model);
         }
@@ -166,6 +176,46 @@
             }
 
             return this.Redirect($"/Club/Polls/{model.ClubId}");
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditClubInputModel model, string id)
+        {
+            bool isFileValid = true;
+            if (model.ImageFile != null)
+            {
+                isFileValid = this.clubService.IsFileValid(model.ImageFile);
+            }
+
+            if (ModelState.IsValid && isFileValid && model.Interests.Any() == true)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                await this.clubService.EditClub(model, id);
+
+                return this.Redirect("/Club/Details/" + id);
+            }
+
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+
+            if (model.Interests.Any() == false)
+            {
+                ModelState.AddModelError(ClubFields.Interests, ErrorMessages.ClubInterestsRequired);
+            }
+            var bindingModel = new EditClubBindingModel()
+            {
+                Id = id,
+                Name = model.Name,
+                Fee = model.Fee,
+                IsPublic = model.IsPublic,
+                PriceType = model.PriceType,
+                Description = model.Description,
+                Town = model.Town,
+                PictureUrl = model.PictureUrl,
+                ImageFile = model.ImageFile,
+                InterestsToList = interests
+            };
+            return this.View(bindingModel);
         }
     }
 }

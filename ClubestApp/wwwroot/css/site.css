@@ -245,3 +245,32 @@
  .w-5rem {
      width: 5rem;
 }
+.btn-padding-smaller {
+    padding: .84rem 1.7rem !important;
+}
+
+.w-interest-image {
+    width: 30px !important;
+    height: 30px !important;
+    margin: 5px;
+}
+
+.btn-rounded-custom {
+    border-radius: 8.125rem !important;
+    padding: .84rem 1.2rem !important;
+}
+
+.w-30px {
+    width: 30px;
+}
+
+.border-radius-rounded {
+    border-radius: 40%;
+}
+
+.font-size-13 {
+    font-size: 13px;
+}
+.font-size-15 {
+    font-size: 15px;
+}
