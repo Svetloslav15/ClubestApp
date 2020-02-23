@@ -1,17 +1,65 @@
 ﻿@model ClubestApp.Models.BindingModels.ClubDetailsBindingModel
+@using ClubestApp.Data.Models.Enums
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"{Model.Club.Name}";
 }
 
-    <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
-        <partial name="../Shared/_ClubDetails.cshtml"/>
-        <!--/.Navbar-->
-        <div class="col-lg-4">
-            SideNav
-        </div>
-        <div class="col-lg-8 border">
-            <div>
-                Posts
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+    <!--/.Navbar-->
+    <div class="col-lg-4">
+        SideNav
+    </div>
+    <div class="col-lg-8 border">
+        <div>
+            <div class="col-lg-12 text-center">
+                <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави пост">
+                    <button type="button" class="btn blue-gradient waves-effect mx-auto btn-rounded-custom"
+                            data-toggle="modal" data-target="#add-post-modal">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
             </div>
+
+            <!--Add post form-->
+            <div class="modal fade" id="add-post-modal" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content p-4">
+                        <form asp-controller="Post" asp-action="AddPost" method="post" enctype="multipart/form-data" runat="server">
+                            <div class="md-form">
+                                <textarea id="textarea-post" name="Content" class="form-control md-textarea" length="30" rows="3"></textarea>
+                                <label for="textarea-post"><i class="fas fa-pencil-alt fa-lg"></i></label>
+                            </div>
+                            <input type="hidden" name="ClubId" value="@Model.Club.Id" />
+                            <div class="row">
+                                <div class="col-lg-8 input-group">
+                                    <div class="custom-file">
+                                        <input type="file" accept="image/*" name="FormFile" id="FormFile" />
+                                        <label class="custom-file-label" for="FormFile">Избери файл... </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 text-right">
+                                    <input type="submit" class="btn blue-gradient waves-effect" value="Добави" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--/Add post form-->
+            <!-- List posts for a club-->
+            @if (Model.Posts.Count == 0)
+            {
+                <div class="box-shadow-light mt-1">
+                    <h3 class="text-primary text-center p-3">Няма все още постове!</h3>
+                </div>
+            }
+            else
+            {
+                <partial name="../Shared/_PostPartial.cshtml"/>
+            }
+            <!--/List posts for a club-->
         </div>
     </div>
+</div>

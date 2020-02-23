@@ -59,13 +59,21 @@
 
             if (requestType == 1)
             {
+                UserClub userClub = new UserClub()
+                {
+                    Club = request.Club,
+                    User = request.User,
+                    ClubId = request.ClubId,
+                    UserId = request.UserId
+                };
+                await this.dbContext.UserClubs.AddAsync(userClub);
                 request.RequestType = RequestType.Approved;
             }
             else if (requestType == 2)
             {
                 request.RequestType = RequestType.Removed;
             }
-
+           
             await this.dbContext.SaveChangesAsync();
 
             return request;

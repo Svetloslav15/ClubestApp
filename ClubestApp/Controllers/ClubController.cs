@@ -19,14 +19,17 @@
         private readonly ClubService clubService;
         private readonly UserManager<User> userManager;
         private readonly RequestService requestService;
+        private readonly PostService postService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
-                    RequestService requestService)
+                    RequestService requestService,
+                    PostService postService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
             this.requestService = requestService;
+            this.postService = postService;
         }
 
         public IActionResult AddClub()
@@ -93,10 +96,12 @@
         {
             Club club = await this.clubService.GetClubById(id);
             string clubPriceType = club.PriceType.ToString();
+            IList<Post> postsForClub = await this.postService.GetAllPostsForClub(club.Id);
             ClubDetailsBindingModel bindingModel = new ClubDetailsBindingModel()
             {
                 Club = club,
-                ClubPriceType = clubPriceType
+                ClubPriceType = clubPriceType,
+                Posts = postsForClub
             };
 
             return this.View(bindingModel);

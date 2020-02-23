@@ -2,45 +2,55 @@
     <div class="px-0 col-lg-4 p-3">
         <img src="@Model.Club.PictureUrl" alt="@Model.Club.Name" class="w-100 h-100" />
     </div>
-    <div class="px-0 col-lg-8 box-shadow p-3 mt-3 row">
-        <div class="col-lg-10">
-            <h3 class="text-center text-uppercase mb-3 h3">@Model.Club.Name</h3>
-            <h5>Град: @Model.Club.Town</h5>
+    <div class="px-0 col-lg-8 box-shadow p-3 mt-3">
+        <h3 class="text-center text-uppercase mb-3 h3">
+            @Model.Club.Name
+        </h3>
+        <p>
+            Град: @Model.Club.Town
             @if (Model.ClubPriceType == "Free")
             {
-                <h5>Такса: <span class="font-weight-bold text-uppercase">Безплатно</span></h5>
-            }
-            else if (Model.ClubPriceType == "Montly")
-            {
-                <h5>Месечна Такса: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
-            }
-            else if (Model.ClubPriceType == "PerHour")
-            {
-                <h5>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></h5>
-            }
+            <p>Такса: <span class="font-weight-bold text-uppercase">Безплатно</span></p>
+        }
+        else if (Model.ClubPriceType == "Montly")
+        {
+            <p>Месечна Такса: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></p>
+        }
+        else if (Model.ClubPriceType == "PerHour")
+        {
+            <p>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></p>
+        }
             <p>@Model.Club.Description</p>
-        </div>
-        <div class="col-lg-2">
-            <a href="/Club/Edit/@Model.Club.Id" title="Редактирай клуб" class="btn btn-primary px-3 d-block"><i class="fas fa-edit"></i></a>
+            <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Влез в клуб">
+                <i class="fas fa-plus-circle fa-lg"></i>
+            </a>
+            @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
+            {
+                <button class="btn btn-warning waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-danger waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            }
         </div>
     </div>
-</div>
-<div class="px-0 col-lg-12">
-    <ul class="nav justify-content-center primary-color lighten-4">
-        <li class="nav-item waves-effect">
-            <a class="nav-link text-white" href="/Club/Details/@Model.Club.Id">Постове</a>
-        </li>
-        <li class="nav-item waves-effect">
-            <a class="nav-link text-white" href="/Club/ListMembers/@Model.Club.Id">Членове</a>
-        </li>
-        <li class="nav-item waves-effect">
-            <a class="nav-link text-white" href="#!">Събития</a>
-        </li>
-        <li class="nav-item waves-effect">
-            <a class="nav-link text-white" href="#!">Анкети</a>
-        </li>
-        <li class="nav-item waves-effect">
-            <a class="nav-link text-white" href="/Club/JoinRequests/@Model.Club.Id">Заявки</a>
-        </li>
-    </ul>
-</div>
+    <div class="px-0 col-lg-12">
+        <ul class="nav justify-content-center primary-color lighten-4">
+            <li class="nav-item waves-effect">
+                <a class="nav-link text-white" href="/Club/Details/@Model.Club.Id">Постове</a>
+            </li>
+            <li class="nav-item waves-effect">
+                <a class="nav-link text-white" href="/Club/ListMembers/@Model.Club.Id">Членове</a>
+            </li>
+            <li class="nav-item waves-effect">
+                <a class="nav-link text-white" href="#!">Събития</a>
+            </li>
+            <li class="nav-item waves-effect">
+                <a class="nav-link text-white" href="#!">Анкети</a>
+            </li>
+            <li class="nav-item waves-effect">
+                <a class="nav-link text-white" href="/Club/JoinRequests/@Model.Club.Id">Заявки</a>
+            </li>
+        </ul>
+    </div>

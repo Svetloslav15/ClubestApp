@@ -3,7 +3,7 @@
     <p class="text-center h4 mb-4 text-black mt-2">Регистрирация на клуб</p>
     <!-- Name -->
     <div class="row">
-        <div class="mb-4 col-lg-6">
+        <div class="mb-1 col-lg-6">
             <div class="md-form">
                 <input type="text" asp-for="Name" id="form1" class="form-control text-black">
                 <label for="form1" class="text-black">Име</label>
@@ -12,7 +12,7 @@
         </div>
 
         <!-- FeeType -->
-        <div class="mb-5 col-lg-6 mt-4">
+        <div class="mb-1 col-lg-6 mt-1">
             <select asp-for="PriceType" class="custom-select">
                 <option value="" disabled selected>Вид Такса</option>
                 <option value="montly">Месечна</option>
@@ -23,7 +23,7 @@
         </div>
 
         <!-- Fee -->
-        <div class="mb-4 col-lg-6">
+        <div class="mb-1 col-lg-6">
             <div class="md-form">
                 <input type="text" asp-for="Fee" id="form1" class="form-control text-black">
                 <label for="form1" class="text-black">Такса</label>
@@ -57,8 +57,8 @@
 
     <div class="row">
         <!-- Description -->
-        <div class="md-form">
-            <div class="mb-4 col-lg-11">
+        <div class="col-lg-6 md-form">
+            <div class="mb-1">
                 <textarea id="form7" asp-for="Description" class="md-textarea form-control" rows="3" maxlength="300"></textarea>
                 <label for="form7">Описание</label>
                 <span class="note-info">*Опишете детайли за клуба(например адрес, посещения и т.н.)</span>
@@ -67,7 +67,7 @@
         </div>
 
         <!-- Town -->
-        <div class="mb-4 col-lg-5">
+        <div class="mb-1 col-lg-6">
             <div class="md-form">
                 <input type="text" asp-for="Town" id="form1" class="form-control text-black">
                 <label for="form1" class="text-black">Населено Място</label>
@@ -76,7 +76,7 @@
         </div>
 
         <!-- Image -->
-        <div class="mb-4 col-lg-6">
+        <div class="mb-1 col-lg-6">
             <label for="form1" class="text-black">Снимка на клуба</label>
             <div class="md-form">
                 <input type="file" asp-for="ImageFile" name="ImageFile" id="form1" class="form-control text-black">
@@ -85,9 +85,7 @@
         </div>
 
         <!-- Interests -->
-
-
-        <div class="mb-5 col-lg-6 mt-4">
+        <div class="mb-1 col-lg-6">
             <label for="form1" class="text-black">Интереси</label>
             <select asp-for="Interests" class="custom-select" multiple>
                 @foreach (var item in Model.InterestsToList)
@@ -108,13 +106,9 @@
             </span>
             <span asp-validation-for="Interests" class="text-danger"></span>
         </div>
-
-
     </div>
-
-
     <!-- Sign in button -->
-    <div class="text-center mt-5">
+    <div class="text-center mt-3">
         <input type="submit" class="btn text-white bg-white blue-gradient btn-outline-white" value="Добави" />
     </div>
 </form>
