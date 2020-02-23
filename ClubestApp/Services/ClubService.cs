@@ -8,6 +8,7 @@
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
@@ -171,7 +172,65 @@
             return result.Entity;
         }
 
-        public async Task<ListPollsBindingModel> GetPollsModel(string clubId)
+        public async void AddVote(List<string> votes, string pollId, string userId)
+        {
+            User user = this.dbContext.Users.First(u => u.Id == userId);
+            foreach (var vote in votes)
+            {
+                Option option = this.dbContext
+                    .Options
+                    .FirstOrDefault(x => x.Content == vote && x.PollId == pollId);
+                Poll currentPoll = this.dbContext
+                    .Polls
+                    .First(x => x.Id == pollId);
+                if (option != null && currentPoll.PollVotedUsers.Any(x => x.UserId == userId) == false)
+                {
+                    option.VotesCount++;
+                    currentPoll.PollVotedUsers.Add(new PollVotedUsers
+                    {
+                        User = user,
+                        UserId = userId,
+                        PollId = pollId,
+                        Poll = currentPoll
+                    });
+
+                    this.dbContext.SaveChanges();
+                }
+            }
+
+        }
+
+        public async void CreatePoll(AddPollInputModel model, string id)
+        {
+            Poll newPoll = new Poll()
+            {
+                Content = model.Content,
+                ClubId = id,
+                IsMultichoice = model.IsMultichoice.ToLower() == "true" ? true
+                : false,
+                ExpiredDate = model.ExpiredDate,
+            };
+
+            var poll = this.dbContext.Polls.Add(newPoll);
+
+            List<string> options = model.Options.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<Option> optionsObjects = new List<Option>();
+            foreach (var option in options)
+            {
+                Option newOption = new Option()
+                {
+                    VotesCount = 0,
+                    Content = option,
+                    PollId = poll.Entity.Id,
+                };
+
+                this.dbContext.Options.Add(newOption);
+            }
+
+            this.dbContext.SaveChanges();
+        }
+
+        public async Task<ListPollsBindingModel> GetPollsModel(string clubId, string userId)
         {
             Club club = await this.dbContext
                 .Clubs
@@ -183,18 +242,28 @@
                 Club = club,
                 Polls = this.dbContext
                         .Polls
-                        .Where(x => x.ClubId == clubId)
+                        .Where(x => x.ClubId == clubId && this.IsPollValid(x.ExpiredDate))
                         .Select(x => new PollItemBindingModel
                         {
                             Id = x.Id,
                             Content = x.Content,
                             VotesCount = x.PollVotedUsers.Count,
                             ExpiredDate = x.ExpiredDate,
+                            Options = x.Options.ToList(),
+                            IsMultichoice = x.IsMultichoice,
+                            PollVotedUsers = x.PollVotedUsers.ToList()
                         })
-                        .ToList()
+                        .ToList(),
+                ClubId = club.Id,
+                UserId = this.dbContext.Users.First(u => u.Id == userId).Id
             };
 
             return result;
+        }
+
+        private bool IsPollValid(DateTime expiredDate)
+        {
+            return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
         }
 
         public async Task<ListClubMemebersBindingModel> GetMemberInClub(string clubId)

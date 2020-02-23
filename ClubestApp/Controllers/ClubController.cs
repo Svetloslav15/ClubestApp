@@ -46,6 +46,7 @@
 
                 return this.Redirect("/Home/Index");
             }
+
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
@@ -133,11 +134,38 @@
             return View(model);
         }
 
-        public async Task<IActionResult> Polls(string id)
+        public async Task<IActionResult> Polls([FromQuery] string validation, string id)
         {
-            ListPollsBindingModel model = await this.clubService.GetPollsModel(id);
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ListPollsBindingModel model = await this.clubService.GetPollsModel(id, userId);
+            ViewData["validation"] = validation;
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPoll(AddPollInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                this.clubService.CreatePoll(model, model.ClubId);
+                return this.Redirect($"/Club/Polls/{model.ClubId}");
+            }
+
+            return this.Redirect($"/Club/Polls/{model.ClubId}?validation=true");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVote(AddPollInputModel model)
+        {
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (model.Votes?.Any() == true)
+            {
+                this.clubService.AddVote(model.Votes, model.PollId, userId);
+                return this.Redirect($"/Club/Polls/{model.ClubId}");
+            }
+
+            return this.Redirect($"/Club/Polls/{model.ClubId}");
         }
     }
 }

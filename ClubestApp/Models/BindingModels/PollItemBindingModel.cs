@@ -1,6 +1,8 @@
 ﻿namespace ClubestApp.Models.BindingModels
 {
+    using ClubestApp.Data.Models;
     using System;
+    using System.Collections.Generic;
 
     public class PollItemBindingModel
     {
@@ -11,5 +13,11 @@
         public DateTime ExpiredDate { get; set; }
 
         public int VotesCount { get; set; }
+
+        public List<Option> Options { get; set; }
+
+        public bool IsMultichoice { get; set; }
+
+        public List<PollVotedUsers> PollVotedUsers { get; set; }
     }
 }
