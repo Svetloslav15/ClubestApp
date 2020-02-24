@@ -10,10 +10,13 @@
         [Required(ErrorMessage = ErrorMessages.PollContentRequired)]
         public string Content { get; set; }
 
+        [Required]
         public string Options { get; set; }
 
+        [Required]
         public string IsMultichoice { get; set; }
 
+        [Required]
         public DateTime ExpiredDate { get; set; }
 
         public string ClubId { get; set; }
