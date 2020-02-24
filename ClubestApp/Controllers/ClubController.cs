@@ -145,7 +145,10 @@
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ListPollsBindingModel model = await this.clubService.GetPollsModel(id, userId);
             ViewData["validation"] = validation;
+
+            return this.View(model);
         }
+
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
