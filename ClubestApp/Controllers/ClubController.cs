@@ -161,7 +161,7 @@
         {
             if (ModelState.IsValid)
             {
-                this.clubService.CreatePoll(model, model.ClubId);
+                await this.clubService.CreatePoll(model, model.ClubId);
                 return this.Redirect($"/Club/Polls/{model.ClubId}");
             }
 
@@ -174,7 +174,7 @@
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (model.Votes?.Any() == true)
             {
-                this.clubService.AddVote(model.Votes, model.PollId, userId);
+                await this.clubService.AddVote(model.Votes, model.PollId, userId);
                 return this.Redirect($"/Club/Polls/{model.ClubId}");
             }
 

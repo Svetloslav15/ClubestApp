@@ -67,6 +67,7 @@
         {
             return await this.dbContext.Clubs.ToListAsync();
         }
+
         public GetClubsBindingModel[] GetAllClubsBindingModel(IList<Club> clubs)
         {
             GetClubsBindingModel[] models = clubs
@@ -173,17 +174,20 @@
             return result.Entity;
         }
 
-        public async void AddVote(List<string> votes, string pollId, string userId)
+        public async Task<Poll> AddVote(List<string> votes, string pollId, string userId)
         {
-            User user = this.dbContext.Users.First(u => u.Id == userId);
+            User user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            Poll currentPoll = null;
+
             foreach (var vote in votes)
             {
-                Option option = this.dbContext
+                Option option = await this.dbContext
                     .Options
-                    .FirstOrDefault(x => x.Content == vote && x.PollId == pollId);
-                Poll currentPoll = this.dbContext
+                    .FirstOrDefaultAsync(x => x.Content == vote && x.PollId == pollId);
+                
+                currentPoll = await this.dbContext
                     .Polls
-                    .First(x => x.Id == pollId);
+                    .FirstOrDefaultAsync(x => x.Id == pollId);
                 if (option != null && currentPoll.PollVotedUsers.Any(x => x.UserId == userId) == false)
                 {
                     option.VotesCount++;
@@ -195,13 +199,15 @@
                         Poll = currentPoll
                     });
 
-                    this.dbContext.SaveChanges();
+                    await this.dbContext.SaveChangesAsync();
                 }
+
             }
 
+            return currentPoll;
         }
 
-        public async void CreatePoll(AddPollInputModel model, string id)
+        public async Task<Poll> CreatePoll(AddPollInputModel model, string id)
         {
             Poll newPoll = new Poll()
             {
@@ -212,10 +218,11 @@
                 ExpiredDate = model.ExpiredDate,
             };
 
-            var poll = this.dbContext.Polls.Add(newPoll);
+            var poll = await this.dbContext.Polls.AddAsync(newPoll);
 
-            List<string> options = model.Options.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-            List<Option> optionsObjects = new List<Option>();
+            List<string> options = model.Options.Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
             foreach (var option in options)
             {
                 Option newOption = new Option()
@@ -225,10 +232,11 @@
                     PollId = poll.Entity.Id,
                 };
 
-                this.dbContext.Options.Add(newOption);
+                await this.dbContext.Options.AddAsync(newOption);
             }
 
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
+            return poll.Entity;
         }
 
         public async Task<ListPollsBindingModel> GetPollsModel(string clubId, string userId)
@@ -267,7 +275,7 @@
             return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
         }
       
-        internal async Task<Club> EditClub(EditClubInputModel model, string id)
+        public async Task<Club> EditClub(EditClubInputModel model, string id)
         {
             //Work on image
             string currentUrl = "";
