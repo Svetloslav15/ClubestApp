@@ -27,6 +27,8 @@
 
         public Club Club { get; set; }
 
+        public bool IsMultichoice { get; set; }
+
         public DateTime ExpiredDate { get; set; }
 
         public ICollection<PollVotedUsers> PollVotedUsers { get; set; }

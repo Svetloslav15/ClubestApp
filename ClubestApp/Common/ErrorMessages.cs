@@ -39,5 +39,7 @@
         public const string ClubTownRequired = "Моля посочете населеното място на клуба";
 
         public const string ClubInterestsRequired = "Моля изберете поне един интерес за вашия клуб";
+
+        public const string PollContentRequired = "Моля въведете заглавие на анкетата";
     }
 }

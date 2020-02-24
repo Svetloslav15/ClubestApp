@@ -20,16 +20,19 @@
         private readonly UserManager<User> userManager;
         private readonly RequestService requestService;
         private readonly PostService postService;
+        private readonly PollService pollService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
                     RequestService requestService,
-                    PostService postService)
+                    PostService postService,
+                    PollService pollService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
             this.requestService = requestService;
             this.postService = postService;
+            this.pollService = pollService;
         }
 
         public IActionResult AddClub()
@@ -127,6 +130,15 @@
             return this.View(requestsBindingModel);
         }
 
+        public async Task<IActionResult> Polls([FromQuery] string validation, string id)
+        {
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ListPollsBindingModel model = await this.pollService.GetPollsModel(id, userId);
+            ViewData["validation"] = validation;
+
+            return this.View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ApproveJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
@@ -157,7 +169,7 @@
 
             return this.View(model);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Edit(EditClubInputModel model, string id)
         {
