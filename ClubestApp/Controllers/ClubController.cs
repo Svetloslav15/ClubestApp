@@ -140,6 +140,17 @@
             return View(model);
         }
 
+<<<<<<< Updated upstream
+=======
+        public async Task<IActionResult> Polls([FromQuery] string validation, string id)
+        {
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ListPollsBindingModel model = await this.clubService.GetPollsModel(id, userId);
+            ViewData["validation"] = validation;
+
+            return this.View(model);
+        }
+>>>>>>> Stashed changes
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
