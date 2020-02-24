@@ -1,0 +1,63 @@
+﻿@model ClubestApp.Models.BindingModels.ListPollsBindingModel
+
+<div class="modal fade" id="createPoll" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Създай Анкета</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Poll" asp-action="AddPoll" method="post">
+                <div class="pt-1 modal-body mx-3 ">
+                    <p>Вид</p>
+                    <div class="custom-control custom-radio  pr-2 mx-auto" style="display: inline-block">
+                        @Html.RadioButtonFor(model => model.IsMultichoice, "false", new { @checked = "checked", @class = "custom-control-input", @id = "defaultChecked", @Name = "defaultExampleRadios" })
+                        <label class="text-black custom-control-label" for="defaultChecked">С един избор</label>
+                    </div>
+
+                    <!--Unchecked -->
+                    <div class="custom-control custom-radio mb-1 mx-auto" style="display: inline-block">
+                        @Html.RadioButtonFor(model => model.IsMultichoice, "true", new { @class = "custom-control-input", @id = "defaultUnchecked", @Name = "defaultExampleRadios" })
+                        <label class="text-black custom-control-label" for="defaultUnchecked">С много избори</label>
+                    </div>
+                </div>
+
+                <div class="py-1 modal-body mx-3">
+                    <div class="md-form mb-1">
+                        <input type="text" asp-for="Content" id="form34" class="form-control validate">
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <label for="form34">Въпрос</label>
+                    </div>
+
+                    <div class="md-form">
+                        <input type="text" id="optionField" class="form-control validate">
+                        <label for="form34">Добави опция</label>
+                    </div>
+
+                    <button type="button" class="btn aqua-gradient px-3 mb-2" id="addButton">Добави</button>
+
+                    <div class="mb-1" id="options">
+                    </div>
+
+                    <p id="textOptions" hidden></p>
+                    <input type="text" name="Options" asp-for="Options" id="allOptions" value="" hidden />
+
+                    <div class="md-form mb-1">
+                        <input type="date" asp-for="ExpiredDate" value="@{@DateTime.UtcNow.Year}-@{@DateTime.UtcNow.Month.ToString("d2")} -@{@DateTime.UtcNow.Day}" id="form34" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form34">Дата на изтичане</label>
+                    </div>
+
+                    <input type="text" asp-for="ClubId" value="@Model.ClubId" hidden>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn blue-gradient">Създай<i class="fas fa-paper-plane-o ml-1"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

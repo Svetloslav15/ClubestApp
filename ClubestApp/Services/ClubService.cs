@@ -9,6 +9,7 @@
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
@@ -66,6 +67,7 @@
         {
             return await this.dbContext.Clubs.ToListAsync();
         }
+
         public GetClubsBindingModel[] GetAllClubsBindingModel(IList<Club> clubs)
         {
             GetClubsBindingModel[] models = clubs
@@ -171,8 +173,8 @@
 
             return result.Entity;
         }
-
-        internal async Task<Club> EditClub(EditClubInputModel model, string id)
+      
+        public async Task<Club> EditClub(EditClubInputModel model, string id)
         {
             //Work on image
             string currentUrl = "";
