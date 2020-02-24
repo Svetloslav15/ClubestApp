@@ -115,7 +115,29 @@
         {
             Club club = await this.clubService.GetClubById(id);
             string clubPriceType = club.PriceType.ToString();
-            List<JoinClubRequest> requests = this.requestService.GetJoinClubRequestsForAClub(id)
+            List<JoinClubRequest> requests = this.requestService
+                .GetPendingJoinClubRequestsForAClub(id)
+                .GetAwaiter()
+                .GetResult()
+                .ToList();
+
+            ClubDetailsRequestsBindingModel requestsBindingModel = new ClubDetailsRequestsBindingModel()
+            {
+                Club = club,
+                ClubPriceType = clubPriceType,
+                JoinClubRequests = requests
+            };
+
+            return this.View(requestsBindingModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ArchivedJoinRequests(string id)
+        {
+            Club club = await this.clubService.GetClubById(id);
+            string clubPriceType = club.PriceType.ToString();
+            List<JoinClubRequest> requests = this.requestService
+                .GetArchivedAndApprovedJoinClubRequestsForAClub(id)
                 .GetAwaiter()
                 .GetResult()
                 .ToList();
@@ -144,6 +166,13 @@
         {
             await this.requestService.ApproveJoinClubRequest(model.RequestApproveBindingModel.RequestId, model.RequestApproveBindingModel.RequestType);
             return this.Redirect($"/Club/JoinRequests/{model.RequestApproveBindingModel.ClubId}");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteJoinRequestClub(ClubDetailsRequestsBindingModel model)
+        {
+            await this.requestService.DeleteJoinClubRequest(model.RequestApproveBindingModel.RequestId);
+            return this.Redirect($"/Club/ArchivedJoinRequests/{model.RequestApproveBindingModel.ClubId}");
         }
 
         public async Task<IActionResult> ListMembers(string id)
