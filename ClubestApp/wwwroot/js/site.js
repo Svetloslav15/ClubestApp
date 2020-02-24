@@ -26,7 +26,7 @@ addBtn.addEventListener('click', () => {
     });
 
     optionText.textContent = field.value;
-    textOptions.textContent += field.value + " ";
+    textOptions.textContent += field.value + "~";
     allOptions.setAttribute('value', textOptions.textContent);
 
     containter.appendChild(newDiv);

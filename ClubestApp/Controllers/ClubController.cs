@@ -20,16 +20,19 @@
         private readonly UserManager<User> userManager;
         private readonly RequestService requestService;
         private readonly PostService postService;
+        private readonly PollService pollService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
                     RequestService requestService,
-                    PostService postService)
+                    PostService postService,
+                    PollService pollService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
             this.requestService = requestService;
             this.postService = postService;
+            this.pollService = pollService;
         }
 
         public IActionResult AddClub()
@@ -127,6 +130,15 @@
             return this.View(requestsBindingModel);
         }
 
+        public async Task<IActionResult> Polls([FromQuery] string validation, string id)
+        {
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ListPollsBindingModel model = await this.pollService.GetPollsModel(id, userId);
+            ViewData["validation"] = validation;
+
+            return this.View(model);
+        }
+
         [HttpPost]
         public async Task<IActionResult> ApproveJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
@@ -140,45 +152,11 @@
             return View(model);
         }
 
-        public async Task<IActionResult> Polls([FromQuery] string validation, string id)
-        {
-            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ListPollsBindingModel model = await this.clubService.GetPollsModel(id, userId);
-            ViewData["validation"] = validation;
-
-            return this.View(model);
-        }
-
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
 
             return this.View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddPoll(AddPollInputModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                await this.clubService.CreatePoll(model, model.ClubId);
-                return this.Redirect($"/Club/Polls/{model.ClubId}");
-            }
-
-            return this.Redirect($"/Club/Polls/{model.ClubId}?validation=true");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddVote(AddPollInputModel model)
-        {
-            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (model.Votes?.Any() == true)
-            {
-                await this.clubService.AddVote(model.Votes, model.PollId, userId);
-                return this.Redirect($"/Club/Polls/{model.ClubId}");
-            }
-
-            return this.Redirect($"/Club/Polls/{model.ClubId}");
         }
         
         [HttpPost]

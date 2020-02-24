@@ -54,7 +54,7 @@
                                                 </button>
                                             </div>
                                             <span>Въпрос: @poll.Content</span>
-                                            <form asp-controller="Club" asp-action="AddVote" method="post">
+                                            <form asp-controller="Poll" asp-action="AddVote" method="post">
                                                 @foreach (var option in poll.Options)
                                                 {
                                                     string optionId = 'a' + Guid.NewGuid().ToString() + 'a';

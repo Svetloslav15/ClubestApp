@@ -60,6 +60,7 @@
             services.AddTransient<CloudinaryService>();
             services.AddTransient<PostService>();
             services.AddTransient<CommentService>();
+            services.AddTransient<PollService>();
 
             services.AddMvc(options =>
             {
