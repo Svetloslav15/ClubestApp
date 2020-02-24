@@ -169,5 +169,23 @@
 
             return post;
         }
+
+        public async Task<List<Post>> GetPostsForHomePage(string userId)
+        {
+            List<Club> userClubs = await this.dbContext.UserClubs
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Club)
+                .ToListAsync();
+
+            List<Post> posts = await this.dbContext.Posts
+                .Include(x => x.Author)
+                .Include(x => x.Comments)
+                .Include(x => x.UserPostDislikes)
+                .Include(x => x.UserPostLikes)
+                .Where(x => userClubs.Any(y => y.Id == x.ClubId))
+                .ToListAsync();
+
+            return posts;
+        }
     }
 }
