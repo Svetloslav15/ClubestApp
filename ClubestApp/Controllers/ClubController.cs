@@ -148,6 +148,7 @@
 
             return this.View(model);
         }
+
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
