@@ -1,6 +1,7 @@
 ﻿@model ClubestApp.Models.BindingModels.AdministrationPollsBindingModel
 
 @using System.Drawing;
+@using System.Text;
 @{
     ViewData["Title"] = "PollsAdministration";
 }
@@ -52,7 +53,7 @@
                     string canvasId = 'a' + poll.Id + 'a';
                     <div class="col-lg-12 border m-2 box-shadow-light py-2">
                         <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
-                           data-toggle="tooltip" data-placement="top" title="Изтрий пост">
+                           data-toggle="tooltip" data-placement="top" title="Изтрий анкета">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                         <h4 class="text-center">@poll.Content</h4>
@@ -72,7 +73,7 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.13.0/js/mdb.min.js"></script>
 
-<script>
+<script charset="utf-8">
     @foreach (var poll in Model.ActivePolls)
     {
         string canvasId = 'a' + poll.Id + 'a';
@@ -84,10 +85,10 @@
         {
             Random random = new Random();
             var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
-            @:labels.push('@option.Content');
+
+            @:labels.push("@Html.Raw(@option.Content)");
             @:data.push(@option.VotesCount);
             @:colors.push('@randomColor');
-            @:console.log(colors);
         }
         @:
         @:var myPieChart = new Chart(ctxP, {
