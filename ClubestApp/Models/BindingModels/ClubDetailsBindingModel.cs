@@ -1,7 +1,6 @@
 ﻿namespace ClubestApp.Models.BindingModels
 {
     using ClubestApp.Data.Models;
-    using ClubestApp.Models.InputModels.Comments;
     using System.Collections.Generic;
 
     public class ClubDetailsBindingModel

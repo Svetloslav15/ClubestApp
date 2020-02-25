@@ -43,7 +43,14 @@
 
         public async Task<User> FindUserById(string id)
         {
-            User userdb = await this.dbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
+            User userdb = await this.dbContext.Users
+                .Include(user => user.Posts)
+                .Include(user => user.UserPostLikes)
+                .Include(user => user.UserPostDislikes)
+                .Include(user => user.UserClubs)
+                .Include(user => user.UserEvents)
+                .FirstOrDefaultAsync(user => user.Id == id);
+
             return userdb; 
         }
 

@@ -10,22 +10,28 @@
     using ClubestApp.Services;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
+    using ClubestApp.Models.BindingModels.Home;
 
     public class HomeController : Controller
     {
         private readonly UserManager<User> userManager;
         private readonly ClubService clubService;
+        private readonly UserService userService;
+        private readonly PostService postService;
 
-        public HomeController(UserManager<User> userManager, ClubService clubService)
+        public HomeController(UserManager<User> userManager, ClubService clubService,
+            UserService userService, PostService postService)
         {
             this.userManager = userManager;
+            this.userService = userService;
             this.clubService = clubService;
+            this.postService = postService;
         }
 
         public async Task<IActionResult> Index([FromQuery(Name = "jcr")] bool hasJoinedClub)
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
-            
+
             if (user == null)
             {
                 return this.View("IndexNotLogged");
@@ -35,14 +41,20 @@
                 var interests = this.clubService.GetInterests();            
                 return this.View("AddInterests", interests);
             }
+            user = await this.userService.FindUserById(user.Id);
+
             if (user.UserClubs.Count() == 0)
             {
                 List<Club> clubs = this.clubService.GetPotentialClubs(user.Interests, user.Town);
                 return this.View("PotentialClubs", clubs);
             }
+            List<Post> posts = await this.postService.GetPostsForHomePage(user.Id);
+            IndexPageBindingModel model = new IndexPageBindingModel()
+            {
+                Posts = posts
+            };
 
-            //TODO load latest data from clubs
-            return this.View();
+            return this.View(model);
         }
 
         [Route("{*url}", Order = 999)]

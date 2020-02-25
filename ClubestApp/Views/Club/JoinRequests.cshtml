@@ -1,6 +1,6 @@
 ﻿@model ClubestApp.Models.BindingModels.ClubDetailsRequestsBindingModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Заявки - " + @Model.Club.Name;
 }
 
     <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
@@ -11,6 +11,10 @@
             SideNav
         </div>
         <div class="col-lg-8 border">
+            <div>
+                <a href="/Club/JoinRequests/@Model.Club.Id" class="btn btn-outline-primary">Изчакващи заявки</a>
+                <a href="/Club/ArchivedJoinRequests/@Model.Club.Id" class="btn btn-outline-primary">Архивирани заявки</a>
+            </div>
             <div>
                 @if (Model.JoinClubRequests.Count > 0)
                 {
@@ -34,7 +38,7 @@
                                     <input type="hidden" asp-for="RequestApproveBindingModel.RequestId" value="@request.Id" />
                                     <input type="hidden" asp-for="RequestApproveBindingModel.RequestType" value="2" />
                                     <button type="submit" class="btn btn-padding-smaller btn-danger waves-effect"
-                                            data-toggle="tooltip" data-placement="top" title="Изтрии заявката">
+                                            data-toggle="tooltip" data-placement="top" title="Архивирай заявката">
                                         <i class="fas fa-trash-alt fa-lg"></i>
                                     </button>
                                 </form>
