@@ -61,6 +61,7 @@
             services.AddTransient<PostService>();
             services.AddTransient<CommentService>();
             services.AddTransient<PollService>();
+            services.AddTransient<NotificationService>();
 
             services.AddMvc(options =>
             {
