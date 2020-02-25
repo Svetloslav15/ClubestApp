@@ -42,5 +42,11 @@
 
             return this.Redirect($"/Club/Polls/{model.ClubId}");
         }
+
+        public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
+        {
+            var deletedEntity = await this.pollService.DeletePoll(id);
+            return this.Redirect($"/Club/PollsAdministration/{clubId}");
+        }
     }
 }

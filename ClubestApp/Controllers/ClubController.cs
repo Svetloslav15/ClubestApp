@@ -209,5 +209,12 @@
             };
             return this.View(bindingModel);
         }
+
+        public async Task<IActionResult> PollsAdministration(string id)
+        {
+            AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id);
+
+            return this.View(model);
+        }
     }
 }

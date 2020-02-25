@@ -1,0 +1,199 @@
+﻿@model ClubestApp.Models.BindingModels.AdministrationPollsBindingModel
+
+@using System.Drawing;
+@using System.Text;
+@{
+    ViewData["Title"] = "PollsAdministration";
+}
+
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+
+    <!--/.Navbar-->
+    <div class="col-lg-4">
+        SideNav
+    </div>
+    <div class="col-lg-8">
+        <div>
+            <a href="#active" class="btn btn-outline-primary">Активни анкети</a>
+            <a href="#non-active" class="btn btn-outline-primary">Архивирани анкети</a>
+        </div>
+        <h3 id="active" class="text-center">Активни анкети</h3>
+        <div class="row">
+            @if (Model.ActivePolls.Any() == false)
+            {
+                <h4 class="text-center">Няма активни анкети</h4>
+            }
+            else
+            {
+                @foreach (var poll in Model.ActivePolls)
+                {
+                    string canvasId = 'a' + poll.Id + 'a';
+                    <div class="col-lg-12 border m-2 box-shadow-light py-2">
+                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
+                           data-toggle="tooltip" data-placement="top" title="Изтрий пост">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <h4 class="text-center">@poll.Content</h4>
+                        <canvas class="text-center" id="@canvasId"></canvas>
+                    </div>
+                }
+            }
+        </div>
+        <h3 id="non-active" class="text-center">Изтекли анкети</h3>
+        <div class="row">
+            @if (Model.NonActivePolls.Any() == false)
+            {
+                <h4 class="text-center">Няма изтекли анкети</h4>
+            }
+            else
+            {
+                @foreach (var poll in Model.NonActivePolls)
+                {
+                    string canvasId = 'a' + poll.Id + 'a';
+                    <div class="col-lg-12 border m-2 box-shadow-light py-2">
+                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
+                           data-toggle="tooltip" data-placement="top" title="Изтрий анкета">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <h4 class="text-center">@poll.Content</h4>
+                        <canvas class="text-center" id="@canvasId"></canvas>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.13.0/js/mdb.min.js"></script>
+
+<script charset="utf-8">
+    @foreach (var poll in Model.ActivePolls)
+    {
+        string canvasId = 'a' + poll.Id + 'a';
+        @:var ctxP = document.getElementById("@canvasId").getContext('2d');
+        @:var labels = [];
+        @:var data = [];
+        @:var colors = [];
+        @foreach (var option in poll.Options)
+        {
+            Random random = new Random();
+            var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
+
+            @:labels.push("@Html.Raw(@option.Content)");
+            @:data.push(@option.VotesCount);
+            @:colors.push('@randomColor');
+        }
+        @:
+        @:var myPieChart = new Chart(ctxP, {
+        @:    plugins: [ChartDataLabels],
+        @:    type: 'pie',
+        @:data: {
+        @:    labels: labels,
+        @:        datasets: [{
+        @:        data: data,
+        @:            backgroundColor: colors,
+        @:            hoverBackgroundColor: colors
+        @:        }]
+        @:    },
+        @:    options: {
+        @:    responsive: true,
+        @:        legend: {
+        @:        position: 'right',
+        @:            labels: {
+        @:            padding: 20,
+        @:                boxWidth: 10
+        @:            }
+        @:        },
+        @:        plugins: {
+        @:        datalabels: {
+        @:            formatter: (value, ctx) => {
+        @:                let sum = 0;
+        @:                let dataArr = ctx.chart.data.datasets[0].data;
+        @:                dataArr.map(data => {
+        @:                    sum += data;
+        @:                });
+        @:                let percentage = (value * 100 / sum).toFixed(2) + "%";
+        @:                return percentage;
+        @:            },
+        @:                color: 'white',
+        @:                labels: {
+        @:                title: {
+        @:                    font: {
+        @:                        size: '16'
+        @:                        }
+        @:                    }
+        @:                }
+        @:            }
+        @:        }
+        @:    }
+        @:});
+    }
+    @foreach (var poll in Model.NonActivePolls)
+    {
+        string canvasId = 'a' + poll.Id + 'a';
+        @:var ctxP = document.getElementById("@canvasId").getContext('2d');
+        @:var labels = [];
+        @:var data = [];
+        @:var colors = [];
+        @foreach (var option in poll.Options)
+        {
+            Random random = new Random();
+            var randomColor = String.Format("#{0:X6}", random.Next(0x1000000));
+            @:labels.push('@option.Content');
+            @:data.push(@option.VotesCount);
+            @:colors.push('@randomColor');
+            @:console.log(colors);
+        }
+        @:
+        @:var myPieChart = new Chart(ctxP, {
+        @:    plugins: [ChartDataLabels],
+        @:    type: 'pie',
+        @:data: {
+        @:    labels: labels,
+        @:        datasets: [{
+        @:        data: data,
+        @:            backgroundColor: colors,
+        @:            hoverBackgroundColor: colors
+        @:        }]
+        @:    },
+        @:    options: {
+        @:    responsive: true,
+        @:        legend: {
+        @:        position: 'right',
+        @:            labels: {
+        @:            padding: 20,
+        @:                boxWidth: 10
+        @:            }
+        @:        },
+        @:        plugins: {
+        @:        datalabels: {
+        @:            formatter: (value, ctx) => {
+        @:                let sum = 0;
+        @:                let dataArr = ctx.chart.data.datasets[0].data;
+        @:                dataArr.map(data => {
+        @:                    sum += data;
+        @:                });
+        @:                let percentage = (value * 100 / sum).toFixed(2) + "%";
+        @:                return percentage;
+        @:            },
+        @:                color: 'white',
+        @:                labels: {
+        @:                title: {
+        @:                    font: {
+        @:                        size: '16'
+        @:                        }
+        @:                    }
+        @:                }
+        @:            }
+        @:        }
+        @:    }
+        @:});
+    }
+</script>
