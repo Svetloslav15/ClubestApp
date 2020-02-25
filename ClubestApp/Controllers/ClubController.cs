@@ -3,6 +3,7 @@
     using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
+    using ClubestApp.Models.BindingModels.RequestNewClub;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -57,6 +58,40 @@
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
+        }
+
+        public IActionResult AddRequestNewClub()
+        {
+            AddClubInputModel model = new AddClubInputModel();
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRequestNewClub(AddClubInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                await this.clubService.AddRequestNewClub(model, userId);
+
+                return this.Redirect("/Home/Index");
+            }
+
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> GetAllRequestNewClub()
+        {
+            List<RequestNewClub> requests = await this.clubService.GetRequestsNewClubAsync();
+            ListAllRequestsNewClubBindingModel model = new ListAllRequestsNewClubBindingModel()
+            {
+                RequestsNewClub = requests
+            };
+            return this.View("ListAllRequestsNewClub", model);
         }
 
         [HttpGet]

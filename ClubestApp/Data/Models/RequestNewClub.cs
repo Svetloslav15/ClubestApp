@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Data.Models
 {
+    using ClubestApp.Data.Models.Enums;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -30,5 +31,7 @@
         public string AuthorId { get; set; }
 
         public User Author { get; set; }
+
+        public PriceType PriceType { get; set; }
     }
 }

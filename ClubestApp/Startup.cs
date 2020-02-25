@@ -62,6 +62,7 @@
             services.AddTransient<CommentService>();
             services.AddTransient<PollService>();
             services.AddTransient<NotificationService>();
+            services.AddTransient<RequestNewClubService>();
 
             services.AddMvc(options =>
             {
