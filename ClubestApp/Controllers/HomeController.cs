@@ -31,7 +31,6 @@
         public async Task<IActionResult> Index([FromQuery(Name = "jcr")] bool hasJoinedClub)
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
-            user = await this.userService.FindUserById(user.Id);
 
             if (user == null)
             {
@@ -42,6 +41,8 @@
                 var interests = this.clubService.GetInterests();            
                 return this.View("AddInterests", interests);
             }
+            user = await this.userService.FindUserById(user.Id);
+
             if (user.UserClubs.Count() == 0)
             {
                 List<Club> clubs = this.clubService.GetPotentialClubs(user.Interests, user.Town);

@@ -183,6 +183,7 @@
                 .Include(x => x.UserPostDislikes)
                 .Include(x => x.UserPostLikes)
                 .Where(x => userClubs.Any(y => y.Id == x.ClubId))
+                .OrderByDescending(post => post.DateTime)
                 .ToListAsync();
 
             return posts;
