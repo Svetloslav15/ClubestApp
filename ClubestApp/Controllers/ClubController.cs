@@ -76,7 +76,7 @@
         {
             User user = await this.userManager.GetUserAsync(HttpContext.User);
             await this.requestService.CreateJoinRequestClub(id, user);
-            
+
             return this.Redirect("/?jcr=true");
         }
 
@@ -84,12 +84,12 @@
         public async Task<IActionResult> SearchClub([FromQuery(Name = "club")] string userInput)
         {
             IList<Club> clubs = await this.clubService.GetAllClubs();
-            
+
             if (userInput != null && userInput != "")
             {
                 clubs = await this.clubService.FilterClubsBySearchInput(userInput);
             }
-            
+
             GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel(clubs);
             return this.View("AllClubs", model);
         }
@@ -158,7 +158,7 @@
 
             return this.View(model);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Edit(EditClubInputModel model, string id)
         {
