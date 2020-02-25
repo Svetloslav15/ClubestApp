@@ -44,11 +44,19 @@
             return joinClubRequest;
         }
 
-        public async Task<IList<JoinClubRequest>> GetJoinClubRequestsForAClub(string clubId)
+        public async Task<IList<JoinClubRequest>> GetPendingJoinClubRequestsForAClub(string clubId)
         {
             return await this.dbContext.JoinClubRequests
                 .Include(x => x.User)
                 .Where(x => x.ClubId == clubId && x.RequestType == RequestType.Pending)
+                .ToListAsync();
+        }
+
+        public async Task<IList<JoinClubRequest>> GetArchivedAndApprovedJoinClubRequestsForAClub(string clubId)
+        {
+            return await this.dbContext.JoinClubRequests
+                .Include(x => x.User)
+                .Where(x => x.ClubId == clubId && (x.RequestType == RequestType.Removed || x.RequestType == RequestType.Approved))
                 .ToListAsync();
         }
 
@@ -74,6 +82,17 @@
                 request.RequestType = RequestType.Removed;
             }
            
+            await this.dbContext.SaveChangesAsync();
+
+            return request;
+        }
+
+        public async Task<JoinClubRequest> DeleteJoinClubRequest(string requestId)
+        {
+            JoinClubRequest request = await this.dbContext.JoinClubRequests
+                .FirstOrDefaultAsync(x => x.Id == requestId);
+
+            this.dbContext.JoinClubRequests.Remove(request);
             await this.dbContext.SaveChangesAsync();
 
             return request;
