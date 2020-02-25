@@ -29,6 +29,8 @@
 
         public bool IsMultichoice { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public DateTime ExpiredDate { get; set; }
 
         public ICollection<PollVotedUsers> PollVotedUsers { get; set; }

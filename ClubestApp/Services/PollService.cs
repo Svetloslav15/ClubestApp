@@ -52,6 +52,17 @@ namespace ClubestApp.Services
             return currentPoll;
         }
 
+        public async Task<Poll> DeletePoll(string id)
+        {
+            Poll poll = await this.dbContext
+                .Polls
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            poll.IsDeleted = true;
+            await this.dbContext.SaveChangesAsync();
+            return poll;
+        }
+
         public async Task<Poll> CreatePoll(AddPollInputModel model, string id)
         {
             Poll newPoll = new Poll()
@@ -63,8 +74,6 @@ namespace ClubestApp.Services
                 ExpiredDate = model.ExpiredDate,
             };
 
-            var poll = await this.dbContext.Polls.AddAsync(newPoll);
-
             List<string> options = model.Options.Split("~", StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
 
@@ -74,14 +83,15 @@ namespace ClubestApp.Services
                 {
                     VotesCount = 0,
                     Content = option,
-                    PollId = poll.Entity.Id,
+                    PollId = newPoll.Id,
                 };
 
-                await this.dbContext.Options.AddAsync(newOption);
+                newPoll.Options.Add(newOption);
             }
 
+            var result =  await this.dbContext.Polls.AddAsync(newPoll);
             await this.dbContext.SaveChangesAsync();
-            return poll.Entity;
+            return result.Entity;
         }
 
         public async Task<ListPollsBindingModel> GetPollsModel(string clubId, string userId)
@@ -96,7 +106,7 @@ namespace ClubestApp.Services
                 Club = club,
                 Polls = this.dbContext
                         .Polls
-                        .Where(x => x.ClubId == clubId && this.IsPollValid(x.ExpiredDate))
+                        .Where(x => x.ClubId == clubId && this.IsPollValid(x.ExpiredDate) && !x.IsDeleted)
                         .Select(x => new PollItemBindingModel
                         {
                             Id = x.Id,
@@ -118,6 +128,31 @@ namespace ClubestApp.Services
         private bool IsPollValid(DateTime expiredDate)
         {
             return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
+        }
+
+        public async Task<AdministrationPollsBindingModel> GetAdministrationBindingModel(string clubId)
+        {
+            Club club = await this.dbContext
+                .Clubs
+                .FirstOrDefaultAsync(x => x.Id == clubId);
+
+            AdministrationPollsBindingModel result = new AdministrationPollsBindingModel
+            {
+                Club = club,
+                ClubPriceType = club.PriceType.ToString(),
+                ActivePolls = this.dbContext
+                              .Polls
+                              .Where(x => this.IsPollValid(x.ExpiredDate) == true && x.ClubId == clubId && !x.IsDeleted)
+                              .Include(x => x.Options)
+                              .ToList(),
+                NonActivePolls = this.dbContext
+                              .Polls
+                              .Where(x => this.IsPollValid(x.ExpiredDate) == false && x.ClubId == clubId && !x.IsDeleted)
+                              .Include(x => x.Options)
+                              .ToList(),
+            };
+
+            return result;
         }
     }
 }
