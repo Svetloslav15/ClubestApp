@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm blue-gradient mb-3">
             <div class="container">
                 <a class="text-white float-left" asp-area="" asp-controller="Home" asp-action="Index">
-                   <img src="~/images/logo.png" class="w-5rem" alt="Clubest" />
+                    <img src="~/images/logo.png" class="w-5rem" alt="Clubest" />
                 </a>
                 <button class="aqua-gradient navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,8 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

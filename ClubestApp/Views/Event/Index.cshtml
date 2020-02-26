@@ -1,0 +1,23 @@
+﻿@model ClubestApp.Models.BindingModels.Events.EventIndexBindingModel
+
+@{
+    ViewData["Title"] = $"{Model.Club.Name} - Събития";
+}
+
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+    <div class="col-lg-4">
+        SideNav
+    </div>
+    <div class="col-lg-8 border">
+        <div class="col-lg-12 text-center">
+            <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави Събитие">
+                <a id="openModal" data-toggle="modal" data-target="#createEvent"
+                   class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </div>
+        </div>
+        <partial name="./_AddEvent.cshtml"/>
+    </div>
+</div>

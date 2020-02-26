@@ -1,0 +1,60 @@
+﻿@model ClubestApp.Models.BindingModels.Events.EventIndexBindingModel
+
+<div class="modal fade" id="createEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Създай Събитие</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Event" asp-action="AddEvent" method="post">
+                <input type="hidden" asp-for="AddEventInputModel.ClubId" id="Name" class="form-control validate" value="@Model.Club.Id"/>
+                <div class="py-1 modal-body mx-3">
+                    <div class="md-form mb-1">
+                        <input type="text" asp-for="AddEventInputModel.Name" id="Name" class="form-control validate">
+                        <span asp-validation-for="AddEventInputModel.Name" class="text-danger"></span>
+                        <label for="form34">Име</label>
+                    </div>
+                    <div class="md-form">
+                        <textarea type="text" asp-for="AddEventInputModel.Description" id="Description"
+                                  class="form-control md-textarea" rows="5">
+                        </textarea>
+                        <label for="form34">Описание...</label>
+                    </div>
+                </div>
+                <div class="pt-1 modal-body mx-3">
+                    <p>Вид на събитието:</p>
+                    <div class="col-lg-12 row">
+                        <div class="col-lg-6 mx-auto">
+                            <div class="custom-control custom-radio mx-auto" style="display: inline-block">
+                                @Html.RadioButtonFor(model => model.AddEventInputModel.IsPublic, "true", new { @checked = "checked", @class = "custom-control-input", @id = "defaultChecked", @Name = "defaultExampleRadios" })
+                                <label class="text-black custom-control-label" for="defaultChecked">Публично</label>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mx-auto">
+                            <div class="custom-control custom-radio mx-auto" style="display: inline-block">
+                                @Html.RadioButtonFor(model => model.AddEventInputModel.IsPublic, "false", new { @checked = "checked", @class = "custom-control-input", @id = "defaultChecked1", @Name = "defaultExampleRadios" })
+                                <label class="text-black custom-control-label" for="defaultChecked1">Частно</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-1 modal-body mx-3">
+                    <div class="md-form mb-1">
+                        <input type="date" asp-for="AddEventInputModel.Date" value="@{@DateTime.UtcNow.Year}-@{@DateTime.UtcNow.Month.ToString("d2")} -@{@DateTime.UtcNow.Day}" id="form34" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="form34">Изберете дата</label>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn blue-gradient">Създай<i class="fas fa-paper-plane-o ml-1"></i></button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+</div>
