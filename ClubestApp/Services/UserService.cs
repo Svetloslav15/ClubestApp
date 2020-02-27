@@ -173,5 +173,10 @@
 
             this.dbContext.SaveChanges();
         }
+
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await this.dbContext.Users.ToListAsync();
+        }
     }
 }

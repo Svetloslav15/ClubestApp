@@ -15,15 +15,15 @@
                 <input type="hidden" asp-for="AddEventInputModel.ClubId" id="Name" class="form-control validate" value="@Model.Club.Id"/>
                 <div class="py-1 modal-body mx-3">
                     <div class="md-form mb-1">
-                        <input type="text" asp-for="AddEventInputModel.Name" id="Name" class="form-control validate">
+                        <input type="text" asp-for="AddEventInputModel.Name" id="NameInput" class="form-control validate">
                         <span asp-validation-for="AddEventInputModel.Name" class="text-danger"></span>
-                        <label for="form34">Име</label>
+                        <label for="NameInput">Име</label>
                     </div>
                     <div class="md-form">
-                        <textarea type="text" asp-for="AddEventInputModel.Description" id="Description"
+                        <textarea type="text" asp-for="AddEventInputModel.Description" id="DescriptionInput"
                                   class="form-control md-textarea" rows="5">
                         </textarea>
-                        <label for="form34">Описание...</label>
+                        <label for="DescriptionInput">Описание...</label>
                     </div>
                 </div>
                 <div class="pt-1 modal-body mx-3">

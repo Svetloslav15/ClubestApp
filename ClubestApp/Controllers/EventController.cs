@@ -90,13 +90,15 @@
             Club club = await this.clubService.GetClubById(clubId);
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User currentUser = await this.userService.FindUserById(currentUserId);
+            List<User> allUsers = await this.userService.GetAllUsers();
 
             EventDetailsBindingModels model = new EventDetailsBindingModels()
             {
                 Event = eventEntity,
                 Club = club,
                 ClubPriceType = club.PriceType.ToString(),
-                CurrentUser = currentUser
+                CurrentUser = currentUser,
+                AllUsers = allUsers
             };
 
             return this.View(model);
@@ -108,5 +110,7 @@
 
             return this.Redirect($"/Event/Index/{clubId}");
         }
+
+        public async Task<IActionResult> AddEventRole()
     }
 }

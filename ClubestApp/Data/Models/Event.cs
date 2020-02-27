@@ -10,6 +10,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.EventUsers = new HashSet<EventUser>();
+            this.EventRoles = new HashSet<EventRole>();
         }
 
         [Key]
@@ -18,8 +19,6 @@
         public string Name { get; set; }
 
         public DateTime Date { get; set; }
-
-        public ICollection<EventUser> EventUsers { get; set; }
 
         public string AdminId { get; set; }
 
@@ -34,5 +33,9 @@
         public bool IsPublic { get; set; }
 
         public string Interests { get; set; }
+
+        public ICollection<EventUser> EventUsers { get; set; }
+
+        public ICollection<EventRole> EventRoles { get; set; }
     }
 }

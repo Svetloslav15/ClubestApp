@@ -127,5 +127,21 @@
 
             return eventEntity;
         }
+
+        public async Task<EventRole> AddEventRole(string name, string eventId, string userId)
+        {
+            EventRole eventRole = new EventRole()
+            {
+                Name = name,
+                EventId = eventId,
+                UserId = userId
+            };
+
+            await this.dbContext.EventRoles.AddAsync(eventRole);
+            await this.dbContext.SaveChangesAsync();
+            await this.JoinEvent(eventId, userId);
+
+            return eventRole;
+        }
     }
 }
