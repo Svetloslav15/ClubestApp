@@ -17,7 +17,50 @@
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
+            <div class="mt-1 mb-2">
+                <a href="/Event/Index/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Предстоящи събития</a>
+                <a href="/Event/ExpiredEvents/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Минали събития</a>
+            </div>
         </div>
-        <partial name="./_AddEvent.cshtml"/>
+        <partial name="./_AddEvent.cshtml" />
+        @if (Model.Events.Count > 0)
+        {
+            @foreach (var eventEntity in Model.Events)
+            {
+                <div class="px-0 col-lg-10 mx-auto my-2 box-shadow-light">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h4 class="card-title">@eventEntity.Name</h4>
+                            <p class="card-text">Записани @eventEntity.EventUsers.Count() участници</p>
+                            @if (eventEntity.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
+                            {
+                                <a class="btn blue-gradient btn-sm">Отпиши</a>
+                            }
+                            else
+                            {
+                                <a class="btn blue-gradient btn-sm">Запиши се</a>
+                            }
+                        </div>
+                        @{
+                            int daysLeft = @eventEntity.Date.Subtract(DateTime.UtcNow).Days + 1;
+                        }
+                        <div class="card-footer text-muted blue-gradient white-text">
+                            @if (daysLeft > 0)
+                            {
+                                <p class="mb-0">@daysLeft дни до събитието</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0">Преди @Math.Abs(daysLeft) дни</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 class="text-primary text-center my-5">Няма събития!</h3>
+        }
     </div>
 </div>

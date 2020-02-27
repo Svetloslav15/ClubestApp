@@ -36,12 +36,18 @@
             this.pollService = pollService;
         }
 
-        public IActionResult AddClub()
+        public async Task<IActionResult> AddClub()
         {
             AddClubInputModel model = new AddClubInputModel();
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.clubService.DeleteClubById(id);
+            return this.Redirect("/Club/AllClubs");
         }
 
         [HttpPost]

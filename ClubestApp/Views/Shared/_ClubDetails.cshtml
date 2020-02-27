@@ -26,12 +26,12 @@
             </a>
             @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
             {
-                <button class="btn btn-warning waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
+                <a href="/Club/Edit/@Model.Club.Id" class="btn btn-warning waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
                     <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-danger waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
+                </a>
+                <a href="/Club/Delete/@Model.Club.Id" class="btn btn-danger waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
                     <i class="fas fa-trash-alt"></i>
-                </button>
+                </a>
             }
         </div>
     </div>

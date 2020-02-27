@@ -295,6 +295,18 @@
             return await this.dbContext.Clubs.FirstOrDefaultAsync(club => club.Id == clubId);
         }
 
+        public async Task<Club> DeleteClubById(string id)
+        {
+            Club club = await this.GetClubById(id);
+            if (club != null)
+            {
+                this.dbContext.Clubs.Remove(club);
+            }
+
+            await this.dbContext.SaveChangesAsync();
+            return club;
+        }
+
         public async Task<IList<Club>> FilterClubsBySearchInput(string userInput)
         {
             userInput = userInput
