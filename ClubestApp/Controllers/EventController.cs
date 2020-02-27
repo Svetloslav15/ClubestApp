@@ -68,20 +68,38 @@
             return this.Redirect($"/Event/Index/{model.AddEventInputModel.ClubId}");
         }
 
-        public async Task<IActionResult> JoinEvent([FromQuery] string clubId, string id)
+        public async Task<IActionResult> JoinEvent([FromQuery] string clubId, [FromQuery] string returnUrl, string id)
         {
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.eventService.JoinEvent(id, currentUserId);
 
-            return this.Redirect($"/Event/Index/{clubId}");
+            return this.Redirect(returnUrl);
         }
 
-        public async Task<IActionResult> ExitEvent([FromQuery] string clubId, string id)
+        public async Task<IActionResult> ExitEvent([FromQuery] string returnUrl, string id)
         {
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             await this.eventService.ExitEvent(id, currentUserId);
 
-            return this.Redirect($"/Event/Index/{clubId}");
+            return this.Redirect(returnUrl);
+        }
+
+        public async Task<IActionResult> Details([FromQuery] string clubId, string id)
+        {
+            Event eventEntity = await this.eventService.GetEventById(id);
+            Club club = await this.clubService.GetClubById(clubId);
+            string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            User currentUser = await this.userService.FindUserById(currentUserId);
+
+            EventDetailsBindingModels model = new EventDetailsBindingModels()
+            {
+                Event = eventEntity,
+                Club = club,
+                ClubPriceType = club.PriceType.ToString(),
+                CurrentUser = currentUser
+            };
+
+            return this.View(model);
         }
     }
 }

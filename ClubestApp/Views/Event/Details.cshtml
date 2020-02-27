@@ -1,0 +1,43 @@
+﻿@model ClubestApp.Models.BindingModels.Events.EventDetailsBindingModels
+
+@{
+    ViewData["Title"] = $"{Model.Event.Name}";
+}
+
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+    <div class="col-lg-4">
+    </div>
+    <div class="col-lg-8 border">
+        <div class="my-2 p-2 box-shadow-light">
+            <h2 class="text-center blue-gradient p-2 text-white">@Model.Event.Name</h2>
+            @{
+                int daysLeft = Model.Event.Date.Subtract(DateTime.UtcNow).Days + 1;
+            }
+            @if (daysLeft > 0)
+            {
+                <p class="mb-0 mt-2 text-center"><span class="font-weight-bold h5">@daysLeft</span> дни до събитието</p>
+            }
+            else
+            {
+                <p class="mb-0 text-center">Преди @Math.Abs(daysLeft) дни</p>
+            }
+
+            <div class="text-center mt-3">
+                @if (Model.Event.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
+                {
+                    <a href="/Event/ExitEvent/@Model.Event.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
+                }
+                else
+                {
+                    <a href="/Event/JoinEvent/@Model.Event.Id?clubId=@Model.Club.Id&returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"
+                       class="btn blue-gradient btn-sm">Запиши се</a>
+                }
+            </div>
+            <p class="mt-3 text-center">
+                Записани <span class="font-weight-bold h5">@Model.Event.EventUsers.Count</span> участници
+            </p>
+            <p class="mt-3">@Model.Event.Description</p>
+        </div>
+    </div>
+</div>

@@ -27,19 +27,20 @@
         {
             @foreach (var eventEntity in Model.Events)
             {
-                <div class="px-0 col-lg-10 mx-auto my-2 box-shadow-light">
+                <div class="px-0 col-lg-10 mx-auto my-3 box-shadow-light">
                     <div class="card text-center">
                         <div class="card-body">
                             <h4 class="card-title">@eventEntity.Name</h4>
                             <p class="card-text">Записани @eventEntity.EventUsers.Count() участници</p>
                             @if (eventEntity.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
                             {
-                                <a href="/Event/ExitEvent/@eventEntity.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
+                                <a href="/Event/ExitEvent/@eventEntity.Id?returnUrl=/Event/Index/@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
                             }
                             else
                             {
-                                <a href="/Event/JoinEvent/@eventEntity.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Запиши се</a>
+                                <a href="/Event/JoinEvent/@eventEntity.Id?clubId=@Model.Club.Id&returnUrl=/Event/Index/@Model.Club.Id" class="btn blue-gradient btn-sm">Запиши се</a>
                             }
+                            <a href="/Event/Details/@eventEntity.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Виж събитието</a>
                         </div>
                         @{
                             int daysLeft = @eventEntity.Date.Subtract(DateTime.UtcNow).Days + 1;

@@ -41,6 +41,7 @@
         public async Task<Event> GetEventById(string id)
         {
             return await this.dbContext.Events
+                .Include(x => x.EventUsers)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

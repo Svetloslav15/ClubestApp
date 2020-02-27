@@ -1,9 +1,9 @@
-﻿using ClubestApp.Data.Models;
-using ClubestApp.Models.InputModels.Events;
-using System.Collections.Generic;
-
-namespace ClubestApp.Models.BindingModels.Events
+﻿namespace ClubestApp.Models.BindingModels.Events
 {
+    using ClubestApp.Data.Models;
+    using ClubestApp.Models.InputModels.Events;
+    using System.Collections.Generic;
+
     public class EventIndexBindingModel
     {
         public Club Club { get; set; }
