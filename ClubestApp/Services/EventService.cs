@@ -12,10 +12,13 @@
     public class EventService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly UserService userService;
 
-        public EventService(ApplicationDbContext dbContext)
+        public EventService(ApplicationDbContext dbContext,
+            UserService userService)
         {
             this.dbContext = dbContext;
+            this.userService = userService;
         }
 
         public async Task<Event> AddEvent(AddEventInputModel inputModel)
@@ -33,6 +36,12 @@
             await this.dbContext.Events.AddAsync(eventEntity);
             await this.dbContext.SaveChangesAsync();
             return eventEntity;
+        }
+
+        public async Task<Event> GetEventById(string id)
+        {
+            return await this.dbContext.Events
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Event>> GetAllEventsForClub(string clubId)
@@ -66,6 +75,42 @@
                 .ToListAsync();
 
             return events;
+        }
+
+        public async Task<Event> JoinEvent(string eventId, string userId)
+        {
+            Event eventEntity = await this.GetEventById(eventId);
+            User user = await this.userService.FindUserById(userId);
+
+            if (eventEntity != null && user != null)
+            {
+                EventUser eventUser = new EventUser()
+                {
+                    EventId = eventId,
+                    Event = eventEntity,
+                    UserId = userId,
+                    User = user
+                };
+
+                await this.dbContext.EventUsers.AddAsync(eventUser);
+                await this.dbContext.SaveChangesAsync();
+            }
+
+            return eventEntity;
+        }
+
+        public async Task<EventUser> ExitEvent(string eventId, string userId)
+        {
+            EventUser eventUser = await this.dbContext.EventUsers
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.EventId == eventId);
+
+            if (eventUser != null)
+            {
+                this.dbContext.EventUsers.Remove(eventUser);
+                await this.dbContext.SaveChangesAsync();
+            }
+
+            return eventUser;
         }
     }
 }

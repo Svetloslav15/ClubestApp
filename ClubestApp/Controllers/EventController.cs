@@ -67,5 +67,21 @@
             }
             return this.Redirect($"/Event/Index/{model.AddEventInputModel.ClubId}");
         }
+
+        public async Task<IActionResult> JoinEvent([FromQuery] string clubId, string id)
+        {
+            string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.eventService.JoinEvent(id, currentUserId);
+
+            return this.Redirect($"/Event/Index/{clubId}");
+        }
+
+        public async Task<IActionResult> ExitEvent([FromQuery] string clubId, string id)
+        {
+            string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await this.eventService.ExitEvent(id, currentUserId);
+
+            return this.Redirect($"/Event/Index/{clubId}");
+        }
     }
 }

@@ -89,8 +89,11 @@
                                 </div>
 
                             </div>
+                            @{
+                                int daysLeft = @poll.ExpiredDate.Subtract(DateTime.UtcNow).Days + 1;
+                            }
                             <div class="card-footer text-muted blue-gradient white-text">
-                                <p class="mb-0">@poll.ExpiredDate.Subtract(DateTime.UtcNow).Days дни до изтичане</p>
+                                <p class="mb-0">@daysLeft дни до изтичане</p>
                             </div>
                         </div>
                         <!--/.Panel-->

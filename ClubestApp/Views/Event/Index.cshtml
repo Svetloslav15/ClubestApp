@@ -34,11 +34,11 @@
                             <p class="card-text">Записани @eventEntity.EventUsers.Count() участници</p>
                             @if (eventEntity.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
                             {
-                                <a class="btn blue-gradient btn-sm">Отпиши</a>
+                                <a href="/Event/ExitEvent/@eventEntity.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
                             }
                             else
                             {
-                                <a class="btn blue-gradient btn-sm">Запиши се</a>
+                                <a href="/Event/JoinEvent/@eventEntity.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Запиши се</a>
                             }
                         </div>
                         @{
