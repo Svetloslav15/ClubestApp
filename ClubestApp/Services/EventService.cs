@@ -13,18 +13,20 @@
     {
         private readonly ApplicationDbContext dbContext;
         private readonly UserService userService;
+        private readonly EmailService emailService;
 
         public EventService(ApplicationDbContext dbContext,
-            UserService userService)
+            UserService userService, EmailService emailService)
         {
             this.dbContext = dbContext;
             this.userService = userService;
+            this.emailService = emailService;
         }
 
         public async Task<Event> AddEvent(AddEventInputModel inputModel)
         {
-            Event eventEntity = new Event() 
-            { 
+            Event eventEntity = new Event()
+            {
                 Name = inputModel.Name,
                 Date = inputModel.Date,
                 Description = inputModel.Description,
@@ -83,6 +85,8 @@
             Event eventEntity = await this.GetEventById(eventId);
             User user = await this.userService.FindUserById(userId);
 
+            this.emailService.SendEmail(user, $"Успешно се записа за събитието {eventEntity.Name}!", $"Clubest - {eventEntity.Name}");
+
             if (eventEntity != null && user != null)
             {
                 EventUser eventUser = new EventUser()
@@ -112,6 +116,16 @@
             }
 
             return eventUser;
+        }
+
+        public async Task<Event> DeleteEvent(string eventId)
+        {
+            Event eventEntity = await this.GetEventById(eventId);
+
+            this.dbContext.Remove(eventEntity);
+            await this.dbContext.SaveChangesAsync();
+
+            return eventEntity;
         }
     }
 }

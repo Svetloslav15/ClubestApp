@@ -14,7 +14,7 @@
             this.configuration = configuration;
         }
 
-        public void SendEmail(User sender, User receiver, string mailDescription)
+        public void SendEmail(User receiver, string mailDescription, string subject)
         {
             MailMessage mailMsg = new MailMessage();
 
@@ -22,10 +22,10 @@
             mailMsg.To.Add(new MailAddress(receiver.Email, receiver.FirstName + " " + receiver.LastName));
 
             // From
-            mailMsg.From = new MailAddress(sender.Email, sender.FirstName + " " + sender.LastName);
+            mailMsg.From = new MailAddress("admin@novoselski.net", "Clubest");
 
             // Subject and multipart/alternative Body
-            mailMsg.Subject = "Email Verification";
+            mailMsg.Subject = subject;
             string text = mailDescription;
             mailMsg.Body = text;
 

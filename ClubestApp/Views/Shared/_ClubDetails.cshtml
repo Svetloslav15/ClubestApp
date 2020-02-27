@@ -21,9 +21,9 @@
             <p>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></p>
         }
             <p>@Model.Club.Description</p>
-            <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Влез в клуб">
-                <i class="fas fa-plus-circle fa-lg"></i>
-            </a>
+                <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Влез в клуб">
+                    <i class="fas fa-plus-circle fa-lg"></i>
+                </a>
             @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
             {
                 <a href="/Club/Edit/@Model.Club.Id" class="btn btn-warning waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">

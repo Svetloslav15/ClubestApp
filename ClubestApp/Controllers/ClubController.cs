@@ -118,7 +118,7 @@
             User user = await this.userManager.GetUserAsync(HttpContext.User);
             await this.requestService.CreateJoinRequestClub(id, user);
 
-            return this.Redirect("/?jcr=true");
+            return this.Redirect($"/Club/Details/{id}");
         }
 
         [HttpGet]

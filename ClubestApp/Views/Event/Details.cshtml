@@ -23,17 +23,23 @@
                 <p class="mb-0 text-center">Преди @Math.Abs(daysLeft) дни</p>
             }
 
-            <div class="text-center mt-3">
-                @if (Model.Event.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
-                {
-                    <a href="/Event/ExitEvent/@Model.Event.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
-                }
-                else
-                {
-                    <a href="/Event/JoinEvent/@Model.Event.Id?clubId=@Model.Club.Id&returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"
-                       class="btn blue-gradient btn-sm">Запиши се</a>
-                }
-            </div>
+        <div class="text-center mt-3">
+            @if (Model.Event.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
+            {
+                <a href="/Event/ExitEvent/@Model.Event.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
+            }
+            else
+            {
+                <a href="/Event/JoinEvent/@Model.Event.Id?clubId=@Model.Club.Id&returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"
+                   class="btn blue-gradient btn-sm">Запиши се</a>
+            }
+        <div class="text-center my-1">
+            <a href="/Event/Delete/@Model.Event.Id?clubId=@Model.Club.Id" class="btn btn-danger btn-sm"
+               data-toggle="tooltip" data-placement="top" title="Изтрий събитие">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+        </div>
             <p class="mt-3 text-center">
                 Записани <span class="font-weight-bold h5">@Model.Event.EventUsers.Count</span> участници
             </p>

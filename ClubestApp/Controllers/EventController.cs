@@ -101,5 +101,12 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
+        {
+            await this.eventService.DeleteEvent(id);
+
+            return this.Redirect($"/Event/Index/{clubId}");
+        }
     }
 }
