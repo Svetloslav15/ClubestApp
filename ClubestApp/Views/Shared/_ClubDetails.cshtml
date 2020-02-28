@@ -27,10 +27,10 @@
             @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
             {
                 <a href="/Club/Edit/@Model.Club.Id" class="btn btn-warning waves-effect btn-sm btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit fa-lg"></i>
                 </a>
                 <a href="/Club/Delete/@Model.Club.Id" class="btn btn-danger waves-effect btn-sm btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
-                    <i class="fas fa-trash-alt"></i>
+                    <i class="fas fa-trash-alt fa-lg"></i>
                 </a>
             }
         </div>

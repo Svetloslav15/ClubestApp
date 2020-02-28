@@ -46,45 +46,7 @@
                             </button>
                         </div>
 
-                        <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form asp-controller="Event" asp-action="" method="post">
-                                        <div class="modal-body mx-3">
-                                            <div class="md-form mb-3">
-                                                <p class="text-left">Избери потребител:</p>
-                                                <select class="browser-default custom-select">
-                                                    @foreach (var user in Model.AllUsers)
-                                                    {
-                                                        <option value="@user.Id">
-                                                            @user.FirstName @user.LastName - @user.Email
-                                                        </option>
-                                                    }
-                                                </select>
-                                            </div>
-                                            <div class="md-form mb-3">
-                                                <p class="text-left">Избери роля:</p>
-                                                <select class="browser-default custom-select">
-                                                    <option value="lecturer">Лектор</option>
-                                                    <option value="guest">Гост</option>
-                                                    <option value="organizator">Организатор</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer d-flex justify-content-center">
-                                            <button type="submit" class="btn blue-gradient">Добави</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                       <partial name="./_AddEventRole.cshtml"/>
                     </div>
                 </div>
             </div>

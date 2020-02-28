@@ -14,6 +14,9 @@ addBtn.addEventListener('click', () => {
     let optionText = document.createElement('h5');
     optionText.classList.add("col-lg-5");
     let deleteButton = document.createElement('button');
+    deleteButton.classList.add("peach-gradient");
+    deleteButton.classList.add("btn");
+    deleteButton.classList.add("btn-md");
     deleteButton.classList.add("col-lg-5");
     deleteButton.innerHTML = "Изтрий";
     deleteButton.type = 'button';
