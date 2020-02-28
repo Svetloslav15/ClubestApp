@@ -4,14 +4,16 @@ using ClubestApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Migrations
+namespace ClubestApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200225211945_ChangeRequestNewClubFields")]
+    partial class ChangeRequestNewClubFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,26 +108,6 @@ namespace ClubestApp.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.EventRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EventId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("EventRoles");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.EventUser", b =>
@@ -293,8 +275,6 @@ namespace ClubestApp.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("PictureUrl");
-
-                    b.Property<int>("PriceType");
 
                     b.Property<string>("Town");
 
@@ -578,17 +558,6 @@ namespace ClubestApp.Migrations
                     b.HasOne("ClubestApp.Data.Models.Club", "Club")
                         .WithMany("Events")
                         .HasForeignKey("ClubId");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.EventRole", b =>
-                {
-                    b.HasOne("ClubestApp.Data.Models.Event", "Event")
-                        .WithMany("EventRoles")
-                        .HasForeignKey("EventId");
-
-                    b.HasOne("ClubestApp.Data.Models.User", "User")
-                        .WithMany("EventRoles")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.EventUser", b =>

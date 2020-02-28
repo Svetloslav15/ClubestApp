@@ -21,17 +21,17 @@
             <p>Такса на час: <span class="font-weight-bold text-uppercase">@Model.Club.Fee лв</span></p>
         }
             <p>@Model.Club.Description</p>
-            <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Влез в клуб">
-                <i class="fas fa-plus-circle fa-lg"></i>
-            </a>
+                <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary btn-sm waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Влез в клуб">
+                    <i class="fas fa-plus-circle fa-lg"></i>
+                </a>
             @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
             {
-                <button class="btn btn-warning waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-danger waves-effect btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
+                <a href="/Club/Edit/@Model.Club.Id" class="btn btn-warning waves-effect btn-sm btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Редактирай клуб">
+                    <i class="fas fa-edit fa-lg"></i>
+                </a>
+                <a href="/Club/Delete/@Model.Club.Id" class="btn btn-danger waves-effect btn-sm btn-padding-smaller" data-toggle="tooltip" data-placement="top" title="Изтрий клуб">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                </a>
             }
         </div>
     </div>
@@ -44,7 +44,7 @@
                 <a class="nav-link text-white" href="/Club/ListMembers/@Model.Club.Id">Членове</a>
             </li>
             <li class="nav-item waves-effect">
-                <a class="nav-link text-white" href="/Club/Events/@Model.Club.Id">Събития</a>
+                <a class="nav-link text-white" href="/Event/Index/@Model.Club.Id">Събития</a>
             </li>
             <li class="nav-item waves-effect">
                 <a class="nav-link text-white" href="/Club/Polls/@Model.Club.Id">Анкети</a>

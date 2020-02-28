@@ -61,6 +61,9 @@
             services.AddTransient<PostService>();
             services.AddTransient<CommentService>();
             services.AddTransient<PollService>();
+            services.AddTransient<NotificationService>();
+            services.AddTransient<RequestNewClubService>();
+            services.AddTransient<EventService>();
 
             services.AddMvc(options =>
             {
@@ -94,7 +97,7 @@
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}/{secondId?}");
             });
         }
     }

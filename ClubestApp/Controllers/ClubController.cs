@@ -3,6 +3,7 @@
     using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
+    using ClubestApp.Models.BindingModels.RequestNewClub;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -35,12 +36,18 @@
             this.pollService = pollService;
         }
 
-        public IActionResult AddClub()
+        public async Task<IActionResult> AddClub()
         {
             AddClubInputModel model = new AddClubInputModel();
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.clubService.DeleteClubById(id);
+            return this.Redirect("/Club/AllClubs");
         }
 
         [HttpPost]
@@ -57,6 +64,40 @@
             var interests = this.clubService.GetInterests();
             model.InterestsToList = interests;
             return this.View(model);
+        }
+
+        public IActionResult AddRequestNewClub()
+        {
+            AddClubInputModel model = new AddClubInputModel();
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRequestNewClub(AddClubInputModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                await this.clubService.AddRequestNewClub(model, userId);
+
+                return this.Redirect("/Home/Index");
+            }
+
+            var interests = this.clubService.GetInterests();
+            model.InterestsToList = interests;
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> GetAllRequestNewClub()
+        {
+            List<RequestNewClub> requests = await this.clubService.GetRequestsNewClubAsync();
+            ListAllRequestsNewClubBindingModel model = new ListAllRequestsNewClubBindingModel()
+            {
+                RequestsNewClub = requests
+            };
+            return this.View("ListAllRequestsNewClub", model);
         }
 
         [HttpGet]
@@ -76,20 +117,20 @@
         {
             User user = await this.userManager.GetUserAsync(HttpContext.User);
             await this.requestService.CreateJoinRequestClub(id, user);
-            
-            return this.Redirect("/?jcr=true");
+
+            return this.Redirect($"/Club/Details/{id}");
         }
 
         [HttpGet]
         public async Task<IActionResult> SearchClub([FromQuery(Name = "club")] string userInput)
         {
             IList<Club> clubs = await this.clubService.GetAllClubs();
-            
+
             if (userInput != null && userInput != "")
             {
                 clubs = await this.clubService.FilterClubsBySearchInput(userInput);
             }
-            
+
             GetClubsBindingModel[] model = this.clubService.GetAllClubsBindingModel(clubs);
             return this.View("AllClubs", model);
         }
@@ -187,7 +228,7 @@
 
             return this.View(model);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Edit(EditClubInputModel model, string id)
         {

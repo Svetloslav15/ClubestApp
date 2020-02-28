@@ -68,7 +68,7 @@
         [Authorize(Roles = "SystemAdmin,ClubAdmin")]
         public IActionResult Administration()
         {
-            return this.View();
+            return this.Redirect("/Club/GetAllRequestNewClub");
         }
     }
 }

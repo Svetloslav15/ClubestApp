@@ -1,0 +1,81 @@
+﻿@model ClubestApp.Data.Models.RequestNewClub
+@using System.Collections.Generic;
+@{
+    ViewData["Title"] = "Заявка - " + Model.Name;
+}
+
+<form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddRequestNewClub" method="post" enctype="multipart/form-data" runat="server">
+    <p class="text-center h4 mb-4 text-black mt-2">Заявка за нов клуб - преглед</p>
+    <!-- Name -->
+    <div class="row">
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                <input type="text" disabled asp-for="Name" id="form1" class="form-control text-black" value="@Model.Name">
+                <label for="form1" disabled class="text-black">Име</label>
+            </div>
+        </div>
+
+        <!-- Fee -->
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                <input type="text" disabled asp-for="Fee" id="form1" class="form-control text-black" value="@Model.Fee">
+                <label for="form1" class="text-black">Такса</label>
+            </div>
+        </div>
+
+        <!-- IsPublic -->
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                @if (Model.IsPublic == true)
+                {
+                    <input type="text" disabled class="form-control text-black" value="Публичен">
+                }
+                else
+                {
+                    <input type="text" disabled class="form-control text-black" value="Частен">
+                }
+                <label for="form1" class="text-black">Вид на клуб:</label>
+            </div>
+        </div>
+        <div class="col-lg-6 md-form">
+            <div class="mb-1 ">
+                <input type="text" disabled class="form-control text-black" value="@Model.Town">
+                <label for="form1" class="text-black">Населено Място</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="col-lg-6 md-form">
+            <div class="mb-1">
+                <textarea disabled class="md-textarea form-control" rows="3" maxlength="300">
+                    @Model.Description
+                </textarea>
+                <label for="form7">Описание</label>
+            </div>
+        </div>
+
+        <!-- Town -->
+        
+        <!-- Image -->
+        <div class="mb-1 col-lg-6">
+            <label for="form1" class="text-black">Снимка на клуба</label>
+            <div class="md-form">
+                <img src="@Model.PictureUrl" alt="Logo" class="w-100" />
+            </div>
+        </div>
+
+        <!-- Buttons -->
+    <div class="text-center mt-3">
+        <a href="/RequestNewClub/Approve/@Model.Id" class="btn btn-success px-3 py-2"
+           data-toggle="tooltip" data-placement="top" title="Одобри заявката">
+            <i class="fas fa-check-circle"></i>
+        </a>
+        <a href="/RequestNewClub/Delete/@Model.Id" class="btn btn-danger px-3 py-2"
+           data-toggle="tooltip" data-placement="top" title="Изтрий заявката">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </div>
+    </form>
