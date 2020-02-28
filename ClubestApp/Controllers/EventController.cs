@@ -112,5 +112,8 @@
         }
 
         public async Task<IActionResult> AddEventRole()
+        {
+            return null;
+        }
     }
 }
