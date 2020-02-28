@@ -48,6 +48,8 @@
                     .ThenInclude(comment => comment.UserCommentDislikes)
                 .Include(post => post.Comments)
                     .ThenInclude(comment => comment.UserCommentLikes)
+                .Include(post => post.Comments)
+                    .ThenInclude(comment => comment.Author)
                 .FirstOrDefaultAsync(post => post.Id == postId);
 
             postEntity.Comments = postEntity.Comments
@@ -94,6 +96,7 @@
                 .Include(post => post.UserPostLikes)
                 .Include(post => post.UserPostDislikes)
                 .Include(post => post.Comments)
+                    .ThenInclude(comment => comment.Author)
                 .OrderByDescending(post => post.DateTime)
                 .ToListAsync();
 
