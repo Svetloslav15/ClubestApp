@@ -56,6 +56,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 div.classList.add('d-flex');
                 div.classList.add('justify-content-start');
                 div.classList.add('mb-2');
+                div.classList.add('border-round');
                 div.classList.add('p-1');
                 div.classList.add('text-white');
                 div.classList.add('blue-gradient');
