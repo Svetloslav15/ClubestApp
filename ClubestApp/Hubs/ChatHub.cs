@@ -21,9 +21,10 @@
             string userId = allUsers
                 .First(x => x.UserName == this.Context.User.Identity.Name)
                 .Id;
-                
+            string connectionId = Context.ConnectionId;
             User user = await this.userService.FindUserById(userId);
             string pictureUrl = user.PictureUrl;
+<<<<<<< HEAD
 
             string connectionId = Context.ConnectionId;
             await this.Clients.AllExcept(connectionId)
@@ -33,6 +34,10 @@
         public async Task Join()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "foo"); 
+=======
+            await this.Clients.AllExcept(connectionId)
+                .SendAsync("ReceiveMessage", pictureUrl, message);
+>>>>>>> 3a569276e83f3b9fe164bc2c724572bbe22c6227
         }
     }
 }
