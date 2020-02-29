@@ -21,10 +21,11 @@
             string userId = allUsers
                 .First(x => x.UserName == this.Context.User.Identity.Name)
                 .Id;
-                
+            string connectionId = Context.ConnectionId;
             User user = await this.userService.FindUserById(userId);
             string pictureUrl = user.PictureUrl;
-            await this.Clients.All.SendAsync("ReceiveMessage", pictureUrl, message);
+            await this.Clients.AllExcept(connectionId)
+                .SendAsync("ReceiveMessage", pictureUrl, message);
         }
     }
 }
