@@ -20,6 +20,7 @@
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         }
+
         public async Task<RequestNewClub> Delete(string id)
         {
             RequestNewClub request = await this.GetRequestNewClubById(id);

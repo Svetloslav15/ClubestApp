@@ -29,13 +29,15 @@
             IList<Event> events = await this.eventService.GetUpCommingEventsForClub(id);
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User currentUser = await this.userService.FindUserById(currentUserId);
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
 
             EventIndexBindingModel model = new EventIndexBindingModel()
             {
                 Club = club,
                 ClubPriceType = club.PriceType.ToString(),
                 Events = events,
-                CurrentUser = currentUser
+                CurrentUser = currentUser,
+                Messages = messages
             };
             return this.View(model);
         }
@@ -46,13 +48,15 @@
             IList<Event> events = await this.eventService.GetUpExpiredEventsForClub(id);
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User currentUser = await this.userService.FindUserById(currentUserId);
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
 
             EventIndexBindingModel model = new EventIndexBindingModel()
             {
                 Club = club,
                 ClubPriceType = club.PriceType.ToString(),
                 Events = events,
-                CurrentUser = currentUser
+                CurrentUser = currentUser,
+                Messages = messages
             };
             return this.View("Index", model);
         }
@@ -99,6 +103,7 @@
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User currentUser = await this.userService.FindUserById(currentUserId);
             List<User> allUsers = await this.userService.GetAllUsers();
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
 
             EventDetailsBindingModels model = new EventDetailsBindingModels()
             {
@@ -106,7 +111,8 @@
                 Club = club,
                 ClubPriceType = club.PriceType.ToString(),
                 CurrentUser = currentUser,
-                AllUsers = allUsers
+                AllUsers = allUsers,
+                Messages = messages
             };
 
             return this.View(model);

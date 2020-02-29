@@ -14,5 +14,7 @@
         public Event Event { get; set; }
 
         public List<User> AllUsers { get; set; } = new List<User>();
+
+        public IList<Message> Messages { get; set; }
     }
 }

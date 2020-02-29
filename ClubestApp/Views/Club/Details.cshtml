@@ -8,6 +8,8 @@
     <partial name="../Shared/_ClubDetails.cshtml" />
     <!--/.Navbar-->
     <div class="col-lg-4">
+        <partial name="_Chat.cshtml" model="@Model.Messages" />
+        <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
     </div>
     <div class="col-lg-8 border">
         <div>

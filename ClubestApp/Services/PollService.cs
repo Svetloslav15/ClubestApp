@@ -119,8 +119,13 @@ namespace ClubestApp.Services
                         })
                         .ToList(),
                 ClubId = club.Id,
-                UserId = this.dbContext.Users.First(u => u.Id == userId).Id
-            };
+                UserId = this.dbContext.Users.First(u => u.Id == userId).Id,
+                Messages = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == clubId)
+                .ToListAsync(),
+        };
 
             return result;
         }
@@ -150,7 +155,12 @@ namespace ClubestApp.Services
                               .Where(x => this.IsPollValid(x.ExpiredDate) == false && x.ClubId == clubId && !x.IsDeleted)
                               .Include(x => x.Options)
                               .ToList(),
-            };
+                Messages = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == clubId)
+                .ToListAsync()
+        };
 
             return result;
         }
