@@ -83,7 +83,6 @@
 
             return this.Redirect(returnUrl);
         }
-
         public async Task<IActionResult> Details([FromQuery] string clubId, string id)
         {
             Event eventEntity = await this.eventService.GetEventById(id);
@@ -111,9 +110,12 @@
             return this.Redirect($"/Event/Index/{clubId}");
         }
 
-        public async Task<IActionResult> AddEventRole()
+        [HttpPost]
+        public async Task<IActionResult> AddEventRole(string name, string eventId, string userId, string clubId)
         {
-            return null;
+            await this.eventService.AddEventRole(name, eventId, userId);
+
+            return this.Redirect($"/Event/Details/{eventId}?clubId={clubId}");
         }
     }
 }

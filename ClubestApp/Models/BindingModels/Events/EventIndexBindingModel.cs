@@ -12,10 +12,10 @@
 
         public string ClubPriceType { get; set; }
 
-        public List<User> UsersForSelectAdmin { get; set; }
+        public List<User> UsersForSelectAdmin { get; set; } = new List<User>();
 
         public AddEventInputModel AddEventInputModel { get; set; }
 
-        public IList<Event> Events { get; set; }
+        public IList<Event> Events { get; set; } = new List<Event>();
     }
 }

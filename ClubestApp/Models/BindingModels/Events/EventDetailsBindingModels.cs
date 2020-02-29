@@ -13,6 +13,6 @@
 
         public Event Event { get; set; }
 
-        public List<User> AllUsers { get; set; }
+        public List<User> AllUsers { get; set; } = new List<User>();
     }
 }
