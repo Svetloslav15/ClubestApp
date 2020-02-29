@@ -5,7 +5,7 @@
 }
 
     <div class="container col-lg-12 my-2 mx-auto border-deep-blue bg-white box-shadow">
-        <h2 class="text-center pt-4 pb-2">Мойте събития</h2>
+        <h2 class="text-center pt-4 pb-4">Мойте събития</h2>
         <div class="row pb-4">
             <div class="col-lg-3 pb-3 mr-lg-3">
                 <ul class="list-group list-group-flush">
@@ -48,7 +48,7 @@
                                     <th scope="row">@counter</th>
                                     @{ counter++; }
                                     <td scope="col">@eventUser.Event.Name</td>
-                                    <td scope="col">@eventUser.Event.Date</td>
+                                    <td scope="col">@eventUser.Event.Date.ToString("dd/MM/yyyy")</td>
                                     <td scope="col">@eventUser.Role</td>
                                 </tr>
                             }
