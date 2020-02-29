@@ -8,6 +8,31 @@
     <partial name="../Shared/_ClubDetails.cshtml" />
     <!--/.Navbar-->
     <div class="col-lg-4">
+        <!-- Chat -->
+        <div class="container">
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-lg-12">&nbsp;</div>
+                <div class="col-lg-12">
+                    User..........<input type="text" id="userInput" />
+                    <br />
+                    Message...<input type="text" id="messageInput" />
+                    <input type="button" id="sendButton" value="Send Message" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">&nbsp;</div>
+                <div class="col-6">
+                    <ul id="messagesList"></ul>
+                </div>
+            </div>
+        </div>
+        <!-- /Chat -->
     </div>
     <div class="col-lg-8 border">
         <div>
@@ -62,3 +87,5 @@
         </div>
     </div>
 </div>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
