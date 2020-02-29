@@ -183,6 +183,7 @@
             List<Post> posts = await this.dbContext.Posts
                 .Include(x => x.Author)
                 .Include(x => x.Comments)
+                    .ThenInclude(x => x.Author)
                 .Include(x => x.UserPostDislikes)
                 .Include(x => x.UserPostLikes)
                 .Where(x => userClubs.Any(y => y.Id == x.ClubId))

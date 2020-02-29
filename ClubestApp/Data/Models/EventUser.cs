@@ -9,5 +9,7 @@
         public string EventId { get; set; }
 
         public Event Event { get; set; }
+
+        public string Role { get; set; }
     }
 }

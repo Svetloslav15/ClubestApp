@@ -53,7 +53,7 @@
               .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            services.AddTransient<EmailService>();
+            services.AddSingleton<EmailService>();
             services.AddTransient<UserService>();
             services.AddTransient<ClubService>();
             services.AddTransient<RequestService>();

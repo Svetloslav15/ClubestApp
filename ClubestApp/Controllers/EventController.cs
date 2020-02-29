@@ -71,9 +71,17 @@
         public async Task<IActionResult> JoinEvent([FromQuery] string clubId, [FromQuery] string returnUrl, string id)
         {
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await this.eventService.JoinEvent(id, currentUserId);
+            await this.eventService.JoinEvent(id, currentUserId, "Участник");
 
             return this.Redirect(returnUrl);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> JoinEvent(string role, string eventId, string userId, string clubId)
+        {
+            await this.eventService.JoinEvent(eventId, userId, role);
+
+            return this.Redirect($"/Event/Details/{eventId}?clubId={clubId}");
         }
 
         public async Task<IActionResult> ExitEvent([FromQuery] string returnUrl, string id)
@@ -109,11 +117,6 @@
             await this.eventService.DeleteEvent(id);
 
             return this.Redirect($"/Event/Index/{clubId}");
-        }
-
-        public async Task<IActionResult> AddEventRole()
-        {
-            return null;
         }
     }
 }

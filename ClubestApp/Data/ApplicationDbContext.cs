@@ -43,8 +43,6 @@
 
         public DbSet<JoinClubRequest> JoinClubRequests { get; set; }
 
-        public DbSet<EventRole> EventRoles { get; set; }
-
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -95,20 +93,6 @@
                 .HasMany(post => post.Comments)
                 .WithOne(comment => comment.Post)
                 .HasForeignKey(comment => comment.PostId);
-            /**/
-
-            //Define 1-M relations for EventRole
-            builder.Entity<EventRole>()
-                .HasOne(role => role.User)
-                .WithMany(user => user.EventRoles)
-                .HasForeignKey(role => role.UserId);
-            /**/
-
-            //Define 1-M relations for EventRole
-            builder.Entity<EventRole>()
-               .HasOne(role => role.Event)
-               .WithMany(eventEntity => eventEntity.EventRoles)
-               .HasForeignKey(role => role.EventId);
             /**/
 
             //Define 1-M realtions for JoinClubRequest

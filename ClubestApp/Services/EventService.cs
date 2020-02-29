@@ -80,28 +80,32 @@
             return events;
         }
 
-        public async Task<Event> JoinEvent(string eventId, string userId)
+        public async Task<bool> JoinEvent(string eventId, string userId, string role)
         {
             Event eventEntity = await this.GetEventById(eventId);
             User user = await this.userService.FindUserById(userId);
 
             this.emailService.SendEmail(user, $"Успешно се записа за събитието {eventEntity.Name}!", $"Clubest - {eventEntity.Name}");
 
-            if (eventEntity != null && user != null)
+            if (eventEntity != null && user != null && 
+                !this.dbContext.EventUsers.Any(x => x.UserId == userId && x.EventId == eventId))
             {
                 EventUser eventUser = new EventUser()
                 {
                     EventId = eventId,
                     Event = eventEntity,
                     UserId = userId,
-                    User = user
+                    User = user,
+                    Role = role
                 };
 
                 await this.dbContext.EventUsers.AddAsync(eventUser);
                 await this.dbContext.SaveChangesAsync();
+
+                return true;
             }
 
-            return eventEntity;
+            return false;
         }
 
         public async Task<EventUser> ExitEvent(string eventId, string userId)
@@ -126,22 +130,6 @@
             await this.dbContext.SaveChangesAsync();
 
             return eventEntity;
-        }
-
-        public async Task<EventRole> AddEventRole(string name, string eventId, string userId)
-        {
-            EventRole eventRole = new EventRole()
-            {
-                Name = name,
-                EventId = eventId,
-                UserId = userId
-            };
-
-            await this.dbContext.EventRoles.AddAsync(eventRole);
-            await this.dbContext.SaveChangesAsync();
-            await this.JoinEvent(eventId, userId);
-
-            return eventRole;
         }
     }
 }
