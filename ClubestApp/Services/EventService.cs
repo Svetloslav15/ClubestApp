@@ -80,7 +80,7 @@
             return events;
         }
 
-        public async Task<bool> JoinEvent(string eventId, string userId)
+        public async Task<bool> JoinEvent(string eventId, string userId, string role)
         {
             Event eventEntity = await this.GetEventById(eventId);
             User user = await this.userService.FindUserById(userId);
@@ -95,7 +95,8 @@
                     EventId = eventId,
                     Event = eventEntity,
                     UserId = userId,
-                    User = user
+                    User = user,
+                    Role = role
                 };
 
                 await this.dbContext.EventUsers.AddAsync(eventUser);
@@ -129,27 +130,6 @@
             await this.dbContext.SaveChangesAsync();
 
             return eventEntity;
-        }
-
-        public async Task<bool> AddEventRole(string name, string eventId, string userId)
-        {
-           
-            bool joinSuccess = await this.JoinEvent(eventId, userId);
-            if (joinSuccess)
-            {
-                EventRole eventRole = new EventRole()
-                {
-                    Name = name,
-                    EventId = eventId,
-                    UserId = userId
-                };
-                await this.dbContext.EventRoles.AddAsync(eventRole);
-                await this.dbContext.SaveChangesAsync();
-
-                return true;
-            }
-
-            return false;
         }
     }
 }

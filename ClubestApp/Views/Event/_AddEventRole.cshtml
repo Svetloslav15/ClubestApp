@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-controller="Event" asp-action="AddEventRole" method="post">
+            <form asp-controller="Event" asp-action="JoinEvent" method="post">
                 <div class="modal-body mx-3">
                     <div class="md-form mb-3">
                         <p class="text-left">Избери потребител:</p>
@@ -25,10 +25,11 @@
                     <input type="hidden" name="clubId" value="@Model.Club.Id" />
                     <div class="md-form mb-3">
                         <p class="text-left">Избери роля:</p>
-                        <select name="name" class="browser-default custom-select">
+                        <select name="role" class="browser-default custom-select">
                             <option value="Лектор">Лектор</option>
                             <option value="Гост">Гост</option>
                             <option value="Организатор">Организатор</option>
+                            <option value="Участник">Участник</option>
                         </select>
                     </div>
                 </div>
