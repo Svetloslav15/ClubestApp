@@ -48,26 +48,25 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header text-center">
-                                                <h4 class="modal-title w-100 font-weight-bold">Гласувай за анкета:</h4>
+                                                <h4 class="modal-title w-100 font-weight-bold">@poll.Content</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <span>Въпрос: @poll.Content</span>
-                                            <form asp-controller="Poll" asp-action="AddVote" method="post">
+                                            <form asp-controller="Poll" asp-action="AddVote" method="post" class="px-3 py-2">
                                                 @foreach (var option in poll.Options)
                                                 {
                                                     string optionId = 'a' + Guid.NewGuid().ToString() + 'a';
                                                     if (poll.IsMultichoice)
                                                     {
-                                                        <div class="px-4 custom-control custom-checkbox text-left">
+                                                        <div class="text-left px-4 custom-control custom-checkbox ml-auto">
                                                             <input type="checkbox" name="Votes" value="@option.Content" class="custom-control-input" id="@optionId">
                                                             <label class="custom-control-label" for="@optionId">@option.Content</label>
                                                         </div>
                                                     }
                                                     else
                                                     {
-                                                        <div class="custom-control custom-radio mx-auto">
+                                                        <div class="text-left px-4  custom-control custom-radio ml-auto">
                                                             @Html.RadioButtonFor(model => model.Votes, @option.Content, new { @class = "custom-control-input", @id = optionId, @Name = "defaultExampleRadios" })
                                                             <label class="text-black custom-control-label" for="@optionId">@option.Content</label>
                                                         </div>
@@ -78,9 +77,9 @@
                                                 <input type="text" name="PollId" value="@poll.Id" asp-for="PollId" hidden />
                                                 <input type="text" name="ClubId" value="@Model.ClubId" asp-for="ClubId" hidden />
                                                 <div class="modal-footer d-flex justify-content-center">
-                                                    <button class="btn blue-gradient" type="submit">
+                                                    <button class="btn blue-gradient px-3 text-center" type="submit">
                                                         Гласувай
-                                                        <i class="fas fa-paper-plane-o ml-1"></i>
+                                                        <i class="fas fa-paper-plane ml-1"></i>
                                                     </button>
                                                 </div>
                                             </form>
