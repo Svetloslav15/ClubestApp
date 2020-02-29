@@ -162,6 +162,17 @@
                 .ToListAsync();
         }
 
+        public async Task<IList<Message>> GetAllMessagesForClub(string id)
+        {
+            IList<Message> result = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == id)
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task<Club> AddClub(AddClubInputModel model, string userId)
         {
             string currentUrl = await this.cloudinaryService.UploadImage(model.ImageFile);
@@ -262,7 +273,12 @@
                         Number = x.User.PhoneNumber,
                     })
                     .ToListAsync(),
-                ClubAdmins = clubAdmins
+                ClubAdmins = clubAdmins,
+                Messages = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == clubId)
+                .ToListAsync(),
             };
         }
 

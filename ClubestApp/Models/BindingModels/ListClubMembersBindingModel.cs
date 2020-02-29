@@ -1,13 +1,12 @@
 ﻿namespace ClubestApp.Models.BindingModels
 {
     using ClubestApp.Data.Models;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class ListClubMembersBindingModel
     {
+        public IList<Message> Messages { get; set; } = new List<Message>();
+
         public List<MemberItemBindingModel> Members { get; set; } = new List<MemberItemBindingModel>();
 
         public Club Club { get; set; }

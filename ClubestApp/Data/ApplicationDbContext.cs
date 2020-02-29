@@ -9,6 +9,8 @@
     {
         public DbSet<Club> Clubs { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public DbSet<ClubAdmin> ClubAdmins { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
@@ -241,6 +243,16 @@
                 .WithMany(up => up.UserPostDislikes)
                 .HasForeignKey(up => up.PostId);
             /**/
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Club)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ClubId);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(s => s.Messages)
+                .HasForeignKey(m => m.SenderId);
         }
     }
 }

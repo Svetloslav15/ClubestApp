@@ -12,5 +12,7 @@
         public List<Poll> ActivePolls { get; set; }
 
         public List<Poll> NonActivePolls { get; set; }
+
+        public IList<Message> Messages { get; set; }
     }
 }

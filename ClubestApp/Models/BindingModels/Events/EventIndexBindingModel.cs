@@ -17,5 +17,7 @@
         public AddEventInputModel AddEventInputModel { get; set; }
 
         public IList<Event> Events { get; set; } = new List<Event>();
+
+        public IList<Message> Messages { get; set; }
     }
 }

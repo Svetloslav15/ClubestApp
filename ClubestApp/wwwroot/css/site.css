@@ -276,5 +276,9 @@
 }
 
 .cursor-pointer {
-    cursor: pointer;N
+    cursor: pointer;
+}
+.scrollable {
+    height: 450px;
+    overflow-y: scroll;
 }

@@ -8,7 +8,8 @@
 
     <!--/.Navbar-->
     <div class="col-lg-4">
-        SideNav
+        <partial name="_Chat.cshtml" model="@Model.Messages" />
+        <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
     </div>
     <div class="col-lg-8 border pb-4">
         <h2 class="text-center mt-2 mb-4">Членове</h2>

@@ -1,0 +1,60 @@
+﻿@model IList<ClubestApp.Data.Models.Message>
+
+@{
+    ViewData["Title"] = "_Chat";
+}
+
+<div class="container-fluid h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-12 col-xl-12 chat">
+            <div class="card">
+                <div class="card-body scrollable row" id="messagesList">
+                    @if (Model != null)
+                    {
+                        @foreach (var message in Model.OrderBy(x => x.Date))
+                        {
+                            if (message.Sender.UserName == this.User.Identity.Name)
+                            {
+                                <div class="d-flex justify-content-start mb-2 blue-gradient text-white p-1">
+                                    <div class="img_cont_msg col-md-3"  title="@message.Sender.FirstName @message.Sender.LastName">
+                                        <img src="@message.Sender.PictureUrl" class="rounded-circle user_img_msg w-100">
+                                    </div>
+                                    <div class="msg_cotainer">
+                                        @message.Content
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex justify-content-start mb-2">
+                                    <div class="img_cont_msg col-md-3">
+                                        <img src="@message.Sender.PictureUrl" class="rounded-circle user_img_msg w-100">
+                                    </div>
+                                    <div class="msg_cotainer">
+                                        @message.Content
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                </div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <textarea name="" id="messageInput" class="form-control type_msg" placeholder="Вашето съобщение..."></textarea>
+                        <div class="input-group-append">
+                            <button id="sendButton" class="input-group-text send_btn purple-gradient">
+                            <i class="fas fa-location-arrow text-white"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Chat -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+<script src="~/js/scroll.js"></script>

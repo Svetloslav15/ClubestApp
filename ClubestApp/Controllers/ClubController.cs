@@ -143,11 +143,13 @@
             Club club = await this.clubService.GetClubById(id);
             string clubPriceType = club.PriceType.ToString();
             IList<Post> postsForClub = await this.postService.GetAllPostsForClub(club.Id);
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
             ClubDetailsBindingModel bindingModel = new ClubDetailsBindingModel()
             {
                 Club = club,
                 ClubPriceType = clubPriceType,
-                Posts = postsForClub
+                Posts = postsForClub,
+                Messages = messages
             };
 
             return this.View(bindingModel);
@@ -164,11 +166,14 @@
                 .GetResult()
                 .ToList();
 
+
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
             ClubDetailsRequestsBindingModel requestsBindingModel = new ClubDetailsRequestsBindingModel()
             {
                 Club = club,
                 ClubPriceType = clubPriceType,
-                JoinClubRequests = requests
+                JoinClubRequests = requests,
+                Messages = messages
             };
 
             return this.View(requestsBindingModel);
@@ -184,12 +189,14 @@
                 .GetAwaiter()
                 .GetResult()
                 .ToList();
+            IList<Message> messages = await this.clubService.GetAllMessagesForClub(club.Id);
 
             ClubDetailsRequestsBindingModel requestsBindingModel = new ClubDetailsRequestsBindingModel()
             {
                 Club = club,
                 ClubPriceType = clubPriceType,
-                JoinClubRequests = requests
+                JoinClubRequests = requests,
+                Messages = messages
             };
 
             return this.View(requestsBindingModel);
