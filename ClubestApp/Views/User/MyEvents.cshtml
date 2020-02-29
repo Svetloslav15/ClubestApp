@@ -21,15 +21,16 @@
                     <li class="list-group-item">
                         <a asp-controller="User" asp-action="ChangePassword">Парола</a>
                     </li>
-                    <li class="list-group-item">
-                        <a asp-controller="User" asp-action="DownloadData">Данни</a>
-                    </li>
                 </ul>
             </div>
             <div class="col-lg-8 py-2 mx-auto">
                 @if (Model.EventUsers.Count > 0)
                 {
-                    <table class="table table-hover">
+                <button class="btn btn-success btn-md" id="export-btn"
+                        data-toggle="tooltip" data-placement="top" title="Свали данните като CSV">
+                    <i class="far fa-file-excel fa-lg"></i>
+                </button>
+                    <table class="table table-hover dataTable">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -45,7 +46,7 @@
                             @foreach (var eventUser in Model.EventUsers)
                             {
                                 <tr>
-                                    <th scope="row">@counter</th>
+                                    <td scope="row">@counter</td>
                                     @{ counter++; }
                                     <td scope="col">@eventUser.Event.Name</td>
                                     <td scope="col">@eventUser.Event.Date.ToString("dd/MM/yyyy")</td>
@@ -64,3 +65,4 @@
             </div>
         </div>
     </div>
+<script src="~/js/csv-export.js"></script>

@@ -5,7 +5,7 @@
 }
 
 <div class="container col-lg-12 my-2 mx-auto border-deep-blue bg-white box-shadow">
-    <h2 class="text-center pt-4 pb-4">Моят профил</h2>
+    <h2 class="text-center pt-4 pb-4">Мойте интереси</h2>
     <div class="row pb-4">
         <div class="col-lg-3 pb-3 mr-lg-3">
             <ul class="list-group list-group-flush">
@@ -21,13 +21,9 @@
                 <li class="list-group-item">
                     <a asp-controller="User" asp-action="ChangePassword">Парола</a>
                 </li>
-                <li class="list-group-item">
-                    <a asp-controller="User" asp-action="DownloadData">Данни</a>
-                </li>
             </ul>
         </div>
-        <div class="col-lg-8 py-2 mx-auto bg-white box-shadow-light row">
-            <h3 class="h3 text-center my-3 text-primary mx-auto">От тук можеш да виждаш и да променяш своите интереси</h3>
+        <div class="col-lg-8 py-2 mx-auto bg-white row">
             <form class="col-lg-12 row mb-5" asp-controller="User" asp-action="Interest" method="post">
                 <div class="col-lg-12 row mx-auto text-left">
                     @foreach (var item in Model.AllInterests)
