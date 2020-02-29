@@ -5,29 +5,30 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (pictureUrl, message) {
-    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    var div = document.createElement("div");
-    div.classList.add('d-flex');
-    div.classList.add('justify-content-start');
-    div.classList.add('mb-4');       
-    let imageDiv = document.createElement('div');
-    imageDiv.classList.add('col-md-3');
-    let imageEl = document.createElement('img');
-    imageEl.src = pictureUrl;
-    imageEl.classList.add('rounded-circle');
-    imageEl.classList.add('w-100');
-    imageDiv.appendChild(imageEl);
-    let messageDiv = document.createElement('div');
-    messageDiv.textContent = msg;
-    let span = document.createElement('span');
-    span.textContent = "\n Add datetime";
-    messageDiv.appendChild(span);
-    div.appendChild(imageDiv);
-    div.appendChild(messageDiv);
-    document.getElementById("messagesList").appendChild(div);
-    document.getElementById("messageInput").value = "";
+connection.on("ReceiveMessage", function (pictureUrl, message, clubId) {
+    if (document.getElementById("clubId").value == clubId) {
+        let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        let div = document.createElement("div");
+        div.classList.add('d-flex');
+        div.classList.add('justify-content-start');
+        div.classList.add('mb-2');
+        let imageDiv = document.createElement('div');
+        imageDiv.classList.add('col-md-3');
+        let imageEl = document.createElement('img');
+        imageEl.src = pictureUrl;
+        imageEl.classList.add('rounded-circle');
+        imageEl.classList.add('w-100');
+        imageDiv.appendChild(imageEl);
+        let messageDiv = document.createElement('div');
+        messageDiv.textContent = msg;
+        div.appendChild(imageDiv);
+        div.appendChild(messageDiv);
+        document.getElementById("messagesList").appendChild(div);
+        document.getElementById("messageInput").value = "";
+        updateScroll();
+    }
 });
+
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
@@ -36,21 +37,47 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
+    let message = document.getElementById("messageInput").value;
+    let clubId = document.getElementById("clubId").value;
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/Message/Add",
         data: {
-            "ClubId": "plamen"
+            "ClubId": clubId,
+            "Content": message,
         },
-        //contentType: "application/json charset-UTF8",
-        //dataType: "json",
         error: function (err) {
-            console.log(err);
+            console.log(err.responseText);
+        },
+        success: function (pictureUrl) {
+            if (document.getElementById("clubId").value == clubId) {
+                let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                let div = document.createElement("div");
+                div.classList.add('d-flex');
+                div.classList.add('justify-content-start');
+                div.classList.add('mb-2');
+                div.classList.add('p-1');
+                div.classList.add('text-white');
+                div.classList.add('blue-gradient');
+                let imageDiv = document.createElement('div');
+                imageDiv.classList.add('col-md-3');
+                let imageEl = document.createElement('img');
+                imageEl.src = pictureUrl;
+                imageEl.classList.add('rounded-circle');
+                imageEl.classList.add('w-100');
+                imageDiv.appendChild(imageEl);
+                let messageDiv = document.createElement('div');
+                messageDiv.textContent = msg;
+                div.appendChild(imageDiv);
+                div.appendChild(messageDiv);
+                document.getElementById("messagesList").appendChild(div);
+                document.getElementById("messageInput").value = "";
+                updateScroll();
+            }
         }
     });
-
-    var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", message).catch(function (err) {
+    
+    connection.invoke("SendMessage", message, clubId).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

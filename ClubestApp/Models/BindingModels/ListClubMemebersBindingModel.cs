@@ -13,5 +13,7 @@ namespace ClubestApp.Models.BindingModels
         public Club Club { get; set; }
 
         public string ClubPriceType { get; set; }
+
+        public IList<Message> Messages { get; set; }
     }
 }

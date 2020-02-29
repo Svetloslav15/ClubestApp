@@ -10,5 +10,7 @@
         public string ClubPriceType { get; set; }
 
         public IList<Post> Posts { get; set; } = new List<Post>();
+
+        public IList<Message> Messages { get; set; }
     }
 }

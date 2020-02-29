@@ -12,5 +12,7 @@
         public RequestApproveBindingModel RequestApproveBindingModel { get; set; }
 
         public List<JoinClubRequest> JoinClubRequests { get; set; }
+
+        public IList<Message> Messages { get; set; }
     }
 }

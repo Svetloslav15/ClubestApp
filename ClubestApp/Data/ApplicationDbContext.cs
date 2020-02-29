@@ -9,6 +9,8 @@
     {
         public DbSet<Club> Clubs { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public DbSet<ClubAdmin> ClubAdmins { get; set; }
 
         public DbSet<Comment> Comments { get; set; }

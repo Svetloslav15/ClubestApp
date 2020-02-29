@@ -27,5 +27,7 @@
         public string PollId { get; set; }
 
         public string UserId { get; set; }
+
+        public IList<Message> Messages { get; set; }
     }
 }

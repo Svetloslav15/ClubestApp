@@ -15,7 +15,7 @@
             this.userService = userService;
         }
 
-        public async Task SendMessage(string message)
+        public async Task SendMessage(string message, string clubId)
         {
             var allUsers = await this.userService.GetAllUsers();
             string userId = allUsers
@@ -24,7 +24,15 @@
                 
             User user = await this.userService.FindUserById(userId);
             string pictureUrl = user.PictureUrl;
-            await this.Clients.All.SendAsync("ReceiveMessage", pictureUrl, message);
+
+            string connectionId = Context.ConnectionId;
+            await this.Clients.AllExcept(connectionId)
+                .SendAsync("ReceiveMessage", pictureUrl, message, clubId);
+        }
+
+        public async Task Join()
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, "foo"); 
         }
     }
 }

@@ -6,6 +6,8 @@ namespace ClubestApp.Data.Models
     {
         public string Id { get; set; }
 
+        public string Content { get; set; }
+
         public DateTime Date { get; set; }
 
         public string ClubId { get; set; }

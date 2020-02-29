@@ -3,5 +3,7 @@
     public class MessageInputModel
     {
         public string ClubId { get; set; }
+
+        public string Content { get; set; }
     }
 }

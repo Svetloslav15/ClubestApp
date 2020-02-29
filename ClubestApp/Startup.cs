@@ -65,6 +65,7 @@
             services.AddTransient<NotificationService>();
             services.AddTransient<RequestNewClubService>();
             services.AddTransient<EventService>();
+            services.AddTransient<MessageService>();
 
             services.AddMvc(options =>
             {
