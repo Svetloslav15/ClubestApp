@@ -173,14 +173,14 @@
             return post;
         }
 
-        public async Task<List<Post>> GetPostsForHomePage(string userId)
+        public async Task<IList<Post>> GetPostsForHomePage(string userId)
         {
-            List<Club> userClubs = await this.dbContext.UserClubs
+            IList<Club> userClubs = await this.dbContext.UserClubs
                 .Where(x => x.UserId == userId)
                 .Select(x => x.Club)
                 .ToListAsync();
 
-            List<Post> posts = await this.dbContext.Posts
+            IList<Post> posts = await this.dbContext.Posts
                 .Include(x => x.Author)
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.Author)

@@ -1,6 +1,10 @@
 ﻿@model ClubestApp.Data.Models.RequestNewClub
 @using System.Collections.Generic;
 
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
 <form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddRequestNewClub" method="post" enctype="multipart/form-data" runat="server">
     <p class="text-center h4 mb-4 text-black mt-2">Заявка за нов клуб - преглед</p>
     <!-- Name -->
@@ -70,7 +74,7 @@
         <div class="mb-1 col-lg-6">
             <label for="form1" class="text-black">Снимка на клуба</label>
             <div class="md-form">
-                <img src="@Model.PictureUrl" alt="Logo" class="w-100"/>
+                <img src="@Model.PictureUrl" alt="Logo" class="w-100" />
             </div>
         </div>
 
@@ -80,13 +84,13 @@
             <p>
                 @foreach (var item in Model.Interests.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList())
                 {
-                    <p>@item</p>
-                }
-            </p>
+                <p>@item</p>
+            }
+                </p>
+            </div>
         </div>
-    </div>
-    <!-- Sign in button -->
-    <div class="text-center mt-3">
-        <input type="submit" class="btn text-white bg-white blue-gradient btn-outline-white" value="Добави" />
-    </div>
-</form>
+        <!-- Sign in button -->
+        <div class="text-center mt-3">
+            <input type="submit" class="btn text-white bg-white blue-gradient btn-outline-white" value="Добави" />
+        </div>
+    </form>
