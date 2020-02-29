@@ -241,6 +241,16 @@
                 .WithMany(up => up.UserPostDislikes)
                 .HasForeignKey(up => up.PostId);
             /**/
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Club)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ClubId);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(s => s.Messages)
+                .HasForeignKey(m => m.SenderId);
         }
     }
 }

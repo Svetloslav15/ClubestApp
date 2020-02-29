@@ -57,5 +57,7 @@
         public ICollection<UserPostDislikes> UserPostDislikes { get; set; }
 
         public ICollection<JoinClubRequest> JoinClubRequests { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
     }
 }
