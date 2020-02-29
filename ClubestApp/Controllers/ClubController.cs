@@ -9,7 +9,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
@@ -22,18 +21,21 @@
         private readonly RequestService requestService;
         private readonly PostService postService;
         private readonly PollService pollService;
+        private readonly UserService userService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
                     RequestService requestService,
                     PostService postService,
-                    PollService pollService)
+                    PollService pollService,
+                    UserService userService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
             this.requestService = requestService;
             this.postService = postService;
             this.pollService = pollService;
+            this.userService = userService;
         }
 
         public async Task<IActionResult> AddClub()
@@ -218,7 +220,7 @@
 
         public async Task<IActionResult> ListMembers(string id)
         {
-            ListClubMemebersBindingModel model = await this.clubService.GetMemberInClub(id);
+            ListClubMembersBindingModel model = await this.clubService.GetMemberInClub(id);
             return View(model);
         }
 
@@ -274,6 +276,24 @@
             AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id);
 
             return this.View(model);
+        }
+
+        public async Task<IActionResult> AddClubAdmin(string id, string secondId)
+        {
+            Club club = await this.clubService.GetClubById(id);
+            User user = await this.userService.FindUserById(secondId);
+            await this.clubService.AddClubAdmin(club, user);
+
+            return this.Redirect($"/Club/ListMembers/{club.Id}");
+        }
+
+        public async Task<IActionResult> RemoveClubAdmin(string id, string secondId)
+        {
+            Club club = await this.clubService.GetClubById(id);
+            User user = await this.userService.FindUserById(secondId);
+            await this.clubService.RemoveClubAdmin(club, user);
+
+            return this.Redirect($"/Club/ListMembers/{club.Id}");
         }
     }
 }

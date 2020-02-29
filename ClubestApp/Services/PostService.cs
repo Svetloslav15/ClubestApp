@@ -16,14 +16,20 @@
         private readonly ApplicationDbContext dbContext;
         private readonly CloudinaryService cloudinaryService;
         private readonly UserService userService;
+        private readonly ClubService clubService;
+        private readonly NotificationService notificationService;
 
         public PostService(ApplicationDbContext dbContext,
             CloudinaryService cloudinaryService,
-            UserService userService)
+            UserService userService,
+            NotificationService notificationService,
+            ClubService clubService)
         {
             this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
             this.userService = userService;
+            this.notificationService = notificationService;
+            this.clubService = clubService;
         }
 
         private bool CheckIsLink(string content)
@@ -84,6 +90,12 @@
 
             await this.dbContext.Posts.AddAsync(post);
             await this.dbContext.SaveChangesAsync();
+
+            Club club = this.dbContext.Clubs
+                .Include(x => x.ClubUsers)
+                .FirstOrDefault(x => x.Id == post.ClubId);
+
+            await this.notificationService.CreateNotificationForListOfUsers($"Има нова публикация в {club.Name}.", $"/Club/Details/{club.Id}", club.ClubUsers.ToList());
 
             return post;
         }
@@ -157,7 +169,7 @@
                 UserPostLikes entity = await this.dbContext.UserPostLikes.FirstOrDefaultAsync(x => x.UserId == user.Id);
                 this.dbContext.UserPostLikes.Remove(entity);
             }
-            
+
             await this.dbContext.SaveChangesAsync();
 
             return post;

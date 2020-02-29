@@ -14,13 +14,16 @@
         private readonly ApplicationDbContext dbContext;
         private readonly UserService userService;
         private readonly EmailService emailService;
+        private readonly NotificationService notificationService;
 
         public EventService(ApplicationDbContext dbContext,
-            UserService userService, EmailService emailService)
+            UserService userService, EmailService emailService,
+            NotificationService notificationService)
         {
             this.dbContext = dbContext;
             this.userService = userService;
             this.emailService = emailService;
+            this.notificationService = notificationService;
         }
 
         public async Task<Event> AddEvent(AddEventInputModel inputModel)
@@ -86,7 +89,6 @@
             User user = await this.userService.FindUserById(userId);
 
             this.emailService.SendEmail(user, $"Успешно се записа за събитието {eventEntity.Name}!", $"Clubest - {eventEntity.Name}");
-
             if (eventEntity != null && user != null && 
                 !this.dbContext.EventUsers.Any(x => x.UserId == userId && x.EventId == eventId))
             {

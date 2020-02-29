@@ -1,0 +1,25 @@
+﻿@model ClubestApp.Models.BindingModels.Notifications.NotificationsIndexBindingModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-lg-10 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <h2 class="text-center mx-auto my-4">Известия</h2>
+    <div class="col-lg-12 mb-3">
+        @if (Model.Notifications.Count > 0)
+        {
+            @foreach (var notification in Model.Notifications)
+            {
+                <div class="container box-shadow-light py-2">
+                    <a href="@notification.Link">
+                        <p>@notification.Content</p>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 class="text-primary text-center my-5">Нямате все още известия</h3>
+        }
+    </div>
+</div>
