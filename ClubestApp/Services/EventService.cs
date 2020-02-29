@@ -131,5 +131,14 @@
 
             return eventEntity;
         }
+
+        public async Task<IList<EventUser>> GetEventUsersForUser(string userId)
+        {
+            return await this.dbContext.EventUsers
+                .Include(x => x.Event)
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+        }
     }
 }

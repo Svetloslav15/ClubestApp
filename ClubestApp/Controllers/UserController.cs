@@ -4,11 +4,13 @@
     using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels;
+    using ClubestApp.Models.BindingModels.User;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -19,7 +21,7 @@
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserService userService;
-        private readonly ClubService clubService;
+        private readonly EventService eventService;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
 
         public UserController(
@@ -27,13 +29,13 @@
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             UserService userService,
-            ClubService clubService)
+            EventService eventService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
             this.userService = userService;
-            this.clubService = clubService;
+            this.eventService = eventService;
         }
 
         public async Task<IActionResult> Profile()
@@ -68,7 +70,20 @@
 
         public IActionResult ChangePassword()
         {
-            return View();
+            return this.View();
+        }
+
+        public async Task<IActionResult> Events()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            IList<EventUser> eventUsers = await this.eventService.GetEventUsersForUser(user.Id);
+            
+            MyEventsBindingModel model = new MyEventsBindingModel()
+            {
+                EventUsers = eventUsers
+            };
+
+            return this.View("MyEvents", model);
         }
 
         [HttpPost]

@@ -1,0 +1,66 @@
+﻿@model ClubestApp.Models.BindingModels.User.MyEventsBindingModel
+
+@{
+    ViewData["Title"] = "Мойте събития";
+}
+
+    <div class="container col-lg-12 my-2 mx-auto border-deep-blue bg-white box-shadow">
+        <h2 class="text-center pt-4 pb-2">Мойте събития</h2>
+        <div class="row pb-4">
+            <div class="col-lg-3 pb-3 mr-lg-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="Profile">Моят профил</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="Interests">Мойте интереси</a>
+                    </li>
+                    <li class="list-group-item active">
+                        <a asp-controller="User" asp-action="Events" class="text-white">Мойте събития</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="ChangePassword">Парола</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a asp-controller="User" asp-action="DownloadData">Данни</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-8 py-2 mx-auto">
+                @if (Model.EventUsers.Count > 0)
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Събитие</th>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Роля</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 1;
+                            }
+                            @foreach (var eventUser in Model.EventUsers)
+                            {
+                                <tr>
+                                    <th scope="row">@counter</th>
+                                    @{ counter++; }
+                                    <td scope="col">@eventUser.Event.Name</td>
+                                    <td scope="col">@eventUser.Event.Date</td>
+                                    <td scope="col">@eventUser.Role</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h4 class="text-center my-3 text-primary border py-4 border-left-0 border-right-0">
+                        Все още нямате записани събития!
+                    </h4>
+                }
+            </div>
+        </div>
+    </div>
