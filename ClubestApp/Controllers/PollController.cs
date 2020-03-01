@@ -1,8 +1,8 @@
 ﻿namespace ClubestApp.Controllers
 {
-    using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Linq;
@@ -19,6 +19,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddPoll(AddPollInputModel model)
         {
             if (ModelState.IsValid && model.ExpiredDate.Subtract(DateTime.UtcNow).Hours > 0)
@@ -43,6 +44,7 @@
             return this.Redirect($"/Club/Polls/{model.ClubId}");
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
         {
             var deletedEntity = await this.pollService.DeletePoll(id);

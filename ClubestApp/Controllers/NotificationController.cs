@@ -3,6 +3,7 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels.Notifications;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
     using System.Security.Claims;
@@ -17,6 +18,7 @@
             this.notificationService = notificationService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;

@@ -2,7 +2,25 @@
 @{
     ViewData["Title"] = $"Членове - {Model.Club.Name}";
 }
+@using Microsoft.AspNetCore.Identity
+@using ClubestApp.Data.Models
+@using ClubestApp.Services
 
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject UserService userService
+
+@{
+    var currentUser = new User();
+    if (SignInManager.IsSignedIn(User))
+    {
+        currentUser = await this.UserManager.GetUserAsync(User);
+    }
+    currentUser = this.userService.FindUserById(currentUser.Id)
+        .GetAwaiter()
+        .GetResult();
+
+}
 <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
     <partial name="../Shared/_ClubDetails.cshtml" />
 
@@ -21,25 +39,28 @@
                     string id = 'a' + member.Id + 'a';
                     <div class="my-1 row">
                         <div class="container box-shadow-light row text-left mt-3 mx-auto p-2 border">
-                            <img data-toggle="modal" data-target="#@id" src="@member.PictureUrl" 
+                            <img data-toggle="modal" data-target="#@id" src="@member.PictureUrl"
                                  class="avatar rounded-circle cursor-pointer z-depth-0 w-image-request" alt="Alternate Text" />
                             <h5 data-toggle="modal" data-target="#@id" class="ml-3 mt-lg-3 cursor-pointer">
                                 @member.FirstName @member.LastName
                             </h5>
                             <div class="ml-auto text-center">
-                                @if (Model.ClubAdmins.Any(x => x.ClubId == Model.Club.Id && x.UserId == member.Id))
+                                @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
                                 {
-                                    <a href="/Club/RemoveClubAdmin/@Model.Club.Id/@member.Id" class="btn btn-md mt-lg-3 btn-danger"
-                                       data-toggle="tooltip" data-placement="top" title="Премахни администраторски права">
-                                        <i class="fas fa-user-times fa-lg"></i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a href="/Club/AddClubAdmin/@Model.Club.Id/@member.Id" class="btn btn-md mt-lg-3 btn-success"
-                                       data-toggle="tooltip" data-placement="top" title="Направи администратор">
-                                        <i class="fas fa-user-lock fa-lg"></i>
-                                    </a>
+                                    @if (Model.ClubAdmins.Any(x => x.ClubId == Model.Club.Id && x.UserId == member.Id))
+                                    {
+                                        <a href="/Club/RemoveClubAdmin/@Model.Club.Id/@member.Id" class="btn btn-md mt-lg-3 btn-danger"
+                                           data-toggle="tooltip" data-placement="top" title="Премахни администраторски права">
+                                            <i class="fas fa-user-times fa-lg"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/Club/AddClubAdmin/@Model.Club.Id/@member.Id" class="btn btn-md mt-lg-3 btn-success"
+                                           data-toggle="tooltip" data-placement="top" title="Направи администратор">
+                                            <i class="fas fa-user-lock fa-lg"></i>
+                                        </a>
+                                    }
                                 }
                             </div>
                         </div>

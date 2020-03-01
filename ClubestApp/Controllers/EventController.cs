@@ -3,6 +3,7 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels.Events;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -62,6 +63,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddEvent(EventIndexBindingModel model)
         {
             int hours = model.AddEventInputModel.Date.Subtract(DateTime.UtcNow).Hours;
@@ -72,6 +74,7 @@
             return this.Redirect($"/Event/Index/{model.AddEventInputModel.ClubId}");
         }
 
+        [Authorize]
         public async Task<IActionResult> JoinEvent([FromQuery] string clubId, [FromQuery] string returnUrl, string id)
         {
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -81,6 +84,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> JoinEvent(string role, string eventId, string userId, string clubId)
         {
             await this.eventService.JoinEvent(eventId, userId, role);
@@ -88,6 +92,7 @@
             return this.Redirect($"/Event/Details/{eventId}?clubId={clubId}");
         }
 
+        [Authorize]
         public async Task<IActionResult> ExitEvent([FromQuery] string returnUrl, string id)
         {
             string currentUserId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -118,6 +123,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
         {
             await this.eventService.DeleteEvent(id);

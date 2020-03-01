@@ -3,7 +3,7 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels.Posts;
     using ClubestApp.Services;
-    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
@@ -24,6 +24,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddPost(AddPostInputModel inputModel)
         {
             if (ModelState.IsValid)
@@ -37,6 +38,7 @@
             return this.Redirect($"/Club/Details/{inputModel.ClubId}");
         }
 
+        [Authorize]
         public async Task<IActionResult> Like(string id, [FromQuery] string clubId)
         {
             User user = await this.userManager.GetUserAsync(User);
@@ -45,6 +47,7 @@
             return this.Redirect($"/Club/Details/{clubId}#{id}");
         }
 
+        [Authorize]
         public async Task<IActionResult> Dislike(string id, [FromQuery] string clubId)
         {
             User user = await this.userManager.GetUserAsync(User);
@@ -53,6 +56,7 @@
             return this.Redirect($"/Club/Details/{clubId}#{id}");
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> Delete(string id, [FromQuery] string clubId)
         {
             await this.postService.DeletePost(id);
