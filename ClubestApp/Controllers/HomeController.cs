@@ -48,7 +48,7 @@
                 List<Club> clubs = this.clubService.GetPotentialClubs(user.Interests, user.Town);
                 return this.View("PotentialClubs", clubs);
             }
-            List<Post> posts = await this.postService.GetPostsForHomePage(user.Id);
+            IList<Post> posts = await this.postService.GetPostsForHomePage(user.Id);
             IndexPageBindingModel model = new IndexPageBindingModel()
             {
                 Posts = posts

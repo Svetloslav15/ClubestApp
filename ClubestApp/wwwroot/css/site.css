@@ -275,6 +275,9 @@
     font-size: 15px;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
 .scrollable {
     height: 450px;
     overflow-y: scroll;

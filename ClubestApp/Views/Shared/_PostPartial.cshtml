@@ -1,5 +1,23 @@
 ﻿@using ClubestApp.Data.Models.Enums
+@using ClubestApp.Data.Models
+@using ClubestApp.Services
+@using Microsoft.AspNetCore.Identity
 
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject UserService userService
+
+@{
+    var currentUser = new User();
+    if (SignInManager.IsSignedIn(User))
+    {
+        currentUser = await UserManager.GetUserAsync(User);
+    }
+    currentUser = this.userService.FindUserById(currentUser.Id)
+        .GetAwaiter()
+        .GetResult();
+
+}
 @foreach (var post in Model.Posts)
 {
     <div class="box-shadow-light my-4 p-3" id="@post.Id">
@@ -9,7 +27,7 @@
                 @post.Author.FirstName @post.Author.LastName
             </span>
             <span class="float-right">
-                @if (User.IsInRole("SystemAdmin") || User.IsInRole("ClubAdmin"))
+                @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == post.ClubId && x.UserId == currentUser.Id)))
                 {
                     <a href="/Post/Delete/@post.Id?clubId=@post.ClubId" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
                        data-toggle="tooltip" data-placement="top" title="Изтрий пост">

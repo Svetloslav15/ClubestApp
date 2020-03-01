@@ -1,4 +1,8 @@
-﻿@model ClubestApp.Models.InputModels.AddClubInputModel
+﻿@{
+    ViewData["Title"] = "Добави клуб";
+}
+
+@model ClubestApp.Models.InputModels.AddClubInputModel
 <form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddClub" method="post" enctype="multipart/form-data" runat="server">
     <p class="text-center h4 mb-4 text-black mt-2">Регистрирация на клуб</p>
     <!-- Name -->

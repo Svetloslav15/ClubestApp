@@ -3,7 +3,7 @@
 @using System.Drawing;
 @using System.Text;
 @{
-    ViewData["Title"] = "PollsAdministration";
+    ViewData["Title"] = "Администрация за заявки";
 }
 
 <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
@@ -15,7 +15,7 @@
         <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
     </div>
     <div class="col-lg-8">
-        <div>
+        <div class="text-center">
             <a href="#active" class="btn btn-outline-primary">Активни анкети</a>
             <a href="#non-active" class="btn btn-outline-primary">Архивирани анкети</a>
         </div>

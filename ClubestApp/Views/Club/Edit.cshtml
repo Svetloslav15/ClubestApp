@@ -1,7 +1,7 @@
 ﻿@model ClubestApp.Models.BindingModels.EditClubBindingModel
 
 @{
-    ViewData["Title"] = "EditClub";
+    ViewData["Title"] = $"Промени {Model.Name}";
 }
 
 <form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="Edit/@Model.Id" method="post" enctype="multipart/form-data" runat="server">
