@@ -113,6 +113,7 @@
 
             var result = await dbContext.ClubAdmins.AddAsync(newClubAdmin);
             await this.userManager.AddToRoleAsync(user, "ClubAdmin");
+            await this.dbContext.SaveChangesAsync();
             return result.Entity;
         }
 
@@ -126,8 +127,8 @@
                 this.dbContext.ClubAdmins.Remove(clubAdmin);
             }
 
+            await this.userManager.RemoveFromRoleAsync(user, "ClubAdmin");
             await this.dbContext.SaveChangesAsync();
-
             return clubAdmin;
         }
 
@@ -197,7 +198,6 @@
 
         public async Task<Club> EditClub(EditClubInputModel model, string id)
         {
-            //Work on image
             string currentUrl = await this.cloudinaryService.UploadImage(model.ImageFile);
 
             Club club = await this.dbContext
