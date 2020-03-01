@@ -49,6 +49,7 @@
                 .Include(user => user.UserPostDislikes)
                 .Include(user => user.UserClubs)
                 .Include(user => user.UserEvents)
+                .Include(user => user.AdminClubs)
                 .FirstOrDefaultAsync(user => user.Id == id);
 
             return userdb; 

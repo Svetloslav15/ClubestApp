@@ -17,45 +17,45 @@
         .GetResult()
         .Count();
 }
-    <ul class="navbar-nav">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            @if (User.IsInRole("SystemAdmin"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-white f-size-13" asp-controller="Home" asp-action="Administration">Администрация</a>
-                </li>
-            }
-            <li class="nav-item">
-                <a class="nav-link link-nav text-white f-size-13" asp-controller="Club" asp-action="AllClubs">Клубове</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link link-nav text-white f-size-13" asp-controller="User" asp-action="Profile">
-                    Здравей, <span>@user.FirstName</span>!
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white f-size-13" href="/Notification/Index">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge badge-danger notification-badge">@unReadNotificationsCount</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white font-size-18" asp-controller="User" asp-action="Logout"
-                   data-toggle="tooltip" data-placement="bottom" title="Изход">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </li>
-        }
-        else
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (User.IsInRole("SystemAdmin"))
         {
             <li class="nav-item">
-                <a id="register-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalRegisterForm" href="">Регистрация</a>
-                <partial name="_RegisterPartial" />
-            </li>
-            <li class="nav-item mr-2">
-                <a id="login-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalLoginForm" href="">Вход</a>
-                <partial name="_SignInPartial" />
+                <a class="nav-link text-white f-size-13" asp-controller="Home" asp-action="Administration">Администрация</a>
             </li>
         }
-    </ul>
+        <li class="nav-item">
+            <a class="nav-link link-nav text-white f-size-13" asp-controller="Club" asp-action="AllClubs">Клубове</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-nav text-white f-size-13" asp-controller="User" asp-action="Profile">
+                Здравей, <span>@user.FirstName</span>!
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white f-size-13" href="/Notification/Index">
+                <i class="fas fa-bell"></i>
+                <span class="badge badge-danger notification-badge">@unReadNotificationsCount</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white font-size-18" asp-controller="User" asp-action="Logout"
+               data-toggle="tooltip" data-placement="bottom" title="Изход">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a id="register-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalRegisterForm" href="">Регистрация</a>
+            <partial name="_RegisterPartial" />
+        </li>
+        <li class="nav-item mr-2">
+            <a id="login-link" class="nav-link text-white link-nav f-size-13" data-toggle="modal" data-target="#modalLoginForm" href="">Вход</a>
+            <partial name="_SignInPartial" />
+        </li>
+    }
+</ul>
