@@ -26,7 +26,7 @@
             {
                 Notifications = notifications
             };
-
+            await this.notificationService.ReadAllNotificationsForUser(userId);
             return View(model);
         }
     }

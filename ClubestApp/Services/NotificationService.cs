@@ -6,7 +6,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
     public class NotificationService
     {
         private readonly ApplicationDbContext dbContext;
@@ -30,6 +29,24 @@
             return await this.dbContext.Notifications
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
+        }
+
+        public async Task<IList<Notification>> GetUnReadNotificationsForUser(string userId)
+        {
+            return await this.dbContext.Notifications
+                .Where(x => x.UserId == userId && x.IsRead == false)
+                .ToListAsync();
+        }
+
+        public async Task<IList<Notification>> ReadAllNotificationsForUser(string userId)
+        {
+            IList<Notification> notifications = await this.GetNotificationsForUser(userId);
+            foreach (Notification notification in notifications)
+            {
+                await this.ReadNotification(notification.Id);
+            }
+
+            return notifications;
         }
 
         public async Task<Notification> CreateNotification(string content, string link, string userId)
