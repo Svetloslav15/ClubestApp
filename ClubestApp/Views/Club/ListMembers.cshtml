@@ -19,14 +19,17 @@
     currentUser = this.userService.FindUserById(currentUser.Id)
         .GetAwaiter()
         .GetResult();
-
+    bool isMember = currentUser.UserClubs.Any(x => x.ClubId == Model.Club.Id);
 }
 <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
     <partial name="../Shared/_ClubDetails.cshtml" />
 
     <!--/.Navbar-->
     <div class="col-lg-4">
-        <partial name="_Chat.cshtml" model="@Model.Messages" />
+        @if (isMember || currentUser.AdminClubs.Any(x => x.ClubId == @Model.Club.Id && x.UserId == currentUser.Id) || User.IsInRole("SystemAdmin"))
+        {
+            <partial name="_Chat.cshtml" model="@Model.Messages" />
+        }
         <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
     </div>
     <div class="col-lg-8 border pb-4">
