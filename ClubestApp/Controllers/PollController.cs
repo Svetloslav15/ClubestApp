@@ -19,7 +19,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddPoll(AddPollInputModel model)
         {
             if (ModelState.IsValid && model.ExpiredDate.Subtract(DateTime.UtcNow).Hours > 0)

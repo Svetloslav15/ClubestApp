@@ -63,7 +63,6 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddEvent(EventIndexBindingModel model)
         {
             int hours = model.AddEventInputModel.Date.Subtract(DateTime.UtcNow).Hours;

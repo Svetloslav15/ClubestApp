@@ -26,7 +26,14 @@
 
     <!--/.Navbar-->
     <div class="col-lg-4">
-        @if (isMember || currentUser.AdminClubs.Any(x => x.ClubId == @Model.Club.Id && x.UserId == currentUser.Id) || User.IsInRole("SystemAdmin"))
+        @if (!Model.Club.IsPublic)
+        {
+            @if (isMember || currentUser.AdminClubs.Any(x => x.ClubId == @Model.Club.Id && x.UserId == currentUser.Id) || User.IsInRole("SystemAdmin"))
+            {
+                <partial name="_Chat.cshtml" model="@Model.Messages" />
+            }
+        }
+        else
         {
             <partial name="_Chat.cshtml" model="@Model.Messages" />
         }
