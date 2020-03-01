@@ -36,12 +36,15 @@
             </div>
             <div class="col-lg-8 border">
                 <div class="col-lg-12 text-center">
-                    <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави Събитие">
-                        <a id="openModal" data-toggle="modal" data-target="#createEvent"
-                           class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    </div>
+                    @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+                    {
+                        <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави Събитие">
+                            <a id="openModal" data-toggle="modal" data-target="#createEvent"
+                               class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    }
                     <div class="mt-1 mb-2">
                         <a href="/Event/Index/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Предстоящи събития</a>
                         <a href="/Event/ExpiredEvents/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Минали събития</a>
@@ -105,18 +108,24 @@
         </div>
         <div class="col-lg-8 border">
             <div class="col-lg-12 text-center">
-                <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави Събитие">
-                    <a id="openModal" data-toggle="modal" data-target="#createEvent"
-                       class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
+                @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+                {
+                    <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави Събитие">
+                        <a id="openModal" data-toggle="modal" data-target="#createEvent"
+                           class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                }
                 <div class="mt-1 mb-2">
                     <a href="/Event/Index/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Предстоящи събития</a>
                     <a href="/Event/ExpiredEvents/@Model.Club.Id" class="btn btn-outline-primary col-lg-5">Минали събития</a>
                 </div>
             </div>
-            <partial name="./_AddEvent.cshtml" />
+            @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+            {
+                <partial name="./_AddEvent.cshtml" />
+            }
             @if (Model.Events.Count > 0)
             {
                 @foreach (var eventEntity in Model.Events)

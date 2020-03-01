@@ -23,17 +23,19 @@
 
     bool isMember = currentUser.UserClubs.Any(x => x.ClubId == Model.Club.Id);
 }
-    <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
-        <partial name="../Shared/_ClubDetails.cshtml" />
-        @if (!Model.Club.IsPublic)
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+    @if (!Model.Club.IsPublic)
+    {
+        @if (isMember || currentUser.AdminClubs.Any(x => x.ClubId == @Model.Club.Id && x.UserId == currentUser.Id) || User.IsInRole("SystemAdmin"))
         {
-            @if (isMember || currentUser.AdminClubs.Any(x => x.ClubId == @Model.Club.Id && x.UserId == currentUser.Id) || User.IsInRole("SystemAdmin"))
-            {
-                <div class="col-lg-4">
-                    <partial name="_Chat.cshtml" model="@Model.Messages" />
-                    <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
-                </div>
-                <div class="col-lg-8 border">
+            <div class="col-lg-4">
+                <partial name="_Chat.cshtml" model="@Model.Messages" />
+                <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
+            </div>
+            <div class="col-lg-8 border">
+                @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+                {
                     <div class="col-lg-12 text-center">
                         <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави aнкета">
                             <a title="Добави Анкета" id="openModal" data-toggle="modal" data-target="#createPoll"
@@ -42,115 +44,8 @@
                             </a>
                         </div>
                     </div>
-
                     <partial name="../Shared/_AddPoll.cshtml" />
-
-                    <div class="row">
-                        @if (Model.Polls.Count > 0)
-                        {
-                            foreach (var poll in Model.Polls)
-                            {
-                                string forId = 'a' + Guid.NewGuid().ToString() + 'a';
-                                <div class="px-0 col-lg-10 mx-auto my-2 box-shadow-light">
-                                    <!--Panel-->
-                                    <div class="card text-center">
-                                        <div class="card-body">
-                                            <h4 class="card-title">@poll.Content</h4>
-                                            <p class="card-text">@poll.VotesCount Гласували</p>
-                                            @if (poll.PollVotedUsers.Any(x => x.UserId == Model.UserId))
-                                            {
-                                                <span>Вече сте гласували за тази анкета</span>
-                                            }
-                                            else
-                                            {
-                                                <a class="btn blue-gradient btn-sm" id="openVoteModal" data-toggle="modal" data-target="#@forId">Гласувай</a>
-                                            }
-                                            <div class="modal fade" id="@forId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                                                 aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header text-center">
-                                                            <h4 class="modal-title w-100 font-weight-bold">@poll.Content</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <form asp-controller="Poll" asp-action="AddVote" method="post" class="px-3 py-2">
-                                                            @foreach (var option in poll.Options)
-                                                            {
-                                                                string optionId = 'a' + Guid.NewGuid().ToString() + 'a';
-                                                                if (poll.IsMultichoice)
-                                                                {
-                                                                    <div class="text-left px-4 custom-control custom-checkbox ml-auto">
-                                                                        <input type="checkbox" name="Votes" value="@option.Content" class="custom-control-input" id="@optionId">
-                                                                        <label class="custom-control-label" for="@optionId">@option.Content</label>
-                                                                    </div>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="text-left px-4  custom-control custom-radio ml-auto">
-                                                                        @Html.RadioButtonFor(model => model.Votes, @option.Content, new { @class = "custom-control-input", @id = optionId, @Name = "defaultExampleRadios" })
-                                                                        <label class="text-black custom-control-label" for="@optionId">@option.Content</label>
-                                                                    </div>
-                                                                }
-
-                                                            }
-
-                                                            <input type="text" name="PollId" value="@poll.Id" asp-for="PollId" hidden />
-                                                            <input type="text" name="ClubId" value="@Model.ClubId" asp-for="ClubId" hidden />
-                                                            <div class="modal-footer d-flex justify-content-center">
-                                                                <button class="btn blue-gradient px-3 text-center" type="submit">
-                                                                    Гласувай
-                                                                    <i class="fas fa-paper-plane ml-1"></i>
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        @{
-                                            int daysLeft = @poll.ExpiredDate.Subtract(DateTime.UtcNow).Days + 1;
-                                        }
-                                        <div class="card-footer text-muted blue-gradient white-text">
-                                            <p class="mb-0">@daysLeft дни до изтичане</p>
-                                        </div>
-                                    </div>
-                                    <!--/.Panel-->
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <h3 class="text-primary text-center my-4 mx-auto">В момента няма анкети!</h3>
-                        }
-                    </div>
-                </div>
-            }
-            else
-            {
-                <h3 class="text-primary text-center mx-auto py-3 mt-4">Анкетите са само за членове на клуба!</h3>
-            }
-        }
-        else
-        {
-            <div class="col-lg-4">
-                <partial name="_Chat.cshtml" model="@Model.Messages" />
-                <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
-            </div>
-            <div class="col-lg-8 border">
-                <div class="col-lg-12 text-center">
-                    <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави aнкета">
-                        <a title="Добави Анкета" id="openModal" data-toggle="modal" data-target="#createPoll"
-                           class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <partial name="../Shared/_AddPoll.cshtml" />
-
+                }
                 <div class="row">
                     @if (Model.Polls.Count > 0)
                     {
@@ -234,7 +129,115 @@
                 </div>
             </div>
         }
-    </div>
+        else
+        {
+            <h3 class="text-primary text-center mx-auto py-3 mt-4">Анкетите са само за членове на клуба!</h3>
+        }
+    }
+    else
+    {
+        <div class="col-lg-4">
+            <partial name="_Chat.cshtml" model="@Model.Messages" />
+            <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
+        </div>
+        <div class="col-lg-8 border">
+            @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+            {
+                <div class="col-lg-12 text-center">
+                    <div class="d-inline" data-toggle="tooltip" data-placement="top" title="Добави aнкета">
+                        <a title="Добави Анкета" id="openModal" data-toggle="modal" data-target="#createPoll"
+                           class="btn blue-gradient waves-effect mx-auto btn-rounded-custom">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <partial name="../Shared/_AddPoll.cshtml" />
+            }
+                <div class="row">
+                    @if (Model.Polls.Count > 0)
+                    {
+                        foreach (var poll in Model.Polls)
+                        {
+                            string forId = 'a' + Guid.NewGuid().ToString() + 'a';
+                            <div class="px-0 col-lg-10 mx-auto my-2 box-shadow-light">
+                                <!--Panel-->
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h4 class="card-title">@poll.Content</h4>
+                                        <p class="card-text">@poll.VotesCount Гласували</p>
+                                        @if (poll.PollVotedUsers.Any(x => x.UserId == Model.UserId))
+                                        {
+                                            <span>Вече сте гласували за тази анкета</span>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn blue-gradient btn-sm" id="openVoteModal" data-toggle="modal" data-target="#@forId">Гласувай</a>
+                                        }
+                                        <div class="modal fade" id="@forId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header text-center">
+                                                        <h4 class="modal-title w-100 font-weight-bold">@poll.Content</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form asp-controller="Poll" asp-action="AddVote" method="post" class="px-3 py-2">
+                                                        @foreach (var option in poll.Options)
+                                                        {
+                                                            string optionId = 'a' + Guid.NewGuid().ToString() + 'a';
+                                                            if (poll.IsMultichoice)
+                                                            {
+                                                                <div class="text-left px-4 custom-control custom-checkbox ml-auto">
+                                                                    <input type="checkbox" name="Votes" value="@option.Content" class="custom-control-input" id="@optionId">
+                                                                    <label class="custom-control-label" for="@optionId">@option.Content</label>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-left px-4  custom-control custom-radio ml-auto">
+                                                                    @Html.RadioButtonFor(model => model.Votes, @option.Content, new { @class = "custom-control-input", @id = optionId, @Name = "defaultExampleRadios" })
+                                                                    <label class="text-black custom-control-label" for="@optionId">@option.Content</label>
+                                                                </div>
+                                                            }
+
+                                                        }
+
+                                                        <input type="text" name="PollId" value="@poll.Id" asp-for="PollId" hidden />
+                                                        <input type="text" name="ClubId" value="@Model.ClubId" asp-for="ClubId" hidden />
+                                                        <div class="modal-footer d-flex justify-content-center">
+                                                            <button class="btn blue-gradient px-3 text-center" type="submit">
+                                                                Гласувай
+                                                                <i class="fas fa-paper-plane ml-1"></i>
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    @{
+                                        int daysLeft = @poll.ExpiredDate.Subtract(DateTime.UtcNow).Days + 1;
+                                    }
+                                    <div class="card-footer text-muted blue-gradient white-text">
+                                        <p class="mb-0">@daysLeft дни до изтичане</p>
+                                    </div>
+                                </div>
+                                <!--/.Panel-->
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <h3 class="text-primary text-center my-4 mx-auto">В момента няма анкети!</h3>
+                    }
+                </div>
+            </div>
+    }
+</div>
 
 @if (ViewData["validation"]?.ToString().ToLower() == "true")
 {

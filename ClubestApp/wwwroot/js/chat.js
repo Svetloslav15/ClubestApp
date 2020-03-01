@@ -11,10 +11,11 @@ connection.on("ReceiveMessage", function (pictureUrl, message, clubId) {
         let div = document.createElement("div");
         div.classList.add('d-flex');
         div.classList.add('justify-content-start');
+        div.classList.add('height-inherit');
         div.classList.add('mb-2');
-        div.classList.add('w-100');
+        div.classList.add('w-100'); 
         let imageDiv = document.createElement('div');
-        imageDiv.classList.add('col-1');
+        imageDiv.classList.add('mr-2');
         let imageEl = document.createElement('img');
         imageEl.src = pictureUrl;
         imageEl.classList.add('rounded-circle');
@@ -55,6 +56,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 let div = document.createElement("div");
                 div.classList.add('d-flex');
+                div.classList.add('height-inherit');
                 div.classList.add('justify-content-start');
                 div.classList.add('mb-2');
                 div.classList.add('w-100');
@@ -63,7 +65,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
                 div.classList.add('text-white');
                 div.classList.add('blue-gradient');
                 let imageDiv = document.createElement('div');
-                imageDiv.classList.add('col-1');
+                imageDiv.classList.add('mr-2');
                 let imageEl = document.createElement('img');
                 imageEl.src = pictureUrl;
                 imageEl.classList.add('rounded-circle');
