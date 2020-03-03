@@ -301,7 +301,7 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -311,7 +311,7 @@
             return this.Redirect($"/Club/ListMembers/{club.Id}");
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> RemoveClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);

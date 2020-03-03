@@ -100,6 +100,13 @@
             return this.Redirect(returnUrl);
         }
 
+        [Authorize]
+        public async Task<IActionResult> ExitFromEvent([FromQuery] string returnUrl, string id, string secondId)
+        {
+            await this.eventService.ExitEvent(id, secondId);
+            return this.Redirect(returnUrl);
+        }
+
         public async Task<IActionResult> Details([FromQuery] string clubId, string id)
         {
             Event eventEntity = await this.eventService.GetEventById(id);

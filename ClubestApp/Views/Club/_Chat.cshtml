@@ -15,9 +15,9 @@
                         {
                             if (message.Sender.UserName == this.User.Identity.Name)
                             {
-                                <div class="d-flex justify-content-start mb-2 blue-gradient text-white p-1">
-                                    <div class="img_cont_msg col-md-3"  title="@message.Sender.FirstName @message.Sender.LastName">
-                                        <img src="@message.Sender.PictureUrl" class="rounded-circle user_img_msg w-100">
+                                <div class="d-flex justify-content-start mb-2 blue-gradient text-white p-1 w-100 height-fit">
+                                    <div class="img_cont_msg mr-1"  title="@message.Sender.FirstName @message.Sender.LastName">
+                                        <img src="@message.Sender.PictureUrl" class="w-50px rounded-circle user_img_msg">
                                     </div>
                                     <div class="msg_cotainer">
                                         @message.Content
@@ -26,9 +26,9 @@
                             }
                             else
                             {
-                                <div class="d-flex justify-content-start mb-2">
-                                    <div class="img_cont_msg col-md-3">
-                                        <img src="@message.Sender.PictureUrl" class="rounded-circle user_img_msg w-100">
+                                <div class="d-flex justify-content-start mb-2 w-100 height-fit">
+                                    <div class="img_cont_msg mr-1">
+                                        <img src="@message.Sender.PictureUrl" class="w-50px rounded-circle user_img_msg w-100">
                                     </div>
                                     <div class="msg_cotainer">
                                         @message.Content
