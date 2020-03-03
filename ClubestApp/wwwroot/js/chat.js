@@ -52,7 +52,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             console.log(err.responseText);
         },
         success: function (pictureUrl) {
-            if (document.getElementById("clubId").value == clubId) {
+            if (document.getElementById("clubId").value == clubId && pictureUrl != "Invalid message") {
                 let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
                 let div = document.createElement("div");
                 div.classList.add('d-flex');

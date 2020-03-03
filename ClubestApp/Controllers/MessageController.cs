@@ -21,7 +21,12 @@
         
         [Authorize]
         public async Task<IActionResult> Add([FromQuery] MessageInputModel model)
-        {
+        { 
+            if (string.IsNullOrWhiteSpace(model.Content) || string.IsNullOrEmpty(model.Content))
+            {
+                return this.Content("Invalid message");
+            }
+
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             User user = await this.userService.FindUserById(userId);
 
