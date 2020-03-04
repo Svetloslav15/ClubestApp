@@ -72,6 +72,10 @@
                                     data-toggle="tooltip" data-placement="top" title="Свали данните като CSV">
                                 <i class="far fa-file-excel fa-lg"></i>
                             </button>
+                            <button class="btn btn-danger btn-sm" id="export-btn-pdf"
+                                    data-toggle="tooltip" data-placement="top" title="Свали данните като PDF">
+                                <i class="far fa-file-pdf fa-lg"></i>
+                            </button>
                             <partial name="./_AddEventRole.cshtml" />
                         </div>
                     </div>
@@ -87,7 +91,7 @@
             {
                 @if (Model.Event.EventUsers.Count > 0)
                 {
-                    <table class="table table-hover border table-striped dataTable">
+                    <table class="table table-hover border table-striped dataTable" id="my-events-table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -109,7 +113,7 @@
                                     <td scope="col">@user.User.FirstName @user.User.LastName</td>
                                     <td scope="col">@user.User.Email</td>
                                     <td scope="col">@user.Role</td>
-                                    <td scope="col"><a href="/Event/ExitFromEvent/@Model.Event.Id/@user.User.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"class="btn btn-danger btn-sm px-3" data-toggle="tooltip" data-placement="top" title="Отпиши @user.User.FirstName"><i class="fas fa-trash-alt fa-lg"></i></a></td>
+                                    <td scope="col"><a href="/Event/ExitFromEvent/@Model.Event.Id/@user.User.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn btn-danger btn-sm px-3" data-toggle="tooltip" data-placement="top" title="Отпиши @user.User.FirstName"><i class="fas fa-trash-alt fa-lg"></i></a></td>
                                 </tr>
                             }
                         </tbody>
@@ -126,3 +130,7 @@
     </div>
 </div>
 <script src="~/js/csv-export.js"></script>
+<script src="~/js/pdf-export.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
