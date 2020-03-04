@@ -31,7 +31,7 @@
                 UserId = user.Id
             };
 
-            bool anyPreviousRequest = await this.dbContext.JoinClubRequests.AnyAsync(x => x.ClubId == clubId && x.UserId == user.Id);
+            bool anyPreviousRequest = await this.dbContext.JoinClubRequests.AnyAsync(x => x.ClubId == clubId && x.UserId == user.Id && x.RequestType == RequestType.Pending);
             if (anyPreviousRequest)
             {
                 return null;

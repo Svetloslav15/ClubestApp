@@ -8,6 +8,9 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (pictureUrl, message, clubId) {
     if (document.getElementById("clubId").value == clubId) {
         let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        if (!msg.trim()) {
+            return;
+        }
         let div = document.createElement("div");
         div.classList.add('d-flex');
         div.classList.add('height-fit');
@@ -54,6 +57,9 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         success: function (pictureUrl) {
             if (document.getElementById("clubId").value == clubId && pictureUrl != "Invalid message") {
                 let msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                if (!msg.trim()) {
+                    return;
+                }
                 let div = document.createElement("div");
                 div.classList.add('d-flex');
                 div.classList.add('height-fit');

@@ -109,12 +109,7 @@
                                     <td scope="col">@user.User.FirstName @user.User.LastName</td>
                                     <td scope="col">@user.User.Email</td>
                                     <td scope="col">@user.Role</td>
-                                    <td scope="col">
-                                        <a href="/Event/ExitFromEvent/@Model.Event.Id/@user.User.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"
-                                           class="btn btn-danger btn-sm px-3" data-toggle="tooltip" data-placement="top" title="Отпиши @user.User.FirstName">
-                                            <i class="fas fa-trash-alt fa-lg"></i>
-                                        </a>
-                                    </td>
+                                    <td scope="col"><a href="/Event/ExitFromEvent/@Model.Event.Id/@user.User.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"class="btn btn-danger btn-sm px-3" data-toggle="tooltip" data-placement="top" title="Отпиши @user.User.FirstName"><i class="fas fa-trash-alt fa-lg"></i></a></td>
                                 </tr>
                             }
                         </tbody>

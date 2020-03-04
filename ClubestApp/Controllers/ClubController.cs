@@ -22,13 +22,15 @@
         private readonly PostService postService;
         private readonly PollService pollService;
         private readonly UserService userService;
+        private readonly NotificationService notificationService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
                     RequestService requestService,
                     PostService postService,
                     PollService pollService,
-                    UserService userService)
+                    UserService userService,
+                    NotificationService notificationService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
@@ -36,6 +38,7 @@
             this.postService = postService;
             this.pollService = pollService;
             this.userService = userService;
+            this.notificationService = notificationService;
         }
         
 
@@ -127,7 +130,19 @@
         public async Task<IActionResult> JoinClub(string id)
         {
             User user = await this.userManager.GetUserAsync(HttpContext.User);
-            await this.requestService.CreateJoinRequestClub(id, user);
+            JoinClubRequest request = await this.requestService.CreateJoinRequestClub(id, user);
+            if (request != null)
+            {
+                await this.notificationService.CreateNotification($"Успешно подадохте заявка за присъединяване към клуб - {request.Club.Name}. Вашата заявка очаква удобрение от администратор.", $"/Club/Details/{id}", request.User.Id);
+            }
+            return this.Redirect($"/Club/Details/{id}");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ExitClub(string id, string secondId)
+        {
+            await this.clubService.RemoveFromClub(id, secondId);
 
             return this.Redirect($"/Club/Details/{id}");
         }
