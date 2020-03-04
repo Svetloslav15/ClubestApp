@@ -1,0 +1,40 @@
+﻿@model ClubestApp.Models.BindingModels.User.MyClubsViewModel
+
+@{
+    ViewData["Title"] = "Моите Клубове";
+}
+
+    <div class="container-fluid bg-white border-deep-blue">
+        <h2 class="text-center pt-3 pb-2">Моите Клубове</h2>
+        <div class="row">
+            @if (Model.Clubs.Any())
+            {
+                @foreach (var club in Model.Clubs)
+                {
+                    <div class="card card-image image-full-w mx-auto w-23rem bg-p-center"
+                         style="background-image: url(@club.PictureUrl);">
+                        <div class="text-white d-flex align-items-center rgba-black-strong py-5 px-4">
+                            <div>
+                                <h5 class="pink-text"><i class="fas fa-chart-pie"></i></h5>
+                                <h4 class="card-title pt-2"><strong>@club.Name</strong></h4>
+                                <div class="col-lg-12 text-center">
+                                    <a href="/Club/Details/@club.Id"
+                                       data-toggle="tooltip" data-placement="top" title="Виж клуб"
+                                       class="btn text-white bg-white blue-gradient mt-4 btn-outline-white">
+                                        <i class="fas fa-eye"></i>
+                                        Виж клуб
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="mx-auto">
+                    <h3 class="mx-auto pb-4">Не членувате в клубове</h3>
+                </div>
+            }
+        </div>
+    </div>

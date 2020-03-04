@@ -240,5 +240,14 @@
 
             return this.Redirect("/User/Profile");
         }
+
+        [Authorize]
+        public async Task<IActionResult> MyClubs()
+        {
+            string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            MyClubsViewModel model = await this.userService.GetUsersClubs(userId);
+
+            return View(model);
+        }
     }
 }

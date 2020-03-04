@@ -59,7 +59,7 @@
                 CurrentUser = currentUser,
                 Messages = messages
             };
-            return this.View("Index", model);
+            return this.View(model);
         }
 
         [HttpPost]

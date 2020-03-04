@@ -88,12 +88,23 @@
         [Authorize]
         public async Task<IActionResult> AddRequestNewClub(AddClubInputModel model)
         {
-            if (ModelState.IsValid)
+            bool isFileValid = true;
+            if (model.ImageFile != null)
+            {
+                isFileValid = this.clubService.IsFileValid(model.ImageFile);
+            }
+
+            if (ModelState.IsValid && isFileValid && model.Interests.Any() == true)
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 await this.clubService.AddRequestNewClub(model, userId);
 
                 return this.Redirect("/Home/Index");
+            }
+
+            if (model.Interests.Any() == false)
+            {
+                ModelState.AddModelError(ClubFields.Interests, ErrorMessages.ClubInterestsRequired);
             }
 
             var interests = this.clubService.GetInterests();

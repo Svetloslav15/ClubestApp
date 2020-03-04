@@ -145,6 +145,7 @@
         {
             return await this.dbContext.EventUsers
                 .Include(x => x.Event)
+                    .ThenInclude(x => x.Club)
                 .Include(x => x.User)
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
