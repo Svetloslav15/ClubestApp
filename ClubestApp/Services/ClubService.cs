@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -383,6 +382,20 @@
         {
             return await this.dbContext.ClubAdmins
                 .ToListAsync();
+        }
+
+        public async Task<UserClub> RemoveFromClub(string clubId, string userId)
+        {
+            UserClub userClub = await this.dbContext.UserClubs
+                .FirstOrDefaultAsync(x => x.ClubId == clubId && x.UserId == userId);
+
+            if (userClub != null)
+            {
+                this.dbContext.UserClubs.Remove(userClub);
+            }
+
+            await this.dbContext.SaveChangesAsync();
+            return userClub;
         }
     }
 }

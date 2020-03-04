@@ -15,6 +15,7 @@
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
     using ClubestApp.Hubs;
+    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {
@@ -54,7 +55,7 @@
               .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
-            services.AddSingleton<EmailService>();
+            services.AddTransient<EmailService>();
             services.AddTransient<UserService>();
             services.AddTransient<ClubService>();
             services.AddTransient<RequestService>();
@@ -72,7 +73,7 @@
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSignalR();
+             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -33,10 +33,10 @@
                     <table class="table table-hover dataTable">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Събитие</th>
-                                <th scope="col">Дата</th>
-                                <th scope="col">Роля</th>
+                                <th scope="col" class="font-weight-bold">#</th>
+                                <th scope="col" class="font-weight-bold">Събитие</th>
+                                <th scope="col" class="font-weight-bold">Дата</th>
+                                <th scope="col" class="font-weight-bold">Роля</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +46,7 @@
                             @foreach (var eventUser in Model.EventUsers)
                             {
                                 <tr>
-                                    <td scope="row">@counter</td>
+                                    <td scope="row" class="font-weight-bold">@counter</td>
                                     @{ counter++; }
                                     <td scope="col">@eventUser.Event.Name</td>
                                     <td scope="col">@eventUser.Event.Date.ToString("dd/MM/yyyy")</td>

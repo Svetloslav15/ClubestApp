@@ -89,9 +89,16 @@
             User user = await this.userService.FindUserById(userId);
 
             this.emailService.SendEmail(user, $"Успешно се записа за събитието {eventEntity.Name}!", $"Clubest - {eventEntity.Name}");
-            if (eventEntity != null && user != null && 
-                !this.dbContext.EventUsers.Any(x => x.UserId == userId && x.EventId == eventId))
+            if (eventEntity != null && user != null)
             {
+                if (this.dbContext.EventUsers.Any(x => x.UserId == userId && x.EventId == eventId))
+                {
+                    EventUser entity = await this.dbContext.EventUsers.FirstOrDefaultAsync(x => x.UserId == userId && x.EventId == eventId);
+                    entity.Role = role;
+
+                    await this.dbContext.SaveChangesAsync();
+                    return true;
+                }
                 EventUser eventUser = new EventUser()
                 {
                     EventId = eventId,

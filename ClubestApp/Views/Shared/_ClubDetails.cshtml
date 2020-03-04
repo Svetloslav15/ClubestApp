@@ -25,6 +25,10 @@
     <div class="px-0 col-lg-8 box-shadow p-3 mt-3">
         <h3 class="text-center text-uppercase mb-3 h3">
             @Model.Club.Name
+            @if (!Model.Club.IsPublic)
+            {
+                <i class="fas fa-lock ml-3"></i>
+            }
         </h3>
         <p>
             Град: @Model.Club.Town
@@ -46,6 +50,13 @@
                 <a href="/Club/JoinClub/@Model.Club.Id" class="btn btn-outline-primary btn-sm waves-effect btn-padding-smaller"
                    data-toggle="tooltip" data-placement="top" title="Влез в клуб">
                     <i class="fas fa-plus-circle fa-lg"></i>
+                </a>
+            }
+            else
+            {
+                <a href="/Club/ExitClub/@Model.Club.Id/@currentUser.Id" class="btn btn-outline-primary btn-sm waves-effect btn-padding-smaller"
+                   data-toggle="tooltip" data-placement="top" title="Излез от клуба">
+                    <i class="fas fa-door-open fa-lg"></i>
                 </a>
             }
 

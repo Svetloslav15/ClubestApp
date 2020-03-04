@@ -7,6 +7,7 @@
     using ClubestApp.Models.BindingModels.User;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -38,6 +39,7 @@
             this.eventService = eventService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Profile()
         {
             //Finds user by his id
@@ -58,6 +60,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Profile(EditProfileInputModel model)
         {
             if (ModelState.IsValid)
@@ -68,11 +71,13 @@
             return this.Redirect("/User/Profile");
         }
 
+        [Authorize]
         public IActionResult ChangePassword()
         {
             return this.View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Events()
         {
             User user = await _userManager.GetUserAsync(User);
@@ -87,6 +92,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ChangePassword(PasswordInputModel inputModel)
         {
             if (ModelState.IsValid)
@@ -105,12 +111,6 @@
                 }
             }
             return this.View("ChangePassword");
-        }
-
-        //TODO
-        public IActionResult DownloadData()
-        {
-            return View();
         }
 
         [HttpPost]
@@ -171,6 +171,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddInterestsToUser(AddInterestsInputModel inputModel)
         {
             if (ModelState.IsValid)
@@ -182,7 +183,7 @@
             return this.Redirect("/");
         }
 
-
+        [Authorize]
         public async Task<IActionResult> Interests()
         {
             User user = await _userManager.GetUserAsync(User);
@@ -194,7 +195,6 @@
 
             return this.View(model);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Interests(AddInterestsInputModel inputModel)
@@ -218,6 +218,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ChangePhoto(EditProfileInputModel inputModel)
         {
             if (inputModel.PhotoFile == null)

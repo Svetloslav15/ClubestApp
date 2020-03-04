@@ -22,13 +22,15 @@
         private readonly PostService postService;
         private readonly PollService pollService;
         private readonly UserService userService;
+        private readonly NotificationService notificationService;
 
         public ClubController(ClubService clubService,
                     UserManager<User> userManager,
                     RequestService requestService,
                     PostService postService,
                     PollService pollService,
-                    UserService userService)
+                    UserService userService,
+                    NotificationService notificationService)
         {
             this.clubService = clubService;
             this.userManager = userManager;
@@ -36,8 +38,11 @@
             this.postService = postService;
             this.pollService = pollService;
             this.userService = userService;
+            this.notificationService = notificationService;
         }
+        
 
+        [Authorize(Roles = "SystemAdmin")]
         public async Task<IActionResult> AddClub()
         {
             AddClubInputModel model = new AddClubInputModel();
@@ -46,6 +51,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = "SystemAdmin")]
         public async Task<IActionResult> Delete(string id)
         {
             await this.clubService.DeleteClubById(id);
@@ -53,6 +59,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin")]
         public async Task<IActionResult> AddClub(AddClubInputModel model)
         {
             if (ModelState.IsValid)
@@ -68,6 +75,7 @@
             return this.View(model);
         }
 
+        [Authorize]
         public IActionResult AddRequestNewClub()
         {
             AddClubInputModel model = new AddClubInputModel();
@@ -77,6 +85,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddRequestNewClub(AddClubInputModel model)
         {
             if (ModelState.IsValid)
@@ -91,7 +100,8 @@
             model.InterestsToList = interests;
             return this.View(model);
         }
-
+       
+        [Authorize(Roles = "SystemAdmin")]
         public async Task<IActionResult> GetAllRequestNewClub()
         {
             List<RequestNewClub> requests = await this.clubService.GetRequestsNewClubAsync();
@@ -103,6 +113,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> AllClubs(IList<Club> clubs)
         {
             if (clubs.Count == 0)
@@ -115,15 +126,29 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> JoinClub(string id)
         {
             User user = await this.userManager.GetUserAsync(HttpContext.User);
-            await this.requestService.CreateJoinRequestClub(id, user);
+            JoinClubRequest request = await this.requestService.CreateJoinRequestClub(id, user);
+            if (request != null)
+            {
+                await this.notificationService.CreateNotification($"Успешно подадохте заявка за присъединяване към клуб - {request.Club.Name}. Вашата заявка очаква удобрение от администратор.", $"/Club/Details/{id}", request.User.Id);
+            }
+            return this.Redirect($"/Club/Details/{id}");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> ExitClub(string id, string secondId)
+        {
+            await this.clubService.RemoveFromClub(id, secondId);
 
             return this.Redirect($"/Club/Details/{id}");
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> SearchClub([FromQuery(Name = "club")] string userInput)
         {
             IList<Club> clubs = await this.clubService.GetAllClubs();
@@ -155,7 +180,7 @@
             return this.View(bindingModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> JoinRequests(string id)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -179,7 +204,7 @@
             return this.View(requestsBindingModel);
         }
 
-        [Authorize]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> ArchivedJoinRequests(string id)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -202,6 +227,7 @@
             return this.View(requestsBindingModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> Polls([FromQuery] string validation, string id)
         {
             string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -212,6 +238,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> ApproveJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
             await this.requestService.ApproveJoinClubRequest(model.RequestApproveBindingModel.RequestId, model.RequestApproveBindingModel.RequestType);
@@ -219,6 +246,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> DeleteJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
             await this.requestService.DeleteJoinClubRequest(model.RequestApproveBindingModel.RequestId);
@@ -231,6 +259,7 @@
             return View(model);
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
@@ -239,6 +268,7 @@
         }
 
         [HttpPost]
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> Edit(EditClubInputModel model, string id)
         {
             bool isFileValid = true;
@@ -278,6 +308,7 @@
             return this.View(bindingModel);
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> PollsAdministration(string id)
         {
             AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id);
@@ -285,6 +316,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> AddClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -294,6 +326,7 @@
             return this.Redirect($"/Club/ListMembers/{club.Id}");
         }
 
+        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
         public async Task<IActionResult> RemoveClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);
