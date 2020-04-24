@@ -25,7 +25,7 @@
         private readonly CloudinaryService cloudinaryService;
         private readonly UserManager<User> userManager;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
-        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1583323870/ClubestPics/undraw_connection_b38q.png.png";
 
         public ClubService(ApplicationDbContext dbContext,
                            UserService userService, CloudinaryService cloudinaryService,
