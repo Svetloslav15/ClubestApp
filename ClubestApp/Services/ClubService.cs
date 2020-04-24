@@ -1,16 +1,13 @@
 ﻿namespace ClubestApp.Services
 {
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -24,24 +21,19 @@
     {
         private readonly ApplicationDbContext dbContext;
         private readonly UserService userService;
-        private readonly Cloudinary cloudinary;
-        private readonly IConfiguration configuration;
+        private readonly CloudinaryService cloudinaryService;
+        private readonly UserManager<User> userManager;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580139315/ClubestPics/identyfying_skills_needs_360x240_p4zsjq.jpg";
 
         public ClubService(ApplicationDbContext dbContext,
-                           UserService userService,
-                           IConfiguration configuration)
+                           UserService userService, CloudinaryService cloudinaryService,
+                           UserManager<User> userManager)
         {
             this.dbContext = dbContext;
             this.userService = userService;
-            this.configuration = configuration;
-            this.cloudinary = new Cloudinary(
-                                        new Account(
-                                             this.configuration.GetConnectionString("CloudinaryCloudName"),
-                                             this.configuration.GetConnectionString("CloudinaryApiKey"),
-                                             this.configuration.GetConnectionString("CloudinaryAppSecret"))
-                                        );
+            this.cloudinaryService = cloudinaryService;
+            this.userManager = userManager;
         }
 
         public async Task<PrivateClubBindingModel> GetClub(string id)
@@ -110,8 +102,7 @@
             return interests;
         }
 
-        //TODO add roles
-        public ClubAdmin AddClubAdmin(Club club, User user)
+        public async Task<ClubAdmin> AddClubAdmin(Club club, User user)
         {
             ClubAdmin newClubAdmin = new ClubAdmin()
             {
@@ -119,36 +110,72 @@
                 User = user,
             };
 
-            var result = dbContext.ClubAdmins.Add(newClubAdmin);
+            var result = await dbContext.ClubAdmins.AddAsync(newClubAdmin);
+            await this.userManager.AddToRoleAsync(user, "ClubAdmin");
+            await this.dbContext.SaveChangesAsync();
+            return result.Entity;
+        }
+
+        public async Task<ClubAdmin> RemoveClubAdmin(Club club, User user)
+        {
+            ClubAdmin clubAdmin = await this.dbContext.ClubAdmins
+                .FirstOrDefaultAsync(x => x.User == user && x.Club == club);
+
+            if (clubAdmin != null)
+            {
+                this.dbContext.ClubAdmins.Remove(clubAdmin);
+            }
+
+            await this.userManager.RemoveFromRoleAsync(user, "ClubAdmin");
+            await this.dbContext.SaveChangesAsync();
+            return clubAdmin;
+        }
+
+        public async Task<RequestNewClub> AddRequestNewClub(AddClubInputModel model, string userId)
+        {
+            string currentUrl = await this.cloudinaryService.UploadImage(model.ImageFile);
+            User user = await this.userService.FindUserById(userId);
+
+            RequestNewClub requestNewClub = new RequestNewClub
+            {
+                Name = model.Name,
+                Fee = (decimal)model.Fee,
+                PriceType = (PriceType)Enum.Parse(typeof(PriceType), model.PriceType, true),
+                IsPublic = (bool)model.IsPublic,
+                Description = model.Description,
+                Town = model.Town,
+                PictureUrl = currentUrl != "" ? currentUrl : defaultPictureUrl,
+                Interests = this.userService.InterestsToString(model.Interests),
+                Author = user,
+                AuthorId = user.Id
+            };
+
+            var result = await this.dbContext.RequestNewClubs.AddAsync(requestNewClub);
+            await this.dbContext.SaveChangesAsync();
 
             return result.Entity;
         }
 
+        public async Task<List<RequestNewClub>> GetRequestsNewClubAsync()
+        {
+            return await this.dbContext.RequestNewClubs
+                .ToListAsync();
+        }
+
+        public async Task<IList<Message>> GetAllMessagesForClub(string id)
+        {
+            IList<Message> result = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == id)
+                .ToListAsync();
+
+            return result;
+        }
+
         public async Task<Club> AddClub(AddClubInputModel model, string userId)
         {
-            //Work on image
-            string currentUrl = "";
-            if (model.ImageFile != null)
-            {
-                string filePath = Path.GetFileName(model.ImageFile.FileName);
-                using (var stream = File.Create(filePath))
-                {
-                    model.ImageFile.CopyToAsync(stream)
-                        .GetAwaiter()
-                        .GetResult();
-                }
-
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(filePath),
-                    PublicId = $"ClubestPics/{model.ImageFile.FileName}"
-                };
-
-                //Deletes file in pc and uploads it in cloud
-                var uploadResult = await cloudinary.UploadAsync(uploadParams);
-                File.Delete(filePath);
-                currentUrl = uploadResult.Uri.AbsoluteUri;
-            }
+            string currentUrl = await this.cloudinaryService.UploadImage(model.ImageFile);
 
             Club newClub = new Club
             {
@@ -158,47 +185,19 @@
                 IsPublic = (bool)model.IsPublic,
                 Description = model.Description,
                 Town = model.Town,
-                PictureUrl = currentUrl != ""
-                ? currentUrl
-                : defaultPictureUrl,
+                PictureUrl = currentUrl != "" ? currentUrl : defaultPictureUrl,
                 Interests = this.userService.InterestsToString(model.Interests)
             };
-
-            User user = await this.userService.FindUserById(userId);
-
-            this.AddClubAdmin(newClub, user);
 
             var result = await this.dbContext.Clubs.AddAsync(newClub);
             await this.dbContext.SaveChangesAsync();
 
             return result.Entity;
         }
-      
+
         public async Task<Club> EditClub(EditClubInputModel model, string id)
         {
-            //Work on image
-            string currentUrl = "";
-            if (model.ImageFile != null)
-            {
-                string filePath = Path.GetFileName(model.ImageFile.FileName);
-                using (var stream = File.Create(filePath))
-                {
-                    model.ImageFile.CopyToAsync(stream)
-                        .GetAwaiter()
-                        .GetResult();
-                }
-
-                var uploadParams = new ImageUploadParams()
-                {
-                    File = new FileDescription(filePath),
-                    PublicId = $"ClubestPics/{model.ImageFile.FileName}"
-                };
-
-                //Deletes file in pc and uploads it in cloud
-                var uploadResult = await cloudinary.UploadAsync(uploadParams);
-                File.Delete(filePath);
-                currentUrl = uploadResult.Uri.AbsoluteUri;
-            }
+            string currentUrl = await this.cloudinaryService.UploadImage(model.ImageFile);
 
             Club club = await this.dbContext
                 .Clubs
@@ -250,14 +249,17 @@
             return model;
         }
 
-        public async Task<ListClubMemebersBindingModel> GetMemberInClub(string clubId)
+        public async Task<ListClubMembersBindingModel> GetMemberInClub(string clubId)
         {
-            return new ListClubMemebersBindingModel()
+            IList<ClubAdmin> clubAdmins = await this.GetClubAdmins();
+            return new ListClubMembersBindingModel()
             {
                 Club = await this.GetClubById(clubId),
                 ClubPriceType = await this.GetClubPriceType(clubId),
                 Members = await this.dbContext
                     .UserClubs
+                    .Include(x => x.User)
+                    .Include(x => x.Club)
                     .Where(x => x.ClubId == clubId)
                     .Select(x => new MemberItemBindingModel
                     {
@@ -269,7 +271,13 @@
                         Email = x.User.Email,
                         Number = x.User.PhoneNumber,
                     })
-                    .ToListAsync()
+                    .ToListAsync(),
+                ClubAdmins = clubAdmins,
+                Messages = await this.dbContext
+                .Messages
+                .Include(x => x.Sender)
+                .Where(x => x.ClubId == clubId)
+                .ToListAsync(),
             };
         }
 
@@ -318,6 +326,18 @@
             return await this.dbContext.Clubs.FirstOrDefaultAsync(club => club.Id == clubId);
         }
 
+        public async Task<Club> DeleteClubById(string id)
+        {
+            Club club = await this.GetClubById(id);
+            if (club != null)
+            {
+                this.dbContext.Clubs.Remove(club);
+            }
+
+            await this.dbContext.SaveChangesAsync();
+            return club;
+        }
+
         public async Task<IList<Club>> FilterClubsBySearchInput(string userInput)
         {
             userInput = userInput
@@ -356,6 +376,26 @@
             }
 
             return true;
+        }
+
+        public async Task<IList<ClubAdmin>> GetClubAdmins()
+        {
+            return await this.dbContext.ClubAdmins
+                .ToListAsync();
+        }
+
+        public async Task<UserClub> RemoveFromClub(string clubId, string userId)
+        {
+            UserClub userClub = await this.dbContext.UserClubs
+                .FirstOrDefaultAsync(x => x.ClubId == clubId && x.UserId == userId);
+
+            if (userClub != null)
+            {
+                this.dbContext.UserClubs.Remove(userClub);
+            }
+
+            await this.dbContext.SaveChangesAsync();
+            return userClub;
         }
     }
 }

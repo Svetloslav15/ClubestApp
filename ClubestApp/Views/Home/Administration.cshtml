@@ -1,30 +1,10 @@
 ﻿
 @{
-    ViewData["Title"] = "Administration";
+    ViewData["Title"] = "Администрация";
 }
 
     <div class="pl-0 col-lg-12 row bg-white box-shadow-light">
-        <div class="pl-0 col-lg-3">
-            <nav class="navbar navbar-light bg-light flex-column">
-                <a class="font-size-18 text-dark font-weight-bold mb-3" href="#">Администрация</a>
-                <nav class="nav nav-pills flex-column">
-                    <a class="nav-link text-dark" asp-controller="Club" asp-action="AddClub">
-                        Добави клуб
-                        <i class="fas fa-plus-circle ml-2"></i>
-                    </a>
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>
-                        <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>
-                    </nav>
-                    <a class="nav-link" href="#item-2">Item2</a>
-                    <a class="nav-link" href="#item-3">Item3</a>
-                    <nav class="nav nav-pills flex-column">
-                        <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>
-                        <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>
-                    </nav>
-                </nav>
-            </nav>    
-        </div>
+        <partial name="../Shared/Administration/_Navigation.cshtml"/>
         <div class="col-lg-9">
             <a href="#">content</a>
             <a href="#">content</a>

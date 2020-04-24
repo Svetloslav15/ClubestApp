@@ -274,3 +274,22 @@
 .font-size-15 {
     font-size: 15px;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.scrollable {
+    height: 450px;
+    overflow-y: scroll;
+}
+.w-25px {
+    width: 25px !important;
+}
+.w-50px {
+    width: 40px !important;
+}
+
+.height-fit {
+    width: 100%;
+    height: fit-content;
+}

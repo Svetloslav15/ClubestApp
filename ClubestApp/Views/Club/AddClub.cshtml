@@ -1,4 +1,8 @@
-﻿@model ClubestApp.Models.InputModels.AddClubInputModel
+﻿@{
+    ViewData["Title"] = "Добави клуб";
+}
+
+@model ClubestApp.Models.InputModels.AddClubInputModel
 <form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddClub" method="post" enctype="multipart/form-data" runat="server">
     <p class="text-center h4 mb-4 text-black mt-2">Регистрирация на клуб</p>
     <!-- Name -->
@@ -25,8 +29,8 @@
         <!-- Fee -->
         <div class="mb-1 col-lg-6">
             <div class="md-form">
-                <input type="text" asp-for="Fee" id="form1" class="form-control text-black">
-                <label for="form1" class="text-black">Такса</label>
+                <input type="text" asp-for="Fee" id="Fee-Input-Field" class="form-control text-black">
+                <label for="Fee-Input-Field" class="text-black">Такса</label>
                 <span class="note-info">*Aко клубът ви е безплатен напишете за цена 0.</span>
                 <span asp-validation-for="Fee" class="text-danger"></span>
             </div>
@@ -69,8 +73,8 @@
         <!-- Town -->
         <div class="mb-1 col-lg-6">
             <div class="md-form">
-                <input type="text" asp-for="Town" id="form1" class="form-control text-black">
-                <label for="form1" class="text-black">Населено Място</label>
+                <input type="text" asp-for="Town" id="town-Input-Field" class="form-control text-black">
+                <label for="town-Input-Field" class="text-black">Населено Място</label>
                 <span asp-validation-for="Town" class="text-danger"></span>
             </div>
         </div>

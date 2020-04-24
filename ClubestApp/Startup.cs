@@ -14,6 +14,8 @@
     using ClubestApp.Services;
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
+    using ClubestApp.Hubs;
+    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {
@@ -61,11 +63,17 @@
             services.AddTransient<PostService>();
             services.AddTransient<CommentService>();
             services.AddTransient<PollService>();
+            services.AddTransient<NotificationService>();
+            services.AddTransient<RequestNewClubService>();
+            services.AddTransient<EventService>();
+            services.AddTransient<MessageService>();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+             services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,11 +98,16 @@
 
             app.UseAuthentication();
 
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}/{secondId?}");
             });
         }
     }

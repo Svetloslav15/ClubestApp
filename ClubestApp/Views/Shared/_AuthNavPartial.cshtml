@@ -1,23 +1,36 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ClubestApp.Data.Models
+@using ClubestApp.Services
+
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject NotificationService  notificationService
+
 @{
     var user = new User();
     if (SignInManager.IsSignedIn(User))
     {
         user = await UserManager.GetUserAsync(User);
     }
+    var unReadNotificationsCount = this.notificationService.GetUnReadNotificationsForUser(user.Id)
+        .GetAwaiter()
+        .GetResult()
+        .Count();
 }
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-            <li class="nav-item">
-            <!--<a class="nav-link text-white f-size-13" asp-controller="Club" asp-action="AddClub">Добави Клуб</a>-->
-                <a class="nav-link text-white f-size-13" asp-controller="Home" asp-action="Administration">Администрация</a>
-            </li>
+            @if (User.IsInRole("SystemAdmin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-white f-size-13" asp-controller="Home" asp-action="Administration">Администрация</a>
+                </li>
+            }
             <li class="nav-item">
                 <a class="nav-link link-nav text-white f-size-13" asp-controller="Club" asp-action="AllClubs">Клубове</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-nav text-white f-size-13" asp-controller="User" asp-action="MyClubs">Моите Клубове</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link link-nav text-white f-size-13" asp-controller="User" asp-action="Profile">
@@ -25,9 +38,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white f-size-13" href="#">
+                <a class="nav-link text-white f-size-13" href="/Notification/Index">
                     <i class="fas fa-bell"></i>
-                    <span class="badge badge-danger notification-badge">0</span>
+                    <span class="badge badge-danger notification-badge">@unReadNotificationsCount</span>
                 </a>
             </li>
             <li class="nav-item">

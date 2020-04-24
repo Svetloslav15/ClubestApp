@@ -16,6 +16,8 @@
     using System.Text;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
+    using ClubestApp.Models.BindingModels.User;
+    using ClubestApp.Models.BindingModels;
 
     public class UserService
     {
@@ -49,6 +51,7 @@
                 .Include(user => user.UserPostDislikes)
                 .Include(user => user.UserClubs)
                 .Include(user => user.UserEvents)
+                .Include(user => user.AdminClubs)
                 .FirstOrDefaultAsync(user => user.Id == id);
 
             return userdb; 
@@ -172,6 +175,32 @@
                 .Interests = "";
 
             this.dbContext.SaveChanges();
+        }
+
+        public async Task<List<User>> GetAllUsers()
+        {
+            return await this.dbContext.Users.ToListAsync();
+        }
+
+        public async Task<MyClubsViewModel> GetUsersClubs(string userId)
+        {
+            var clubs = await this.dbContext
+                .Clubs
+                .Where(x => x.ClubUsers.Any(y => y.UserId == userId))
+                .Select(x => new GetClubsBindingModel
+                {
+                    Id = x.Id,
+                    PictureUrl = x.PictureUrl,
+                    Name = x.Name
+                })
+                .ToListAsync();
+
+            var result = new MyClubsViewModel
+            {
+                Clubs = clubs
+            };
+
+            return result;
         }
     }
 }

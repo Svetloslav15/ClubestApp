@@ -1,0 +1,96 @@
+﻿@model ClubestApp.Data.Models.RequestNewClub
+@using System.Collections.Generic;
+
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
+<form class="container bg-white border-deep-blue box-shadow p-5" asp-controller="Club" asp-action="AddRequestNewClub" method="post" enctype="multipart/form-data" runat="server">
+    <p class="text-center h4 mb-4 text-black mt-2">Заявка за нов клуб - преглед</p>
+    <!-- Name -->
+    <div class="row">
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                <input type="text" disabled asp-for="Name" id="form1" class="form-control text-black" value="@Model.Name">
+                <label for="form1" disabled class="text-black">Име</label>
+            </div>
+        </div>
+
+        <!-- FeeType -->
+        <div class="mb-1 col-lg-6 mt-1">
+            <select asp-for="PriceType" class="custom-select">
+                <option value="" disabled selected>Вид Такса</option>
+                <option value="montly">Месечна</option>
+                <option value="perHour">За час</option>
+                <option value="free">Безплатно</option>
+            </select>
+            <span asp-validation-for="PriceType" class="text-danger"></span>
+        </div>
+
+        <!-- Fee -->
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                <input type="text" disabled asp-for="Fee" id="form1" class="form-control text-black" value="@Model.Fee">
+                <label for="form1" class="text-black">Такса</label>
+            </div>
+        </div>
+
+        <!-- IsPublic -->
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                @if (Model.IsPublic == true)
+                {
+                    <input type="text" disabled class="form-control text-black" value="Публичен">
+                }
+                else
+                {
+                    <input type="text" disabled class="form-control text-black" value="Частен">
+                }
+                <label for="form1" class="text-black">Вид на клуб:</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Description -->
+        <div class="col-lg-6 md-form">
+            <div class="mb-1">
+                <textarea disabled class="md-textarea form-control" rows="3" maxlength="300">
+                    @Model.Description
+                </textarea>
+                <label for="form7">Описание</label>
+            </div>
+        </div>
+
+        <!-- Town -->
+        <div class="mb-1 col-lg-6">
+            <div class="md-form">
+                <input type="text" disabled class="form-control text-black">
+                <label for="form1" class="text-black">Населено Място</label>
+            </div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-1 col-lg-6">
+            <label for="form1" class="text-black">Снимка на клуба</label>
+            <div class="md-form">
+                <img src="@Model.PictureUrl" alt="Logo" class="w-100" />
+            </div>
+        </div>
+
+        <!-- Interests -->
+        <div class="mb-1 col-lg-6">
+            <label for="form1" class="text-black">Интереси</label>
+            <p>
+                @foreach (var item in Model.Interests.Split(", ", StringSplitOptions.RemoveEmptyEntries).ToList())
+                {
+                <p>@item</p>
+            }
+                </p>
+            </div>
+        </div>
+        <!-- Sign in button -->
+        <div class="text-center mt-3">
+            <input type="submit" class="btn text-white bg-white blue-gradient btn-outline-white" value="Добави" />
+        </div>
+    </form>

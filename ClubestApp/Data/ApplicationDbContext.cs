@@ -9,6 +9,8 @@
     {
         public DbSet<Club> Clubs { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public DbSet<ClubAdmin> ClubAdmins { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
@@ -83,6 +85,12 @@
                 .HasForeignKey(poll => poll.ClubId);
 
             builder.Entity<Club>()
+               .HasMany(club => club.JoinClubRequests)
+               .WithOne(request => request.Club)
+               .HasForeignKey(club => club.ClubId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Club>()
                 .HasMany(club => club.Posts)
                 .WithOne(post => post.Club)
                 .HasForeignKey(post => post.ClubId);
@@ -100,12 +108,6 @@
                 .HasOne(jrc => jrc.User)
                 .WithMany(user => user.JoinClubRequests)
                 .HasForeignKey(jrc => jrc.UserId);
-
-            builder.Entity<JoinClubRequest>()
-               .HasOne(jrc => jrc.Club)
-               .WithMany(club => club.JoinClubRequests)
-               .HasForeignKey(jrc => jrc.ClubId);
-
 
             //Define mapping table for Users and Clubs
             builder.Entity<UserClub>()
@@ -241,6 +243,16 @@
                 .WithMany(up => up.UserPostDislikes)
                 .HasForeignKey(up => up.PostId);
             /**/
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Club)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ClubId);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(s => s.Messages)
+                .HasForeignKey(m => m.SenderId);
         }
     }
 }

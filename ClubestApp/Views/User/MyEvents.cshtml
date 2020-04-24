@@ -1,0 +1,78 @@
+﻿@model ClubestApp.Models.BindingModels.User.MyEventsBindingModel
+
+@{
+    ViewData["Title"] = "Мойте събития";
+}
+
+<div class="container col-lg-12 my-2 mx-auto border-deep-blue bg-white box-shadow">
+    <h2 class="text-center pt-4 pb-4">Мойте събития</h2>
+    <div class="row pb-4">
+        <div class="col-lg-3 pb-3 mr-lg-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="Profile">Моят профил</a>
+                </li>
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="Interests">Моите интереси</a>
+                </li>
+                <li class="list-group-item active">
+                    <a asp-controller="User" asp-action="Events" class="text-white">Моите събития</a>
+                </li>
+                <li class="list-group-item">
+                    <a asp-controller="User" asp-action="ChangePassword">Парола</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-lg-8 py-2 mx-auto">
+            @if (Model.EventUsers.Count > 0)
+            {
+                <button class="btn btn-success btn-md" id="export-btn"
+                        data-toggle="tooltip" data-placement="top" title="Свали данните като CSV">
+                    <i class="far fa-file-excel fa-lg"></i>
+                </button>
+                <button class="btn btn-danger btn-md" id="export-btn-pdf"
+                        data-toggle="tooltip" data-placement="top" title="Свали данните като PDF">
+                    <i class="far fa-file-pdf fa-lg"></i>
+                </button>
+                <table class="table table-hover dataTable" id="my-events-table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="font-weight-bold">#</th>
+                            <th scope="col" class="font-weight-bold">Събитие</th>
+                            <th scope="col" class="font-weight-bold">Клуб</th>
+                            <th scope="col" class="font-weight-bold">Дата</th>
+                            <th scope="col" class="font-weight-bold">Роля</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int counter = 1;
+                        }
+                        @foreach (var eventUser in Model.EventUsers)
+                        {
+                            <tr>
+                                <td scope="row" class="font-weight-bold">@counter</td>
+                                @{ counter++; }
+                                <td scope="col" class="text-primary"><a href="/Event/Details/@eventUser.Event.Id?clubId=@eventUser.Event.Club.Id">@eventUser.Event.Name</a></td>
+                                <td scope="col">@eventUser.Event.Club.Name</td>
+                                <td scope="col">@eventUser.Event.Date.ToString("dd/MM/yyyy")</td>
+                                <td scope="col">@eventUser.Role</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h4 class="text-center my-3 text-primary border py-4 border-left-0 border-right-0">
+                    Все още нямате записани събития!
+                </h4>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/js/csv-export.js"></script>
+<script src="~/js/pdf-export.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>

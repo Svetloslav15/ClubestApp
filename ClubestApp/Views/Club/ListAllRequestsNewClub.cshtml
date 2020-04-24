@@ -1,0 +1,39 @@
+﻿@model ClubestApp.Models.BindingModels.RequestNewClub.ListAllRequestsNewClubBindingModel
+@{
+    ViewData["Title"] = "Администрация - заявки за нови клубове";
+}
+
+<div class="pl-0 col-lg-12 row bg-white box-shadow-light">
+    <partial name="../Shared/Administration/_Navigation.cshtml" />
+    <div class="col-lg-9">
+        <h2 class="text-center my-4">Заявки за нови клубове</h2>
+        @if (Model.RequestsNewClub.Count != 0)
+        {
+            @foreach (var request in Model.RequestsNewClub)
+            {
+                <div class="col-lg-11 mx-auto my-2 box-shadow-light p-2 row">
+                    <p class="d-inline-block mt-2 ml-2">@request.Name</p>
+                    <div class="ml-auto">
+                        <a href="/RequestNewClub/Details/@request.Id" class="btn btn-primary px-3 py-2"
+                           data-toggle="tooltip" data-placement="top" title="Виж детайли за заявката">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="/RequestNewClub/Approve/@request.Id" class="btn btn-success px-3 py-2"
+                           data-toggle="tooltip" data-placement="top" title="Одобри заявката">
+                            <i class="fas fa-check-circle"></i>
+                        </a>
+                        <a href="/RequestNewClub/Delete/@request.Id" class="btn btn-danger px-3 py-2"
+                           data-toggle="tooltip" data-placement="top" title="Изтрий заявката">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <h3 class="text-primary text-center my-4">Няма налични заявки</h3>
+        }
+
+    </div>
+</div>

@@ -3,7 +3,7 @@
 @using System.Drawing;
 @using System.Text;
 @{
-    ViewData["Title"] = "PollsAdministration";
+    ViewData["Title"] = "Администрация за заявки";
 }
 
 <div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
@@ -11,10 +11,11 @@
 
     <!--/.Navbar-->
     <div class="col-lg-4">
-        SideNav
+        <partial name="_Chat.cshtml" model="@Model.Messages" />
+        <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
     </div>
     <div class="col-lg-8">
-        <div>
+        <div class="text-center">
             <a href="#active" class="btn btn-outline-primary">Активни анкети</a>
             <a href="#non-active" class="btn btn-outline-primary">Архивирани анкети</a>
         </div>
@@ -30,10 +31,14 @@
                 {
                     string canvasId = 'a' + poll.Id + 'a';
                     <div class="col-lg-12 border m-2 box-shadow-light py-2">
-                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
-                           data-toggle="tooltip" data-placement="top" title="Изтрий пост">
+                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2 btn-md"
+                           data-toggle="tooltip" data-placement="top" title="Изтрий анкета">
                             <i class="fas fa-trash-alt"></i>
                         </a>
+                        <button class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2 btn-md export-poll-btn-pdf"
+                                 data-toggle="tooltip" data-placement="top" title="Свали данните като PDF">
+                            <i class="far fa-file-pdf fa-lg"></i>
+                        </button>
                         <h4 class="text-center">@poll.Content</h4>
                         <canvas class="text-center" id="@canvasId"></canvas>
                     </div>
@@ -52,10 +57,14 @@
                 {
                     string canvasId = 'a' + poll.Id + 'a';
                     <div class="col-lg-12 border m-2 box-shadow-light py-2">
-                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2"
+                        <a href="/Poll/Delete/@poll.Id?clubId=@Model.Club.Id" class="mr-2 mb-3 btn btn-md btn-danger fa-lg px-3 py-2"
                            data-toggle="tooltip" data-placement="top" title="Изтрий анкета">
                             <i class="fas fa-trash-alt"></i>
                         </a>
+                        <button class="mr-2 mb-3 btn btn-danger fa-lg px-3 py-2 btn-md export-poll-btn-pdf" data-id="@poll.Id"
+                                data-toggle="tooltip" data-placement="top" title="Свали данните като PDF">
+                            <i class="far fa-file-pdf fa-lg"></i>
+                        </button>
                         <h4 class="text-center">@poll.Content</h4>
                         <canvas class="text-center" id="@canvasId"></canvas>
                     </div>
@@ -197,3 +206,7 @@
         @:});
     }
 </script>
+<script src="~/js/pdf-export.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>

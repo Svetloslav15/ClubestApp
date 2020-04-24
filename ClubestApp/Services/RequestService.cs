@@ -4,7 +4,6 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using Microsoft.EntityFrameworkCore;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -32,7 +31,7 @@
                 UserId = user.Id
             };
 
-            bool anyPreviousRequest = await this.dbContext.JoinClubRequests.AnyAsync(x => x.ClubId == clubId && x.UserId == user.Id);
+            bool anyPreviousRequest = await this.dbContext.JoinClubRequests.AnyAsync(x => x.ClubId == clubId && x.UserId == user.Id && x.RequestType == RequestType.Pending);
             if (anyPreviousRequest)
             {
                 return null;

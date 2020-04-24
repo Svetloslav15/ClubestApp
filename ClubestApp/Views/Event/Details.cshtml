@@ -1,0 +1,136 @@
+﻿@using ClubestApp.Data.Models.Enums
+@using ClubestApp.Data.Models
+@using ClubestApp.Services
+@using Microsoft.AspNetCore.Identity
+@model ClubestApp.Models.BindingModels.Events.EventDetailsBindingModels
+
+@{
+    ViewData["Title"] = $"{Model.Event.Name}";
+}
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@inject UserService userService
+
+@{
+    var currentUser = new User();
+    if (SignInManager.IsSignedIn(User))
+    {
+        currentUser = await UserManager.GetUserAsync(User);
+    }
+    currentUser = this.userService.FindUserById(currentUser.Id)
+        .GetAwaiter()
+        .GetResult();
+
+}
+<div class="col-lg-12 my-2 mx-auto bg-white border-deep-blue box-shadow row">
+    <partial name="../Shared/_ClubDetails.cshtml" />
+    <div class="col-lg-4">
+        <partial name="../Club/_Chat.cshtml" model="@Model.Messages" />
+        <input type="text" name="name" value="@Model.Club.Id" id="clubId" hidden />
+    </div>
+    <div class="col-lg-8 border">
+        <div class="my-2 p-2 box-shadow-light">
+            <h2 class="text-center blue-gradient p-2 text-white">@Model.Event.Name</h2>
+            @{
+                int daysLeft = Model.Event.Date.Subtract(DateTime.UtcNow).Days + 1;
+            }
+            @if (daysLeft > 0)
+            {
+                <p class="mb-0 mt-2 text-center"><span class="font-weight-bold h5">@daysLeft</span> дни до събитието</p>
+            }
+            else
+            {
+                <p class="mb-0 text-center">Преди @Math.Abs(daysLeft) дни</p>
+            }
+
+            <div class="text-center mt-3">
+                @if (Model.Event.EventUsers.Any(x => x.UserId == Model.CurrentUser.Id))
+                {
+                    <a href="/Event/ExitEvent/@Model.Event.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn blue-gradient btn-sm">Отпиши</a>
+                }
+                else
+                {
+                    <a href="/Event/JoinEvent/@Model.Event.Id?clubId=@Model.Club.Id&returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id"
+                       class="btn blue-gradient btn-sm">Запиши се</a>
+                }
+                @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+                {
+                    <div class="text-center">
+                        <div class="d-inline-block mx-auto my-1 row">
+                            <a href="/Event/Delete/@Model.Event.Id?clubId=@Model.Club.Id" class="btn btn-danger btn-sm"
+                               data-toggle="tooltip" data-placement="top" title="Изтрий събитие">
+                                <i class="fas fa-trash-alt fa-lg"></i>
+                            </a>
+                            <div class="d-inline-block" data-toggle="modal" data-target="#modalLoginForm">
+                                <button class="btn btn-deep-purple btn-sm"
+                                        data-toggle="tooltip" data-placement="top" title="Добави човек с роля">
+                                    <i class="fas fa-user-plus fa-lg"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-success btn-sm" id="export-btn"
+                                    data-toggle="tooltip" data-placement="top" title="Свали данните като CSV">
+                                <i class="far fa-file-excel fa-lg"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" id="export-btn-pdf"
+                                    data-toggle="tooltip" data-placement="top" title="Свали данните като PDF">
+                                <i class="far fa-file-pdf fa-lg"></i>
+                            </button>
+                            <partial name="./_AddEventRole.cshtml" />
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <p class="mt-3 text-center">
+                Записани <span class="font-weight-bold h5">@Model.Event.EventUsers.Count</span> участници
+            </p>
+            <input type="hidden" id="event-name-hidden" value="@Model.Event.Name" />
+            <p class="mt-3">@Model.Event.Description</p>
+            @if (User.IsInRole("SystemAdmin") || (User.IsInRole("ClubAdmin") && currentUser.AdminClubs.Any(x => x.ClubId == Model.Club.Id && x.UserId == currentUser.Id)))
+            {
+                @if (Model.Event.EventUsers.Count > 0)
+                {
+                    <table class="table table-hover border table-striped dataTable" id="my-events-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Име</th>
+                                <th scope="col">Имейл</th>
+                                <th scope="col">Роля</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 1;
+                            }
+                            @foreach (var user in Model.Event.EventUsers)
+                            {
+                                <tr>
+                                    <td scope="row">@counter</td>
+                                    @{ counter++; }
+                                    <td scope="col">@user.User.FirstName @user.User.LastName</td>
+                                    <td scope="col">@user.User.Email</td>
+                                    <td scope="col">@user.Role</td>
+                                    <td scope="col"><a href="/Event/ExitFromEvent/@Model.Event.Id/@user.User.Id?returnUrl=/Event/Details/@Model.Event.Id?clubId=@Model.Club.Id" class="btn btn-danger btn-sm px-3" data-toggle="tooltip" data-placement="top" title="Отпиши @user.User.FirstName"><i class="fas fa-trash-alt fa-lg"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h4 class="text-center my-3 text-primary border py-4 border-left-0 border-right-0">
+                        Все още няма записани участници!
+                    </h4>
+                }
+            }
+        </div>
+    </div>
+</div>
+<script src="~/js/csv-export.js"></script>
+<script src="~/js/pdf-export.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>

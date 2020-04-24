@@ -5,6 +5,6 @@
 
     public class IndexPageBindingModel
     {
-        public List<Post> Posts { get; set; } = new List<Post>();
+        public IList<Post> Posts { get; set; } = new List<Post>();
     }
 }
