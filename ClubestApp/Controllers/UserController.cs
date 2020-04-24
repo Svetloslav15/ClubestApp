@@ -23,7 +23,7 @@
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserService userService;
         private readonly EventService eventService;
-        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1586440816/ClubestPics/24029_llq8xg.png";
 
         public UserController(
             UserManager<User> userManager,
