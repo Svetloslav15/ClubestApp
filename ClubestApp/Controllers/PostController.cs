@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels.Posts;
     using ClubestApp.Services;
@@ -56,7 +57,7 @@
             return this.Redirect($"/Club/Details/{clubId}#{id}");
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> Delete(string id, [FromQuery] string clubId)
         {
             await this.postService.DeletePost(id);

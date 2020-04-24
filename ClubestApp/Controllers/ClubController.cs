@@ -42,7 +42,7 @@
         }
         
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> AddClub()
         {
             AddClubInputModel model = new AddClubInputModel();
@@ -51,7 +51,7 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> Delete(string id)
         {
             await this.clubService.DeleteClubById(id);
@@ -59,7 +59,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> AddClub(AddClubInputModel model)
         {
             if (ModelState.IsValid)
@@ -112,7 +112,7 @@
             return this.View(model);
         }
        
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> GetAllRequestNewClub()
         {
             List<RequestNewClub> requests = await this.clubService.GetRequestsNewClubAsync();
@@ -191,7 +191,7 @@
             return this.View(bindingModel);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> JoinRequests(string id)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -215,7 +215,7 @@
             return this.View(requestsBindingModel);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> ArchivedJoinRequests(string id)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -249,7 +249,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> ApproveJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
             await this.requestService.ApproveJoinClubRequest(model.RequestApproveBindingModel.RequestId, model.RequestApproveBindingModel.RequestType);
@@ -257,7 +257,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> DeleteJoinRequestClub(ClubDetailsRequestsBindingModel model)
         {
             await this.requestService.DeleteJoinClubRequest(model.RequestApproveBindingModel.RequestId);
@@ -270,7 +270,7 @@
             return View(model);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> Edit(string id)
         {
             EditClubBindingModel model = await this.clubService.GetEditClubModel(id);
@@ -279,7 +279,7 @@
         }
 
         [HttpPost]
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> Edit(EditClubInputModel model, string id)
         {
             bool isFileValid = true;
@@ -319,7 +319,7 @@
             return this.View(bindingModel);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> PollsAdministration(string id)
         {
             AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id);
@@ -327,7 +327,7 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> AddClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);
@@ -337,7 +337,7 @@
             return this.Redirect($"/Club/ListMembers/{club.Id}");
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> RemoveClubAdmin(string id, string secondId)
         {
             Club club = await this.clubService.GetClubById(id);

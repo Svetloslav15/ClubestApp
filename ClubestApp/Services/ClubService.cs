@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Services
 {
+    using ClubestApp.Common;
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
@@ -111,7 +112,7 @@
             };
 
             var result = await dbContext.ClubAdmins.AddAsync(newClubAdmin);
-            await this.userManager.AddToRoleAsync(user, "ClubAdmin");
+            await this.userManager.AddToRoleAsync(user, UserRoles.ClubAdmin);
             await this.dbContext.SaveChangesAsync();
             return result.Entity;
         }
@@ -126,7 +127,7 @@
                 this.dbContext.ClubAdmins.Remove(clubAdmin);
             }
 
-            await this.userManager.RemoveFromRoleAsync(user, "ClubAdmin");
+            await this.userManager.RemoveFromRoleAsync(user, UserRoles.ClubAdmin);
             await this.dbContext.SaveChangesAsync();
             return clubAdmin;
         }

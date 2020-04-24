@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.BindingModels.Events;
     using ClubestApp.Services;
@@ -129,7 +130,7 @@
             return this.View(model);
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
         {
             await this.eventService.DeleteEvent(id);
