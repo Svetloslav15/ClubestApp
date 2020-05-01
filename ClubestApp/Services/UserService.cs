@@ -24,7 +24,7 @@
         private readonly SignInManager<User> signInManager;
         private readonly Cloudinary cloudinary;
         private readonly IConfiguration configuration;
-        private const string defaultPictureUrl = @"https://res.cloudinary.com/dzivpr6fj/image/upload/v1580902697/ClubestPics/24029_llq8xg.png";
+        private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1586440816/ClubestPics/24029_llq8xg.png";
         private readonly ApplicationDbContext dbContext;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
 
