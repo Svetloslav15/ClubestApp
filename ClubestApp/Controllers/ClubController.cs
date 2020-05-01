@@ -144,7 +144,7 @@
             JoinClubRequest request = await this.requestService.CreateJoinRequestClub(id, user);
             if (request != null)
             {
-                await this.notificationService.CreateNotification($"Успешно подадохте заявка за присъединяване към клуб - {request.Club.Name}. Вашата заявка очаква удобрение от администратор.", $"/Club/Details/{id}", request.User.Id);
+                await this.notificationService.CreateNotification($"Успешно подадохте заявка за присъединяване към клуб - {request.Club.Name}. Вашата заявка очаква одобрение от администратор.", $"/Club/Details/{id}", request.User.Id);
             }
             return this.Redirect($"/Club/Details/{id}");
         }
