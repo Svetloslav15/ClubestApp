@@ -9,6 +9,9 @@
     public class EmailService
     {
         private IConfiguration configuration;
+        private readonly string adminEmail = "admin@novoselski.net";
+        private readonly string mailTitle = "Clubest";
+
         public EmailService(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -19,7 +22,7 @@
             MailMessage mailMsg = new MailMessage();
 
             mailMsg.To.Add(new MailAddress(receiver.Email, receiver.FirstName + " " + receiver.LastName));
-            mailMsg.From = new MailAddress("admin@novoselski.net", "Clubest");
+            mailMsg.From = new MailAddress(this.adminEmail, mailTitle);
 
             mailMsg.Subject = subject;
             string text = mailDescription;
