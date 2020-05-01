@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class PostController : Controller
@@ -40,21 +41,31 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Like(string id, [FromQuery] string clubId)
+        public async Task<IActionResult> Like(string id)
         {
             User user = await this.userManager.GetUserAsync(User);
-            await this.postService.LikePost(id, user);
+            var post = await this.postService.LikePost(id, user);
 
-            return this.Redirect($"/Club/Details/{clubId}#{id}");
+            var list = new List<int>()
+            { 
+                post.UserPostLikes.Count,
+                post.UserPostDislikes.Count 
+            };
+            return Ok(list);
         }
 
         [Authorize]
-        public async Task<IActionResult> Dislike(string id, [FromQuery] string clubId)
+        public async Task<IActionResult> Dislike(string id)
         {
             User user = await this.userManager.GetUserAsync(User);
-            await this.postService.DislikePost(id, user);
+            var post = await this.postService.DislikePost(id, user);
 
-            return this.Redirect($"/Club/Details/{clubId}#{id}");
+            var list = new List<int>()
+            {
+                post.UserPostLikes.Count,
+                post.UserPostDislikes.Count
+            };
+            return Ok(list);
         }
 
         [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
