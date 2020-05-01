@@ -9,9 +9,9 @@
 
         public string ClubPriceType { get; set; }
 
-        public List<Poll> ActivePolls { get; set; }
+        public List<Poll> Polls { get; set; }
 
-        public List<Poll> NonActivePolls { get; set; }
+        public bool Expired { get; set; }
 
         public IList<Message> Messages { get; set; }
     }

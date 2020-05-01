@@ -320,9 +320,9 @@
         }
 
         [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
-        public async Task<IActionResult> PollsAdministration(string id)
+        public async Task<IActionResult> PollsAdministration(string id, bool expired = false)
         {
-            AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id);
+            AdministrationPollsBindingModel model = await this.pollService.GetAdministrationBindingModel(id, expired);
 
             return this.View(model);
         }
