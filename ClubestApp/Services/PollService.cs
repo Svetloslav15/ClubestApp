@@ -33,7 +33,7 @@ namespace ClubestApp.Services
                 currentPoll = await this.dbContext
                     .Polls
                     .FirstOrDefaultAsync(x => x.Id == pollId);
-                if (option != null && currentPoll.PollVotedUsers.Any(x => x.UserId == userId) == false)
+                if (option != null && (currentPoll.PollVotedUsers.Any(x => x.UserId == userId) == false || currentPoll.IsMultichoice == true))
                 {
                     option.VotesCount++;
                     currentPoll.PollVotedUsers.Add(new PollVotedUsers
@@ -46,7 +46,6 @@ namespace ClubestApp.Services
 
                     await this.dbContext.SaveChangesAsync();
                 }
-
             }
 
             return currentPoll;
@@ -135,7 +134,7 @@ namespace ClubestApp.Services
             return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
         }
 
-        public async Task<AdministrationPollsBindingModel> GetAdministrationBindingModel(string clubId)
+        public async Task<AdministrationPollsBindingModel> GetAdministrationBindingModel(string clubId, bool expired)
         {
             Club club = await this.dbContext
                 .Clubs
@@ -145,21 +144,17 @@ namespace ClubestApp.Services
             {
                 Club = club,
                 ClubPriceType = club.PriceType.ToString(),
-                ActivePolls = this.dbContext
+                Polls = this.dbContext
                               .Polls
-                              .Where(x => this.IsPollValid(x.ExpiredDate) == true && x.ClubId == clubId && !x.IsDeleted)
-                              .Include(x => x.Options)
-                              .ToList(),
-                NonActivePolls = this.dbContext
-                              .Polls
-                              .Where(x => this.IsPollValid(x.ExpiredDate) == false && x.ClubId == clubId && !x.IsDeleted)
+                              .Where(x => this.IsPollValid(x.ExpiredDate) != expired && x.ClubId == clubId && !x.IsDeleted)
                               .Include(x => x.Options)
                               .ToList(),
                 Messages = await this.dbContext
                 .Messages
                 .Include(x => x.Sender)
                 .Where(x => x.ClubId == clubId)
-                .ToListAsync()
+                .ToListAsync(),
+                Expired = expired,
         };
 
             return result;
