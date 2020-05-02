@@ -214,8 +214,6 @@ namespace ClubestApp.Migrations
 
                     b.Property<DateTime>("ExpiredDate");
 
-                    b.Property<string>("Interests");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("IsMultichoice");
@@ -225,19 +223,6 @@ namespace ClubestApp.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("Polls");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.PollUser", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("PollId");
-
-                    b.HasKey("UserId", "PollId");
-
-                    b.HasIndex("PollId");
-
-                    b.ToTable("PollUser");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.PollVotedUsers", b =>
@@ -639,19 +624,6 @@ namespace ClubestApp.Migrations
                     b.HasOne("ClubestApp.Data.Models.Club", "Club")
                         .WithMany("Polls")
                         .HasForeignKey("ClubId");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.PollUser", b =>
-                {
-                    b.HasOne("ClubestApp.Data.Models.Poll", "Poll")
-                        .WithMany("PollUsers")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ClubestApp.Data.Models.User", "User")
-                        .WithMany("UserPolls")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.PollVotedUsers", b =>

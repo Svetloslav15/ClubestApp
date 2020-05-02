@@ -25,8 +25,6 @@
 
         public DbSet<Poll> Polls { get; set; }
 
-        public DbSet<PollUser> PollUser { get; set; }
-
         public DbSet<PollVotedUsers> PollVotedUsers { get; set; }
 
         public DbSet<Post> Posts { get; set; }
@@ -137,21 +135,6 @@
                 .HasOne(ca => ca.Club)
                 .WithMany(ca => ca.ClubAdmins)
                 .HasForeignKey(ca => ca.ClubId);
-            /**/
-
-            //Define mapping table for User and Poll
-            builder.Entity<PollUser>()
-            .HasKey(uc => new { uc.UserId, uc.PollId });
-
-            builder.Entity<PollUser>()
-                .HasOne(pu => pu.User)
-                .WithMany(pu => pu.UserPolls)
-                .HasForeignKey(pu => pu.UserId);
-
-            builder.Entity<PollUser>()
-                .HasOne(pu => pu.Poll)
-                .WithMany(pu => pu.PollUsers)
-                .HasForeignKey(pu => pu.PollId);
             /**/
 
             //Define mapping table for Voted Users and Polls

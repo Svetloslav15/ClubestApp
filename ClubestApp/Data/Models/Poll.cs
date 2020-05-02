@@ -9,7 +9,6 @@
         public Poll()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.PollUsers = new HashSet<PollUser>();
             this.PollVotedUsers = new HashSet<PollVotedUsers>();
             this.Options = new HashSet<Option>();
         }
@@ -18,10 +17,6 @@
         public string Id { get; set; }
 
         public string Content { get; set; }
-
-        public ICollection<PollUser> PollUsers { get; set; }
-
-        public string Interests { get; set; }
 
         public string ClubId { get; set; }
 

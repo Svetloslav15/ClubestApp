@@ -15,7 +15,6 @@
             this.RequestNewClubs = new HashSet<RequestNewClub>();
             this.UserCommentLikes = new HashSet<UserCommentLikes>();
             this.UserCommentDislikes = new HashSet<UserCommentDislikes>();
-            this.UserPolls = new HashSet<PollUser>();
             this.UserVotedPolls = new HashSet<PollVotedUsers>();
             this.UserPostLikes = new HashSet<UserPostLikes>();
             this.UserPostDislikes = new HashSet<UserPostDislikes>();
@@ -39,8 +38,6 @@
         public ICollection<ClubAdmin> AdminClubs { get; set; }
 
         public ICollection<Notification> Notifications { get; set; }
-
-        public ICollection<PollUser> UserPolls { get; set; }
 
         public ICollection<PollVotedUsers> UserVotedPolls { get; set; }
 

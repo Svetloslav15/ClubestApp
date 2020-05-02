@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Migrations
+namespace ClubestApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200219060538_AddFieldToPoll")]
-    partial class AddFieldToPoll
+    [Migration("20200502054741_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,6 +116,8 @@ namespace ClubestApp.Migrations
 
                     b.Property<string>("EventId");
 
+                    b.Property<string>("Role");
+
                     b.HasKey("UserId", "EventId");
 
                     b.HasIndex("EventId");
@@ -141,6 +143,28 @@ namespace ClubestApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("JoinClubRequests");
+                });
+
+            modelBuilder.Entity("ClubestApp.Data.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClubId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("SenderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClubId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Notification", b =>
@@ -192,7 +216,7 @@ namespace ClubestApp.Migrations
 
                     b.Property<DateTime>("ExpiredDate");
 
-                    b.Property<string>("Interests");
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("IsMultichoice");
 
@@ -201,19 +225,6 @@ namespace ClubestApp.Migrations
                     b.HasIndex("ClubId");
 
                     b.ToTable("Polls");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.PollUser", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("PollId");
-
-                    b.HasKey("UserId", "PollId");
-
-                    b.HasIndex("PollId");
-
-                    b.ToTable("PollUser");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.PollVotedUsers", b =>
@@ -242,6 +253,8 @@ namespace ClubestApp.Migrations
 
                     b.Property<DateTime>("DateTime");
 
+                    b.Property<string>("FileUrlOrLink");
+
                     b.Property<int>("PostType");
 
                     b.HasKey("Id");
@@ -260,7 +273,21 @@ namespace ClubestApp.Migrations
 
                     b.Property<string>("AuthorId");
 
-                    b.Property<string>("Content");
+                    b.Property<string>("Description");
+
+                    b.Property<decimal>("Fee");
+
+                    b.Property<string>("Interests");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("PictureUrl");
+
+                    b.Property<int>("PriceType");
+
+                    b.Property<string>("Town");
 
                     b.HasKey("Id");
 
@@ -561,11 +588,23 @@ namespace ClubestApp.Migrations
                 {
                     b.HasOne("ClubestApp.Data.Models.Club", "Club")
                         .WithMany("JoinClubRequests")
-                        .HasForeignKey("ClubId");
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ClubestApp.Data.Models.User", "User")
                         .WithMany("JoinClubRequests")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ClubestApp.Data.Models.Message", b =>
+                {
+                    b.HasOne("ClubestApp.Data.Models.Club", "Club")
+                        .WithMany("Messages")
+                        .HasForeignKey("ClubId");
+
+                    b.HasOne("ClubestApp.Data.Models.User", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Notification", b =>
@@ -587,19 +626,6 @@ namespace ClubestApp.Migrations
                     b.HasOne("ClubestApp.Data.Models.Club", "Club")
                         .WithMany("Polls")
                         .HasForeignKey("ClubId");
-                });
-
-            modelBuilder.Entity("ClubestApp.Data.Models.PollUser", b =>
-                {
-                    b.HasOne("ClubestApp.Data.Models.Poll", "Poll")
-                        .WithMany("PollUsers")
-                        .HasForeignKey("PollId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ClubestApp.Data.Models.User", "User")
-                        .WithMany("UserPolls")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.PollVotedUsers", b =>

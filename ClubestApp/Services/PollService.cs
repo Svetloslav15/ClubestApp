@@ -22,7 +22,9 @@ namespace ClubestApp.Services
         public async Task<Poll> AddVote(List<string> votes, string pollId, string userId)
         {
             User user = await this.dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            Poll currentPoll = null;
+            Poll currentPoll = await this.dbContext
+                    .Polls
+                    .FirstOrDefaultAsync(x => x.Id == pollId);
 
             foreach (var vote in votes)
             {
@@ -30,22 +32,25 @@ namespace ClubestApp.Services
                     .Options
                     .FirstOrDefaultAsync(x => x.Content == vote && x.PollId == pollId);
 
-                currentPoll = await this.dbContext
-                    .Polls
-                    .FirstOrDefaultAsync(x => x.Id == pollId);
-                if (option != null && (currentPoll.PollVotedUsers.Any(x => x.UserId == userId) == false || currentPoll.IsMultichoice == true))
+                if (option != null)
                 {
                     option.VotesCount++;
-                    currentPoll.PollVotedUsers.Add(new PollVotedUsers
-                    {
-                        User = user,
-                        UserId = userId,
-                        PollId = pollId,
-                        Poll = currentPoll
-                    });
 
                     await this.dbContext.SaveChangesAsync();
                 }
+            }
+
+            if (votes.Any(x => this.dbContext.Options.Any(y => y.Content == x && y.PollId == pollId)))
+            {
+                currentPoll.PollVotedUsers.Add(new PollVotedUsers
+                {
+                    User = user,
+                    UserId = userId,
+                    PollId = pollId,
+                    Poll = currentPoll
+                });
+
+                await this.dbContext.SaveChangesAsync();
             }
 
             return currentPoll;
