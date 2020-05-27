@@ -1,7 +1,13 @@
 <!-- PROJECT LOGO -->
-![Clubest Image](https://i.imgur.com/3AQrPVs.png)
- # Clubest
- >  Social media for extracurricular activities
+<p align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="https://i.imgur.com/3AQrPVs.png" alt="Clubest Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Clubest</h3>
+
+</p>
+   Social media for extracurricular activities
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
