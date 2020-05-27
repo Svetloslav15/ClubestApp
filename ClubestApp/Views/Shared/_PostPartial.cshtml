@@ -34,12 +34,12 @@
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 }
-                <a href="/Post/Like/@post.Id?clubId=@post.ClubId" class="mr-2">
-                    <span class="h3">@post.UserPostLikes.Count</span>
+                <a onClick="likePost('@post.Id')" class="mr-2">
+                    <span class="h3" id="likes-count-@post.Id">@post.UserPostLikes.Count</span>
                     <i class="far fa-thumbs-up fa-2x"></i>
                 </a>
-                <a href="/Post/Dislike/@post.Id?clubId=@post.ClubId" class="ml-2">
-                    <span class="h3">@post.UserPostDislikes.Count</span>
+                <a onClick="dislikePost('@post.Id')" class="ml-2">
+                    <span class="h3" id="dislikes-count-@post.Id">@post.UserPostDislikes.Count</span>
                     <i class="far fa-thumbs-down fa-2x"></i>
                 </a>
             </span>
@@ -80,3 +80,27 @@
         <!-- /Load Comments-->
     </div>
 }
+<script>
+    function likePost(postId) {
+        const url = `/Post/Like/${postId}`;
+        $.ajax({
+            url,
+            type: "GET",
+            dataType: 'text'
+        }).then((data) => {
+            $(`#likes-count-${postId}`).text(data[1]);
+            $(`#dislikes-count-${postId}`).text(data[3]);
+        }).catch(console.warn)
+    }
+    function dislikePost(postId) {
+        const url = `/Post/Dislike/${postId}`;
+        $.ajax({
+            url,
+            type: "GET",
+            dataType: 'text'
+        }).then((data) => {
+            $(`#likes-count-${postId}`).text(data[1]);
+            $(`#dislikes-count-${postId}`).text(data[3]);
+        }).catch(console.warn)
+    }
+</script>

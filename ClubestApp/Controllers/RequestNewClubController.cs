@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Data.Models;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@
             return View(request);
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> Delete(string id)
         {
             await this.requestNewClubService.Delete(id);
@@ -29,7 +30,7 @@
 
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public async Task<IActionResult> Approve(string id)
         {
             await this.requestNewClubService.ApproveAndMakeClub(id);

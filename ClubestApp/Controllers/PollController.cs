@@ -1,5 +1,6 @@
 ﻿namespace ClubestApp.Controllers
 {
+    using ClubestApp.Common;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -43,7 +44,7 @@
             return this.Redirect($"/Club/Polls/{model.ClubId}");
         }
 
-        [Authorize(Roles = "SystemAdmin, ClubAdmin")]
+        [Authorize(Roles = UserRoles.SystemOrClubAdmin)]
         public async Task<IActionResult> Delete([FromQuery] string clubId, string id)
         {
             var deletedEntity = await this.pollService.DeletePoll(id);

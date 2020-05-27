@@ -11,6 +11,7 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
     using ClubestApp.Models.BindingModels.Home;
+    using ClubestApp.Common;
 
     public class HomeController : Controller
     {
@@ -65,7 +66,7 @@
             return this.View();
         }
 
-        [Authorize(Roles = "SystemAdmin")]
+        [Authorize(Roles = UserRoles.SystemAdmin)]
         public IActionResult Administration()
         {
             return this.Redirect("/Club/GetAllRequestNewClub");
