@@ -2,7 +2,6 @@
 {
     using ClubestApp.Common;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Internal;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 

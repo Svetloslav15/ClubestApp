@@ -3,14 +3,12 @@
     using ClubestApp.Data;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
-    using Moq;
     using Xunit;
     using System;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
     using ClubestApp.Data.Models;
     using Microsoft.Extensions.Configuration;
-    using Xunit.Ioc.Autofac;
     using Microsoft.Extensions.DependencyInjection;
 
     public class UserServiceTests : IClassFixture<DbFixture>
@@ -29,8 +27,10 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
             this.db = new ApplicationDbContext(options);
-            var service = new UserService(this.db, this.serviceProvider.GetService<SignInManager<User>>(),
-                this.serviceProvider.GetService<IConfiguration>());
+            var service = new UserService(this.db, 
+                    this.serviceProvider.GetService<SignInManager<User>>(),
+                    this.serviceProvider.GetService<IConfiguration>()
+                );
 
             return service;
         }
