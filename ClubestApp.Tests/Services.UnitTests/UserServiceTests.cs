@@ -25,8 +25,10 @@
         public UserService Before()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
             this.db = new ApplicationDbContext(options);
+
             var service = new UserService(this.db, 
                     this.serviceProvider.GetService<SignInManager<User>>(),
                     this.serviceProvider.GetService<IConfiguration>()

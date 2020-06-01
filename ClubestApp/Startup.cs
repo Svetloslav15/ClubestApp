@@ -15,7 +15,6 @@
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
     using ClubestApp.Hubs;
-    using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
     {

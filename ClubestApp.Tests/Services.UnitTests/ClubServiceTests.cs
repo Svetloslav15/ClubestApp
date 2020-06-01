@@ -2,7 +2,6 @@
 {
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
-    using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Identity;
@@ -30,12 +29,7 @@
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new ApplicationDbContext(options);
-
-            this.clubService = new ClubService(this.dbContext,
-                this.serviceProvider.GetService<UserService>(),
-                this.serviceProvider.GetService<CloudinaryService>(),
-                this.serviceProvider.GetService<UserManager<User>>()
-            );
+            this.clubService = new ClubService(this.dbContext, null, null, this.serviceProvider.GetService<UserManager<User>>());
         }
 
         [Fact]
@@ -63,31 +57,36 @@
             {
                 FirstName = "Test"
             };
-            this.dbContext.Add(user);
-            this.dbContext.SaveChanges();
+            await this.dbContext.AddAsync(user);
+            await this.dbContext.SaveChangesAsync();
 
-            var club = await this.clubService.AddClub(clubInputModel, user.Id);
-
-            Assert.NotNull(club);
+            var s = await this.clubService.GetRequestsNewClubAsync();
+            //Club club = await this.clubService.AddClub(clubInputModel, user.Id);
+            Assert.NotNull(s);
         }
 
         [Fact]
-        public async Task AddClubShouldReturnNullWithNoEmptyData()
+        public async Task AddRequestNewClubShouldAddRequest()
         {
             this.Before();
 
-            AddClubInputModel clubInputModel = new AddClubInputModel();
-
-            User user = new User()
+            AddClubInputModel inputModel = new AddClubInputModel()
             {
-                FirstName = "Test"
+                Name = "test",
+                Fee = 30,
+                IsPublic = true,
+                PriceType = "2",
+                Description = "fsmdklvjdfvbjdfkvbnjkdbnvjkefrnvejknvbioenvdfrovgejv",
+                Town = "Sofia",
+                Interests = new List<string>()
+                {
+                    "sdfscfs", "sdvs", "sdcscs"
+                }
             };
-            this.dbContext.Add(user);
-            this.dbContext.SaveChanges();
 
-            var club = await this.clubService.AddClub(clubInputModel, user.Id);
+            RequestNewClub request = await this.clubService.AddRequestNewClub(inputModel, null);
 
-            Assert.Null(club);
+            Assert.NotNull(request);
         }
     }
 }

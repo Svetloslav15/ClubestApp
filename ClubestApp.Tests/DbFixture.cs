@@ -1,30 +1,33 @@
 ﻿namespace ClubestApp.Tests
 {
     using ClubestApp.Data;
+    using ClubestApp.Services;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    
     using System;
 
     public class DbFixture
     {
+        public ServiceProvider ServiceProvider { get; private set; }
+
         public DbFixture()
         {
-            var serviceCollection = new ServiceCollection();
+            IServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection
                 .AddDbContext<ApplicationDbContext>(options =>
                         options.UseInMemoryDatabase(Guid.NewGuid().ToString()),
                     ServiceLifetime.Transient);
 
-            var builder = new ConfigurationBuilder()
+            IConfigurationBuilder builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Development.json");
 
-            var configuration = builder.Build();
+            IConfiguration configuration = builder.Build();
             serviceCollection.AddScoped<IConfiguration>(_ => configuration);
+            serviceCollection.AddScoped<ClubService>();
 
             this.ServiceProvider = serviceCollection.BuildServiceProvider();
         }
-
-        public ServiceProvider ServiceProvider { get; private set; }
     }
 }
