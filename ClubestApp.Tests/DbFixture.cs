@@ -2,6 +2,7 @@
 {
     using ClubestApp.Data;
     using ClubestApp.Services;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,7 @@
 
             IConfiguration configuration = builder.Build();
             serviceCollection.AddScoped<IConfiguration>(_ => configuration);
-            serviceCollection.AddScoped<ClubService>();
+            serviceCollection.AddTransient<ClubService>();
 
             this.ServiceProvider = serviceCollection.BuildServiceProvider();
         }

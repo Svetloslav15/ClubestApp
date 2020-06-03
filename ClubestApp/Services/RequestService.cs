@@ -3,12 +3,15 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
+    using ClubestApp.Services.Contracts;
+    
     using Microsoft.EntityFrameworkCore;
+
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class RequestService
+    public class RequestService : IRequestService
     {
         private readonly ApplicationDbContext dbContext;
         private readonly ClubService clubService;
@@ -85,7 +88,7 @@
 
             return request;
         }
-
+        
         public async Task<JoinClubRequest> DeleteJoinClubRequest(string requestId)
         {
             JoinClubRequest request = await this.dbContext.JoinClubRequests

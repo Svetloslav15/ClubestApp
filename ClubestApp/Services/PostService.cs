@@ -4,45 +4,28 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.InputModels.Posts;
+    using ClubestApp.Services.Contracts;
+
     using Microsoft.EntityFrameworkCore;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class PostService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly CloudinaryService cloudinaryService;
-        private readonly UserService userService;
-        private readonly ClubService clubService;
-        private readonly NotificationService notificationService;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly INotificationService notificationService;
 
         public PostService(ApplicationDbContext dbContext,
-            CloudinaryService cloudinaryService,
-            UserService userService,
-            NotificationService notificationService,
-            ClubService clubService)
+            ICloudinaryService cloudinaryService,
+            INotificationService notificationService)
         {
             this.dbContext = dbContext;
             this.cloudinaryService = cloudinaryService;
-            this.userService = userService;
             this.notificationService = notificationService;
-            this.clubService = clubService;
-        }
-
-        private bool CheckIsLink(string content)
-        {
-            string pattern = "";
-            Regex regex = new Regex(pattern);
-
-            if (regex.IsMatch(content))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         public async Task<Post> GetPostById(string postId)

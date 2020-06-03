@@ -2,12 +2,15 @@
 {
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    using ClubestApp.Services.Contracts;
+    
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
+
     using System.IO;
     using System.Threading.Tasks;
 
-    public class CloudinaryService
+    public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary cloudinary;
         private readonly IConfiguration configuration;

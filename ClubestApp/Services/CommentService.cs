@@ -3,21 +3,20 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels.Comments;
+    using ClubestApp.Services.Contracts;
+
     using System;
     using System.Threading.Tasks;
 
-    public class CommentService
+    public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserService userService;
         private readonly PostService postService;
 
         public CommentService(ApplicationDbContext dbContext,
-            UserService userService,
             PostService postService)
         {
             this.dbContext = dbContext;
-            this.userService = userService;
             this.postService = postService;
         }
 

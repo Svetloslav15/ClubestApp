@@ -4,9 +4,12 @@
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
     using ClubestApp.Services;
+    using ClubestApp.Services.Contracts;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Moq;
+    
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -17,10 +20,14 @@
         private ServiceProvider serviceProvider;
         private ApplicationDbContext dbContext;
         private ClubService clubService;
+        private Mock<IUserService> userServiceMock;
+        private Mock<ICloudinaryService> cloudinaryServiceMock;
 
         public ClubServiceTests(DbFixture dbFixture)
         {
             this.serviceProvider = dbFixture.ServiceProvider;
+            this.userServiceMock = new Mock<IUserService>();
+            this.cloudinaryServiceMock = new Mock<ICloudinaryService>();
         }
 
         private void Before()
@@ -29,7 +36,11 @@
                 .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
             this.dbContext = new ApplicationDbContext(options);
-            this.clubService = new ClubService(this.dbContext, null, null, this.serviceProvider.GetService<UserManager<User>>());
+
+            this.clubService = new ClubService(this.dbContext,
+                this.userServiceMock.Object, 
+                this.cloudinaryServiceMock.Object, 
+                this.serviceProvider.GetService<UserManager<User>>());
         }
 
         [Fact]
@@ -60,9 +71,8 @@
             await this.dbContext.AddAsync(user);
             await this.dbContext.SaveChangesAsync();
 
-            var s = await this.clubService.GetRequestsNewClubAsync();
-            //Club club = await this.clubService.AddClub(clubInputModel, user.Id);
-            Assert.NotNull(s);
+            Club club = await this.clubService.AddClub(clubInputModel, user.Id);
+            Assert.NotNull(club);
         }
 
         [Fact]

@@ -5,21 +5,24 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Models.BindingModels.User;
+    using ClubestApp.Models.BindingModels;
+    using ClubestApp.Services.Contracts;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Newtonsoft.Json;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
-    using ClubestApp.Models.BindingModels.User;
-    using ClubestApp.Models.BindingModels;
+    using Newtonsoft.Json;
 
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly SignInManager<User> signInManager;
         private readonly Cloudinary cloudinary;

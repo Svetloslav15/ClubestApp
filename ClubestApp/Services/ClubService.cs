@@ -6,6 +6,7 @@
     using ClubestApp.Data.Models.Enums;
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Services.Contracts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -21,14 +22,15 @@
     public class ClubService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserService userService;
-        private readonly CloudinaryService cloudinaryService;
+        private readonly IUserService userService;
+        private readonly ICloudinaryService cloudinaryService;
         private readonly UserManager<User> userManager;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1583323870/ClubestPics/undraw_connection_b38q.png.png";
 
         public ClubService(ApplicationDbContext dbContext,
-                           UserService userService, CloudinaryService cloudinaryService,
+                           IUserService userService, 
+                           ICloudinaryService cloudinaryService,
                            UserManager<User> userManager)
         {
             this.dbContext = dbContext;

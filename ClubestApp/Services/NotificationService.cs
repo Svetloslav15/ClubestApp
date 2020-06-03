@@ -2,17 +2,19 @@
 {
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
+    using ClubestApp.Services.Contracts;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    public class NotificationService
+    
+    public class NotificationService : INotificationService
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserService userService;
+        private readonly IUserService userService;
 
         public NotificationService(ApplicationDbContext dbContext,
-            UserService userService)
+            IUserService userService)
         {
             this.dbContext = dbContext;
             this.userService = userService;

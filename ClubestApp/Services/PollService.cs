@@ -1,15 +1,17 @@
-﻿using ClubestApp.Data;
-using ClubestApp.Data.Models;
-using ClubestApp.Models.BindingModels;
-using ClubestApp.Models.InputModels;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ClubestApp.Services
+﻿namespace ClubestApp.Services
 {
+    using ClubestApp.Data;
+    using ClubestApp.Data.Models;
+    using ClubestApp.Models.BindingModels;
+    using ClubestApp.Models.InputModels;
+
+    using Microsoft.EntityFrameworkCore;
+    
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class PollService
     {
         private readonly ApplicationDbContext dbContext;
@@ -129,11 +131,6 @@ namespace ClubestApp.Services
             return result;
         }
 
-        private bool IsPollValid(DateTime expiredDate)
-        {
-            return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
-        }
-
         public async Task<AdministrationPollsBindingModel> GetAdministrationBindingModel(string clubId, bool expired)
         {
             Club club = await this.dbContext
@@ -158,6 +155,11 @@ namespace ClubestApp.Services
         };
 
             return result;
+        }
+
+        private bool IsPollValid(DateTime expiredDate)
+        {
+            return expiredDate.Subtract(DateTime.UtcNow).Hours > 0;
         }
     }
 }
