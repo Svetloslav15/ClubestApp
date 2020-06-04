@@ -6,6 +6,7 @@
     using ClubestApp.Models.BindingModels;
     using ClubestApp.Models.BindingModels.User;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Models.InputModels.Users;
     using ClubestApp.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -249,6 +250,23 @@
             MyClubsViewModel model = await this.userService.GetUsersClubs(userId);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> ForgottenPassword()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgottenPassword(ForgottenPasswordInputModel inputModel)
+        {
+            if (ModelState.IsValid)
+            {
+                await this.userService.SendMailToUserForForgottenPassword(inputModel.Email);
+                return this.Redirect("/");
+            }
+
+            return this.Redirect("/login");
         }
     }
 }
