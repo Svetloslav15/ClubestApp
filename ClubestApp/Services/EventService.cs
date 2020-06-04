@@ -3,7 +3,9 @@
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels.Events;
+
     using Microsoft.EntityFrameworkCore;
+    
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,7 +19,8 @@
         private readonly NotificationService notificationService;
 
         public EventService(ApplicationDbContext dbContext,
-            UserService userService, EmailService emailService,
+            UserService userService, 
+            EmailService emailService,
             NotificationService notificationService)
         {
             this.dbContext = dbContext;

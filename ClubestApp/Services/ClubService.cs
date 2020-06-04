@@ -28,7 +28,8 @@
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1583323870/ClubestPics/undraw_connection_b38q.png.png";
 
         public ClubService(ApplicationDbContext dbContext,
-                           UserService userService, CloudinaryService cloudinaryService,
+                           UserService userService,
+                           CloudinaryService cloudinaryService,
                            UserManager<User> userManager)
         {
             this.dbContext = dbContext;

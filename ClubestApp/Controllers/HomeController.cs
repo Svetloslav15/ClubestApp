@@ -1,17 +1,15 @@
 ﻿namespace ClubestApp.Controllers
 {
-    using System.Diagnostics;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using ClubestApp.Models;
     using ClubestApp.Data.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authorization; 
     using System.Threading.Tasks;
-    using ClubestApp.Services;
     using System.Collections.Generic;
-    using Microsoft.AspNetCore.Authorization;
     using ClubestApp.Models.BindingModels.Home;
     using ClubestApp.Common;
+    using ClubestApp.Services;
 
     public class HomeController : Controller
     {
@@ -20,8 +18,10 @@
         private readonly UserService userService;
         private readonly PostService postService;
 
-        public HomeController(UserManager<User> userManager, ClubService clubService,
-            UserService userService, PostService postService)
+        public HomeController(UserManager<User> userManager,
+            ClubService clubService,
+            UserService userService, 
+            PostService postService)
         {
             this.userManager = userManager;
             this.userService = userService;

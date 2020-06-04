@@ -2,22 +2,27 @@
 {
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    
     using ClubestApp.Data;
     using ClubestApp.Data.Models;
     using ClubestApp.Models.InputModels;
+    using ClubestApp.Models.BindingModels.User;
+    using ClubestApp.Models.BindingModels;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
-    using Newtonsoft.Json;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.EntityFrameworkCore;
+
+    using Newtonsoft.Json;
+    
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
-    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
-    using ClubestApp.Models.BindingModels.User;
-    using ClubestApp.Models.BindingModels;
+
 
     public class UserService
     {
@@ -27,12 +32,15 @@
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1586440816/ClubestPics/24029_llq8xg.png";
         private readonly ApplicationDbContext dbContext;
         private readonly string interestsPath = $"{Directory.GetCurrentDirectory()}/Common/Json/Interests.json";
+        private readonly EmailService emailService;
 
         public UserService(ApplicationDbContext dbContext,
                            SignInManager<User> signInManager,
-                           IConfiguration configuration)
+                           IConfiguration configuration,
+                           EmailService emailService)
         {
             this.dbContext = dbContext;
+            this.emailService = emailService;
             this.signInManager = signInManager;
             this.configuration = configuration;
             this.cloudinary = new Cloudinary(
@@ -201,6 +209,18 @@
             };
 
             return result;
+        }
+
+        public async Task<User> SendMailToUserForForgottenPassword(string email)
+        {
+            User user = await this.dbContext.Users
+                 .FirstOrDefaultAsync(x => x.Email == email);
+            string mailContent = "Someone is trying to change your password, " +
+                "if that is you go to this link and change your password: http://clubest.net/forgotpass?id=" + "";
+
+            this.emailService.SendEmail(user, mailContent, "Clubest: Forgotten password");
+
+            return user;
         }
     }
 }

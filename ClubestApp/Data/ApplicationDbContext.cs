@@ -21,6 +21,8 @@
 
         public DbSet<Notification> Notifications { get; set; }
 
+        public DbSet<PasswordToken> PasswordTokens { get; set; }
+
         public DbSet<Option> Options { get; set; }
 
         public DbSet<Poll> Polls { get; set; }
@@ -101,6 +103,13 @@
                 .HasMany(post => post.Comments)
                 .WithOne(comment => comment.Post)
                 .HasForeignKey(comment => comment.PostId);
+            /**/
+
+            //Define 1-M relations for PasswordTokens
+            builder.Entity<PasswordToken>()
+                .HasOne(token => token.User)
+                .WithMany(user => user.PasswordTokens)
+                .HasForeignKey(token => token.UserId);
             /**/
 
             //Define 1-M realtions for JoinClubRequest

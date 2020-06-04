@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using ClubestApp.Data;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +14,7 @@
     using ClubestApp.Data.Seeding;
     using ClubestApp.Extensions;
     using ClubestApp.Hubs;
-    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.EntityFrameworkCore;
 
     public class Startup
     {

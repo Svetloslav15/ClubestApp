@@ -1,15 +1,15 @@
-﻿using ClubestApp.Data;
-using ClubestApp.Data.Models;
-using ClubestApp.Models.BindingModels;
-using ClubestApp.Models.InputModels;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ClubestApp.Services
+﻿namespace ClubestApp.Services
 {
+    using ClubestApp.Data;
+    using ClubestApp.Data.Models;
+    using ClubestApp.Models.BindingModels;
+    using ClubestApp.Models.InputModels;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class PollService
     {
         private readonly ApplicationDbContext dbContext;

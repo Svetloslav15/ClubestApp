@@ -18,7 +18,8 @@
         private readonly UserService userService;
 
         public EventController(ClubService clubService,
-            EventService eventService, UserService userService)
+            EventService eventService, 
+            UserService userService)
         {
             this.clubService = clubService;
             this.eventService = eventService;

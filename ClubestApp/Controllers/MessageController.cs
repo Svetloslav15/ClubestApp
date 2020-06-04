@@ -13,7 +13,8 @@
         private readonly MessageService messageService;
         private readonly UserService userService;
 
-        public MessageController(MessageService messageService, UserService userService)
+        public MessageController(MessageService messageService,
+            UserService userService)
         {
             this.messageService = messageService;
             this.userService = userService;
