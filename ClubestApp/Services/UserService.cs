@@ -26,7 +26,6 @@
 
     public class UserService
     {
-        private readonly SignInManager<User> signInManager;
         private readonly Cloudinary cloudinary;
         private readonly IConfiguration configuration;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1586440816/ClubestPics/24029_llq8xg.png";
@@ -35,13 +34,11 @@
         private readonly EmailService emailService;
 
         public UserService(ApplicationDbContext dbContext,
-                           SignInManager<User> signInManager,
                            IConfiguration configuration,
                            EmailService emailService)
         {
             this.dbContext = dbContext;
             this.emailService = emailService;
-            this.signInManager = signInManager;
             this.configuration = configuration;
             this.cloudinary = new Cloudinary(
                                         new Account(
@@ -63,6 +60,12 @@
                 .FirstOrDefaultAsync(user => user.Id == id);
 
             return userdb; 
+        }
+
+        public async Task<User> FindUserByEmail(string email)
+        {
+            return await this.dbContext.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> EditUser(EditProfileInputModel model)
@@ -211,12 +214,12 @@
             return result;
         }
 
-        public async Task<User> SendMailToUserForForgottenPassword(string email)
+        public async Task<User> SendMailToUserForForgottenPassword(string email, PasswordToken token)
         {
             User user = await this.dbContext.Users
                  .FirstOrDefaultAsync(x => x.Email == email);
             string mailContent = "Someone is trying to change your password, " +
-                "if that is you go to this link and change your password: http://clubest.net/forgotpass?id=" + "";
+                "if that is you go to this link and change your password: http://clubest.net/ChangeForgottenPassword?id=" + token.Id;
 
             this.emailService.SendEmail(user, mailContent, "Clubest: Forgotten password");
 

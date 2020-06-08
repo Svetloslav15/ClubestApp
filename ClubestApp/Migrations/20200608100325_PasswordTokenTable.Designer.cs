@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200301202538_ApplyChanges")]
-    partial class ApplyChanges
+    [Migration("20200608100325_PasswordTokenTable")]
+    partial class PasswordTokenTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -203,6 +203,25 @@ namespace ClubestApp.Data.Migrations
                     b.HasIndex("PollId");
 
                     b.ToTable("Options");
+                });
+
+            modelBuilder.Entity("ClubestApp.Data.Models.PasswordToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content")
+                        .IsRequired();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordTokens");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Poll", b =>
@@ -634,6 +653,13 @@ namespace ClubestApp.Data.Migrations
                     b.HasOne("ClubestApp.Data.Models.Poll", "Poll")
                         .WithMany("Options")
                         .HasForeignKey("PollId");
+                });
+
+            modelBuilder.Entity("ClubestApp.Data.Models.PasswordToken", b =>
+                {
+                    b.HasOne("ClubestApp.Data.Models.User", "User")
+                        .WithMany("PasswordTokens")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ClubestApp.Data.Models.Poll", b =>

@@ -25,6 +25,7 @@
         private readonly ILogger<RegisterModel> _logger;
         private readonly UserService userService;
         private readonly EventService eventService;
+        private readonly PasswordTokenService passwordTokenService;
         private const string defaultPictureUrl = @"https://res.cloudinary.com/dp1c8zoit/image/upload/v1586440816/ClubestPics/24029_llq8xg.png";
 
         public UserController(
@@ -32,13 +33,15 @@
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             UserService userService,
-            EventService eventService)
+            EventService eventService,
+            PasswordTokenService passwordTokenService)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._logger = logger;
             this.userService = userService;
             this.eventService = eventService;
+            this.passwordTokenService = passwordTokenService;
         }
 
         [Authorize]
@@ -113,6 +116,34 @@
                 }
             }
             return this.View("ChangePassword");
+        }
+
+        public async Task<IActionResult> ChangeForgottenPassword([FromQuery] string id)
+        {
+            ViewData["TokenId"] = id;
+
+            return this.View("ForgottenPassChangePassword");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeForgottenPassword(NewPasswordInputModel inputModel)
+        {
+            if (ModelState.IsValid)
+            {
+                PasswordToken token = await this.passwordTokenService.FindById(inputModel.PasswordTokenId);
+
+                if (inputModel.Password == inputModel.ConfirmPassword)
+                {
+                    string resetToken = await this._userManager.GeneratePasswordResetTokenAsync(token.User);
+                    await this._userManager.ResetPasswordAsync(token.User, resetToken, inputModel.Password);
+
+                    return this.Redirect("/");
+                }
+
+                return this.Redirect($"/ChangeForgottenPassword?id={inputModel.PasswordTokenId}");
+            }
+
+            return this.Redirect("/");
         }
 
         [HttpPost]
@@ -260,13 +291,21 @@
         [HttpPost]
         public async Task<IActionResult> ForgottenPassword(ForgottenPasswordInputModel inputModel)
         {
+            string redirectUrl = "/login";
             if (ModelState.IsValid)
             {
-                await this.userService.SendMailToUserForForgottenPassword(inputModel.Email);
-                return this.Redirect("/");
+                User user = await this.userService.FindUserByEmail(inputModel.Email);
+                if (user != null)
+                {
+                    PasswordToken token = await this.passwordTokenService.GeneratePasswordToken(user);
+                    await this.userService.SendMailToUserForForgottenPassword(inputModel.Email, token);
+                    return this.Redirect("/");
+                }
+
+                redirectUrl = "/login";
             }
 
-            return this.Redirect("/login");
+            return this.Redirect(redirectUrl);
         }
     }
 }

@@ -47,6 +47,7 @@
 
         public DbSet<JoinClubRequest> JoinClubRequests { get; set; }
 
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

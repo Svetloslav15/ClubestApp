@@ -13,9 +13,6 @@
         [Key]
         public string Id { get; set; }
         
-        [Required]
-        public string Content { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
         public string UserId { get; set; }

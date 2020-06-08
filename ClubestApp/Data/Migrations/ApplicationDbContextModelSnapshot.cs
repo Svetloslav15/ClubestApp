@@ -208,9 +208,6 @@ namespace ClubestApp.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Content")
-                        .IsRequired();
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("UserId");

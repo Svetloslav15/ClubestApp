@@ -66,6 +66,7 @@
             services.AddTransient<RequestNewClubService>();
             services.AddTransient<EventService>();
             services.AddTransient<MessageService>();
+            services.AddTransient<PasswordTokenService>();
 
             services.AddMvc(options =>
             {

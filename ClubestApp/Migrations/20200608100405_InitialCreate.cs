@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
-    public partial class ApplyChanges : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

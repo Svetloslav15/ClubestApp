@@ -2,22 +2,22 @@
 
 namespace ClubestApp.Migrations
 {
-    public partial class RemoveIsValid : Migration
+    public partial class PasseordTokenTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsValid",
-                table: "Polls");
+                name: "Content",
+                table: "PasswordTokens");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsValid",
-                table: "Polls",
+            migrationBuilder.AddColumn<string>(
+                name: "Content",
+                table: "PasswordTokens",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: "");
         }
     }
 }

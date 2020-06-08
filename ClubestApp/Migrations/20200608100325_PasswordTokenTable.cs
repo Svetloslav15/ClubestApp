@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ClubestApp.Data.Migrations
+namespace ClubestApp.Migrations
 {
-    public partial class _001 : Migration
+    public partial class PasswordTokenTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
