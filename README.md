@@ -1,69 +1,97 @@
- ![Clubest Image](https://i.imgur.com/XPIMRxc.png)
- # Clubest
- >  Social media for extracurricular activities
+<p align="center">
+  <a href="" rel="noopener">
+ <img src="https://i.imgur.com/XPIMRxc.png" alt="Clubest logo"></a>
+</p>
+<h3 align="center">Clubest</h3>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<div align="center">
 
-![Clubest Image](https://i.imgur.com/Rvs2wNz.png)
+  [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
+  [![GitHub Issues](https://img.shields.io/github/issues/Svetloslav15/Clubest)](https://github.com/Svetloslav15/Clubest/issues)
+  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Svetloslav15/Clubest.svg)](https://github.com/Svetloslav15/Clubest/pulls)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
+</div>
 
-### Built With
-The technologies we used to built the app are:
-* [Asp .Net Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2)
-* [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019)
-* [MDBootstrap](https://mdbootstrap.com/docs)
-* [jQuery](https://jquery.com)
+---
 
+<p align="center"> Social platform for extracurricular activities
+    <br> 
+</p>
 
+## 📝 Table of Contents
+- [Problem Statement](#problem_statement)
+- [Idea / Solution](#idea)
+- [Dependencies / Limitations](#limitations)
+- [Future Scope](#future_scope)
+- [Setting up a local environment](#getting_started)
+- [Usage](#usage)
+- [Technology Stack](#tech_stack)
+- [Contributing](../CONTRIBUTING.md)
+- [Authors](#authors)
 
-<!-- GETTING STARTED -->
-## Getting Started
+## 🧐 Problem Statement <a name = "problem_statement"></a>
+Nowadays, there is no easy way for people to find places where they can enjoy their hobbies and interests. It could be playing guitar, learning new skill or just playing sport for fun you will have hard time finding people and place for your activity.
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+- IDEAL: All people who want to enjoy there hobbies and find the most suitable place for them.
+- REALITY: People struggle to find start their side activities, so they search in social media and in most cases they can even give up there passion for new activities.
+- CONSEQUENCES: There are more people who actually want to do something different but they don't know where to find it.
+
+## 💡 Idea / Solution <a name = "idea"></a>
+This section is used to describe potential solutions. 
+
+Once the ideal, reality, and consequences sections have been 
+completed, and understood, it becomes easier to provide a solution for solving the problem.
+
+## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
+- What are the dependencies of your project?
+- Describe each limitation in detailed but concise terms
+- Explain why each limitation exists
+- Provide the reasons why each limitation could not be overcome using the method(s) chosen to acquire.
+- Assess the impact of each limitation in relation to the overall findings and conclusions of your project, and if 
+appropriate, describe how these limitations could point to the need for further research.
+
+## 🚀 Future Scope <a name = "future_scope"></a>
+Write about what you could not develop during the course of the Hackathon; and about what your project can achieve 
+in the future.
+
+## 🏁 Getting Started <a name = "getting_started"></a>
+These instructions will get you a copy of the project up and running on your local machine for development 
+and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-You should have installed Asp .Net Core >= 2.2 <br/>
-You should have installed MS SQL Server
+What things you need to install the software and how to install them.
 
-### Installation
-
-1. Clone the repo
-```sh
-git clone https://github.com/Svetloslav15/ClubestApp.git
 ```
-2. Create appsettings.json
-3. Copy data from appsettings.Development.json to appsettings.json
-4. Build App
+Give examples
+```
 
-<!-- USAGE EXAMPLES -->
-## Usage
+### Installing
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+A step by step series of examples that tell you how to get a development env running.
 
+Say what the step will be
 
-<!-- ROADMAP -->
-## Roadmap
+```
+Give the example
+```
 
-1. Come up with an Idea
-2. Choosing technologies
-3. Creating design
-4. Bulding App
-5. Writing tests and fixing bugs
+And repeat
 
-<!-- LICENSE -->
-## License
+```
+until finished
+```
 
-Distributed under the MIT License. See `LICENSE` for more information.
+## 🎈 Usage <a name="usage"></a>
+Add notes about how to use the system.
 
+## ⛏️ Built With <a name = "tech_stack"></a>
+- [MongoDB](https://www.mongodb.com/) - Database
+- [Express](https://expressjs.com/) - Server Framework
+- [VueJs](https://vuejs.org/) - Web Framework
+- [NodeJs](https://nodejs.org/en/) - Server Environment
 
-
-<!-- CONTACT -->
-## Contact
-
-Svetloslav Novoselski - [@Svetloslav15](https://github.com/Svetloslav15) - svetli@novoselski.net <br/>
-Plamen Michev - [@PlamenMichev](https://github.com/PlamenMichev) -
-
+## ✍️ Authors <a name = "authors"></a>
+- [@Svetloslav](https://github.com/Svetloslav15) - Initial work
+- [@PlamenMichev](https://github.com/PlamenMichev) - Idea & Initial work
