@@ -43,9 +43,6 @@ We have managed to figure out a solution for this problem. A platform which ease
 Add more functionalities and ease the process. Adding google maps and so on.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development 
-and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 You should have installed Asp .Net Core >= 2.2 <br/>
