@@ -58,9 +58,6 @@ git clone https://github.com/Svetloslav15/ClubestApp.git
 3. Copy data from appsettings.Development.json to appsettings.json
 4. Build App
 
-## 🎈 Usage <a name="usage"></a>
-Add notes about how to use the system.
-
 ## ⛏️ Built With <a name = "tech_stack"></a>
 - [ASP .Net Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2) - Server Framework
 - [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019) - Database
