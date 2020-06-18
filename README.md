@@ -1,35 +1,54 @@
- ![Clubest Image](https://i.imgur.com/XPIMRxc.png)
- # Clubest
- >  Social media for extracurricular activities
+<p align="center">
+  <a href="" rel="noopener">
+ <img src="https://i.imgur.com/XPIMRxc.png" alt="Clubest logo"></a>
+</p>
+<h3 align="center">Clubest</h3>
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<div align="center">
 
-![Clubest Image](https://i.imgur.com/Rvs2wNz.png)
+  [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
+  [![GitHub Issues](https://img.shields.io/github/issues/Svetloslav15/Clubest)](https://github.com/Svetloslav15/Clubest/issues)
+  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Svetloslav15/Clubest.svg)](https://github.com/Svetloslav15/Clubest/pulls)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
+</div>
 
-### Built With
-The technologies we used to built the app are:
-* [Asp .Net Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2)
-* [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019)
-* [MDBootstrap](https://mdbootstrap.com/docs)
-* [jQuery](https://jquery.com)
+---
 
+<p align="center"> Social platform for extracurricular activities
+    <br> 
+</p>
 
+## 📝 Table of Contents
+- [Problem Statement](#problem_statement)
+- [Idea / Solution](#idea)
+- [Future Scope](#future_scope)
+- [Setting up a local environment](#getting_started)
+- [Usage](#usage)
+- [Technology Stack](#tech_stack)
+- [Contributing](../CONTRIBUTING.md)
+- [Authors](#authors)
 
-<!-- GETTING STARTED -->
-## Getting Started
+## 🧐 Problem Statement <a name = "problem_statement"></a>
+Nowadays, there is no easy way for people to find places where they can enjoy their hobbies and interests. It could be playing guitar, learning new skill or just playing sport for fun you will have hard time finding people and place for your activity.
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+- IDEAL: All people who want to enjoy there hobbies and find the most suitable place for them.
+- REALITY: People struggle to find start their side activities, so they search in social media and in most cases they can even give up there passion for new activities.
+- CONSEQUENCES: There are more people who actually want to do something different but they don't know where to find it.
 
+## 💡 Idea / Solution <a name = "idea"></a>
+We have managed to figure out a solution for this problem. A platform which ease the process of searching and joining clubs. It is made in a way that allows both club owners and participants to get all functionalities they need in one place. For example: organizing events, conducting polls, communicating and making new friends. Clubest make all those functionalities possible and users should no longer rely on social media.
+
+## 🚀 Future Scope <a name = "future_scope"></a>
+Add more functionalities and ease the process. Adding google maps and so on.
+
+## 🏁 Getting Started <a name = "getting_started"></a>
 ### Prerequisites
 
 You should have installed Asp .Net Core >= 2.2 <br/>
 You should have installed MS SQL Server
 
-### Installation
+### Installing
 
 1. Clone the repo
 ```sh
@@ -39,31 +58,11 @@ git clone https://github.com/Svetloslav15/ClubestApp.git
 3. Copy data from appsettings.Development.json to appsettings.json
 4. Build App
 
-<!-- USAGE EXAMPLES -->
-## Usage
+## ⛏️ Built With <a name = "tech_stack"></a>
+- [ASP .Net Core 2.2](https://dotnet.microsoft.com/download/dotnet-core/2.2) - Server Framework
+- [MS SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019) - Database
+- [MDBootstrap & jQuery](https://mdbootstrap.com/docs) - Front-End
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-1. Come up with an Idea
-2. Choosing technologies
-3. Creating design
-4. Bulding App
-5. Writing tests and fixing bugs
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Svetloslav Novoselski - [@Svetloslav15](https://github.com/Svetloslav15) - svetli@novoselski.net <br/>
-Plamen Michev - [@PlamenMichev](https://github.com/PlamenMichev) -
-
+## ✍️ Authors <a name = "authors"></a>
+- [@Svetloslav](https://github.com/Svetloslav15) - Initial work
+- [@PlamenMichev](https://github.com/PlamenMichev) - Idea & Initial work
